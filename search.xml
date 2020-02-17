@@ -10,6 +10,8 @@
 <p>Given nums = [2, 7, 11, 15], target = 9,</p>
 <p>Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].</p>
 </blockquote>
+<a id="more"></a>
+
 <h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>I was going to work out this problem by violence solution that using dual loop to achieve traversal, and easy to return the indices what we want. But it’s obviously not a efficient method, I think there is a method may get to o(n). </p>
 <p>Througth the HashMap in java, within only the once traversal in original array, after visiting each element by subscript, to compare if existing a key in the HashMap which equals to <strong>target - nums[i]</strong> , if no, then put the element’s value as key, and its index as value into the HashMap, if yes, we can get that recently <strong>nums[i]</strong> add the key in HashMap equals to the <strong>target</strong>. So, what we want is just the value in HashMap searched by the key <strong>target - nums[i]</strong>, and the <strong>i</strong> recent value.</p>
 <p>This problem show that it is nice to use HashMap to make it efficient in such situation, we need to visit the index by value in a array. The key in HashMap can store any type element, then the value can store the original indices, visiting the value by key just need the time complexity of constant order.</p>

@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ds-note-2-ContainerWithMostWater</title>
+    <url>/2020/02/17/ds-note-2-ContainerWithMostWater/</url>
+    <content><![CDATA[<p>Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
+<p>Note: You may not slant the container and n is at least 2.</p>
+<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"  height="200" width="500">
+
+<p>The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.</p>
+<p>Example:</p>
+<blockquote>
+<p>Input: [1,8,6,2,5,4,8,3,7]<br>Output: 49</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Use dual pointer can work out it within once traversal.  Define a variable used to store the recent largest volume. In the beginning, the left pointer is located at 0, another is at the end of array. We know the volume of the whole container is based on the shortest edge, so <strong>volume = min( height[i], height[j] ) * ( j - i )</strong>, we compare  this volume with the one we store, if it is larger than the previous one, we use it as the largest volume to the next comparsion. But how should we control the term of pointer’s move? If  <strong>height[i] &lt; height[j]</strong>, we can get that, on the right of the left pointer, there may be a larger new  <strong>height[i]</strong> can instead of this one, which is stand for the largest volume. But on the left of the right pointer, it is no way. So we can move the left pointer to the next position at ease, because if we need to replace the stored value, it must be larger in this way. For the right pointer, it’s in the same way. When <strong>i  &gt;=  j</strong>, we consider that the traversal can be shut down, in the previous procedure, value of the largest volume is larger and larger until it is the right answer.</p>
+<p>By using dual pointer flexibly can skip many needless comparsion in the traversal, and enhance the efficient.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxvolume = <span class="number">0</span>, i = <span class="number">0</span>, j = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            maxvolume = Math.max(maxvolume, Math.min(height[i], height[j]) * (j - i));</span><br><span class="line">            <span class="keyword">if</span> (height[i] &lt; height[j]) i++;</span><br><span class="line">            <span class="keyword">else</span> j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxvolume;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <tags>
+        <tag>datastructure</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ds-notes-1-TwoSum</title>
     <url>/2020/02/17/ds-notes-1-TwoSum/</url>
     <content><![CDATA[<p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
@@ -13,7 +36,7 @@
 <a id="more"></a>
 
 <h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>I was going to work out this problem by violence solution that using dual loop to achieve traversal, and easy to return the indices what we want. But it’s obviously not a efficient method, I think there is a method may get to o(n). </p>
-<p>Througth the HashMap in java, within only the once traversal in original array, after visiting each element by subscript, to compare if existing a key in the HashMap which equals to <strong>target - nums[i]</strong> , if no, then put the element’s value as key, and its index as value into the HashMap, if yes, we can get that recently <strong>nums[i]</strong> add the key in HashMap equals to the <strong>target</strong>. So, what we want is just the value in HashMap searched by the key <strong>target - nums[i]</strong>, and the <strong>i</strong> recent value.</p>
+<p>Use the HashMap in java, in this way, within only the once traversal in original array, after visiting each element by subscript, to compare if existing a key in the HashMap which equals to <strong>target - nums[i]</strong> , if no, then put the element’s value as key, and its index as value into the HashMap, if yes, we can get that recently <strong>nums[i]</strong> add the key in HashMap equals to the <strong>target</strong>. So, what we want is just the value in HashMap searched by the key <strong>target - nums[i]</strong>, and the <strong>i</strong> recent value.</p>
 <p>This problem show that it is nice to use HashMap to make it efficient in such situation, we need to visit the index by value in a array. The key in HashMap can store any type element, then the value can store the original indices, visiting the value by key just need the time complexity of constant order.</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(target - nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; map.get(target - nums[i]), i &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

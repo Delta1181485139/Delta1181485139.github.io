@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ds-note-2-ContainerWithMostWater</title>
-    <url>/2020/02/17/ds-note-2-ContainerWithMostWater/</url>
-    <content><![CDATA[<p>Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
-<p>Note: You may not slant the container and n is at least 2.</p>
-<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"  height="200" width="500">
-
-<p>The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.</p>
-<p>Example:</p>
+    <title>leetcode刷题笔记-15-三数之和</title>
+    <url>/2020/02/18/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-15-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。</p>
+<p>注意：答案中不可以包含重复的三元组。</p>
+<p>示例：</p>
 <blockquote>
-<p>Input: [1,8,6,2,5,4,8,3,7]<br>Output: 49</p>
+<p>给定数组 nums = [-1, 0, 1, 2, -1, -4]，<br>满足要求的三元组集合为：<br> [<br> &nbsp; &nbsp;[-1, 0, 1],<br> &nbsp; &nbsp;[-1, -1, 2]<br>]</p>
 </blockquote>
 <a id="more"></a>
-<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Use dual pointer can work out it within once traversal.  Define a variable used to store the recent largest volume. In the beginning, the left pointer is located at 0, another is at the end of array. We know the volume of the whole container is based on the shortest edge, so <strong>volume = min( height[i], height[j] ) * ( j - i )</strong>, we compare  this volume with the one we store, if it is larger than the previous one, we use it as the largest volume to the next comparsion. But how should we control the term of pointer’s move? If  <strong>height[i] &lt; height[j]</strong>, we can get that, on the right of the left pointer, there may be a larger new  <strong>height[i]</strong> can instead of this one, which is stand for the largest volume. But on the left of the right pointer, it is no way. So we can move the left pointer to the next position at ease, because if we need to replace the stored value, it must be larger in this way. For the right pointer, it’s in the same way. When <strong>i  &gt;=  j</strong>, we consider that the traversal can be shut down, in the previous procedure, value of the largest volume is larger and larger until it is the right answer.</p>
-<p>By using dual pointer flexibly can skip many needless comparsion in the traversal, and enhance the efficient.</p>
+
+<p>这道题用暴力法搜寻需要 o(n^3) 的时间复杂度，这里我依然用的是增加搜寻指针的方法，需要两次遍历，将时间复杂度降为o(n^2)。</p>
+<p>首先是排除特殊情况。</p>
+<p>先将数组从小到大排序。定义三个指针i，j，k，开始时i为指向数组第一个位置，j指向数组第二个位置，k指向数组最后一个位置。i的值在最外层增加，j，k，用于对于每一个nums[i]，寻找另外两个符合条件的值。为了保证遍历的有序，必须遵循i&lt;j&lt;k这个基本条件。</p>
+<p>先看此时nums[i] + nums[j] +nums[k] 是否为0，如果是，那么就找到了一个符合条件的值，将此三元组放入答案集合中，同时将j和k左移或右移，为什么要同时移动？因为如果只移动其中一个，我们将来要找的对应的剩下那个值其实已经找到了，而数组是已经排好序的，所以搜寻的值只会越来越大或越来越小，现在情况就是nums[i] + nums[j] +nums[k]， 在nums[i]固定的情况下，num[j]如果增大了，nums[k]就必须减小才有可能找到新的三元组。</p>
+<p>再看，如果nums[i] + nums[j] +nums[k] 不为0，那么我们就要想办法让指针往有利于让其等于0的方向移动，这里就可以分两种情况，一种是得到的值比0大，我们希望这个减小，按照数组的有序性，必须让k指针左移才能让值减小，之后再作判断，此时如果同时移动两个指针，将可能会少遍历到一些组合。另外一种情况也是以此类推，直到j&gt;=k的时候可以将i指针右移，然后j的初值再赋为i+1，k的初值为数组长度-1，开始寻找对于一个新的nums[i]，符合条件的nums[j]，nums[k]，直到i的位置到了整个数组的倒数第三个。</p>
+<p>在每次移动指针的时候要按照题目进行去重处理，方法就是用一个while循环，因为有序数组的话相同的值一定是相邻的，在指针需要移动的时候比较移动前后的值，若相等则继续移动一个单位，注意的是循环条件还需要满足外层循环的条件，否则可能会数组下标越界。i的去重也同理。</p>
+<p>这道题同时用到了有序数组的特性和多指针比较法来减少循环次数，其实我还想看看有没有更快的方法，不过其实想到一个办法之后能够快速的用代码实现才是更重要的，要是花大量的时间来debug就有点亏了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(nums.length&gt;<span class="number">2</span>)&#123;</span><br><span class="line">            Arrays.sort(nums);</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>, j, k;</span><br><span class="line">            <span class="keyword">while</span>(nums[i]&lt;=<span class="number">0</span>&amp;&amp;i&lt;nums.length -<span class="number">1</span>)&#123;</span><br><span class="line">                j = i+<span class="number">1</span>; k = nums.length -<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span>(j&lt;k)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(nums[i]+nums[j]==-nums[k])&#123;</span><br><span class="line">                        ans.add(Arrays.asList(nums[i],nums[j],nums[k]));</span><br><span class="line">                        j++;k--;</span><br><span class="line">                        <span class="keyword">while</span>(nums[j]==nums[j-<span class="number">1</span>]&amp;&amp;j&lt;k)j++;</span><br><span class="line">                        <span class="keyword">while</span>(nums[k]==nums[k+<span class="number">1</span>]&amp;&amp;j&lt;k)k--;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[i]+nums[j]+nums[k]&lt;<span class="number">0</span>)&#123;</span><br><span class="line">                        j++;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        k--;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">                <span class="keyword">while</span>(nums[i]==nums[i-<span class="number">1</span>]&amp;&amp;i&lt;nums.length-<span class="number">1</span>)i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>datastructure</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-11-盛最多水的容器</title>
+    <url>/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<p>给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
+<p>说明：你不能倾斜容器，且 n 的值至少为 2。</p>
+<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"  height="200" width="500">
+
+<p>图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。</p>
+<p>示例：</p>
+<blockquote>
+<p>输入: [1,8,6,2,5,4,8,3,7]</p>
+<p>输出: 49</p>
+</blockquote>
+<a id="more"></a>
+<p>除了o(n^2)的暴力法之外，可以用双指针来完成一次遍历，近用o(n)找到这个最大的容积。</p>
+<p>一开始，指针i位于数组最左侧，指针j位于数组最右侧，用一个变量maxvolume来存储迄今为止得到的最大容积，每次的移动指针都需要将此时算得的容积与旧值比较，若大则更新，否则继续移动指针。由题意可以得知，我们要求的这个容积的值取决于短的那根垂线，对于两根垂线中短的那一根，如果定住指针不动，移动另一指针，无论以后这一边的高是多少，也不可能再找到一个可以比现在更大的容积了。所以指针移动的策略是，比较height[i]与height[j]的大小，谁小就移动谁，直到i&gt;=j,遍历停止，这样的话，maxvolume的值会按正确方向向答案靠拢。</p>
+<p>通过使用双指针的方法，通常可以减少一个数量级的时间复杂度，但是需要着重考虑指针移动的策略，以避开不需要的比较。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxvolume = <span class="number">0</span>, i = <span class="number">0</span>, j = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            maxvolume = Math.max(maxvolume, Math.min(height[i], height[j]) * (j - i));</span><br><span class="line">            <span class="keyword">if</span> (height[i] &lt; height[j]) i++;</span><br><span class="line">            <span class="keyword">else</span> j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxvolume;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -24,20 +51,20 @@
       </tags>
   </entry>
   <entry>
-    <title>ds-notes-1-TwoSum</title>
-    <url>/2020/02/17/ds-notes-1-TwoSum/</url>
-    <content><![CDATA[<p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
-<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-<p>Example:</p>
+    <title>leetcode刷题笔记-1-两数之和</title>
+    <url>/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+<p>示例：</p>
 <blockquote>
-<p>Given nums = [2, 7, 11, 15], target = 9,</p>
-<p>Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].</p>
+<p>给定 nums = [2, 7, 11, 15], target = 9</p>
+<p>因为 nums[0] + nums[1] = 2 + 7 = 9所以返回 [0, 1]</p>
 </blockquote>
 <a id="more"></a>
 
-<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>I was going to work out this problem by violence solution that using dual loop to achieve traversal, and easy to return the indices what we want. But it’s obviously not a efficient method, I think there is a method may get to o(n). </p>
-<p>Use the HashMap in java, in this way, there is only the once traversal in original array, after visiting each element by subscript, to compare if existing a key in the HashMap which equals to <strong>target - nums[i]</strong> , if no, then put the element’s value as key, and its index as value into the HashMap, if yes, we can get that recently <strong>nums[i]</strong> add the key in HashMap equals to the <strong>target</strong>. So, what we want is just the value in HashMap searched by the key <strong>target - nums[i]</strong>, and the <strong>i</strong> recent value.</p>
-<p>This problem show that it is nice to use HashMap to make it efficient in such situation, we need to visit the index by value in a array. The key in HashMap can store any type element, then the value can store the original indices, visiting the value by key just need the time complexity of constant order.</p>
+<p>我本来想通过暴力解法来解这种题，因为逻辑并不复杂。但是后面又想到了一种通过使用HashMap的方法，能够将时间复杂度降为o(n)。</p>
+<p>我们要想知道数组中和等于target的两个下标，也就是想要知道对于一个数组中的数，如果target减这个数也存在数组中，那么这两个数的下标就是我们要的答案。在对数组的一次遍历中，将遍历到的数的值作为键，下标作为值，以这样一个二元组加入到一个HashMap集合中。因为通过键访问值只需要常数级的时间复杂度。所以在每一次对数组元素的访问中，查看HashMap集合中是否存在一个以target-nums[i]为键的元组，若存在，则返回它的值，它的值就是我们在此前一起传入的下标。我们要的答案就是现在的i,和通过HashMap集合找到对应的值，即原本的下标。</p>
+<p>这道题表明使用哈希表来存储需要通过值来访问得到序号的二元组是十分有效的，因为哈希表的键可以存储任意类型的元素，用值来存储整型的下标。需要注意的是，哈希表中一个键只能对应一个值，一个值却可以对应多个键，类似于函数中的单射关系。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(target - nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; map.get(target - nums[i]), i &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>

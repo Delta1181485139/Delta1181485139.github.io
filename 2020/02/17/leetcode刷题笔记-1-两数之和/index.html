@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="en">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two l">
+<meta name="description" content="给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例：  给定 nums &#x3D; [2, 7, 11, 15], target &#x3D; 9 因为 nums[0] + nums[1] &#x3D; 2 + 7 &#x3D; 9所以返回 [0, 1]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ds-note-2-ContainerWithMostWater">
-<meta property="og:url" content="http://yoursite.com/2020/02/17/ds-note-2-ContainerWithMostWater/index.html">
+<meta property="og:title" content="leetcode刷题笔记-1-两数之和">
+<meta property="og:url" content="http://yoursite.com/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two l">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
-<meta property="article:published_time" content="2020-02-17T12:35:09.000Z">
-<meta property="article:modified_time" content="2020-02-17T13:55:19.891Z">
+<meta property="og:description" content="给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例：  给定 nums &#x3D; [2, 7, 11, 15], target &#x3D; 9 因为 nums[0] + nums[1] &#x3D; 2 + 7 &#x3D; 9所以返回 [0, 1]">
+<meta property="article:published_time" content="2020-02-17T07:57:45.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:11:03.865Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="datastructure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
 
 
 
@@ -108,7 +105,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/17/ds-note-2-ContainerWithMostWater/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/02/17/leetcode刷题笔记-1-两数之和/"/>
 
 
 
 
 
-  <title>ds-note-2-ContainerWithMostWater | Delta</title>
+  <title>leetcode刷题笔记-1-两数之和 | Delta</title>
   
 
 
@@ -140,7 +137,7 @@
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -188,7 +185,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
           </a>
         </li>
       
@@ -198,7 +195,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            关于
           </a>
         </li>
       
@@ -211,7 +208,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Search
+            搜索
           </a>
         </li>
       
@@ -231,7 +228,7 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-             placeholder="Searching..." spellcheck="false"
+             placeholder="搜索..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
   </div>
@@ -269,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/17/ds-note-2-ContainerWithMostWater/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -286,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ds-note-2-ContainerWithMostWater</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-1-两数之和</h1>
         
 
         <div class="post-meta">
@@ -296,9 +293,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-17T20:35:09+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-17T15:57:45+08:00">
                 2020-02-17
               </time>
             
@@ -336,20 +333,19 @@
       
 
       
-        <p>Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
-<p>Note: You may not slant the container and n is at least 2.</p>
-<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"  height="200" width="500">
-
-<p>The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.</p>
-<p>Example:</p>
+        <p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+<p>示例：</p>
 <blockquote>
-<p>Input: [1,8,6,2,5,4,8,3,7]<br>Output: 49</p>
+<p>给定 nums = [2, 7, 11, 15], target = 9</p>
+<p>因为 nums[0] + nums[1] = 2 + 7 = 9所以返回 [0, 1]</p>
 </blockquote>
 <a id="more"></a>
-<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Use dual pointer can work out it within once traversal.  Define a variable used to store the recent largest volume. In the beginning, the left pointer is located at 0, another is at the end of array. We know the volume of the whole container is based on the shortest edge, so <strong>volume = min( height[i], height[j] ) * ( j - i )</strong>, we compare  this volume with the one we store, if it is larger than the previous one, we use it as the largest volume to the next comparsion. But how should we control the term of pointer’s move? If  <strong>height[i] &lt; height[j]</strong>, we can get that, on the right of the left pointer, there may be a larger new  <strong>height[i]</strong> can instead of this one, which is stand for the largest volume. But on the left of the right pointer, it is no way. So we can move the left pointer to the next position at ease, because if we need to replace the stored value, it must be larger in this way. For the right pointer, it’s in the same way. When <strong>i  &gt;=  j</strong>, we consider that the traversal can be shut down, in the previous procedure, value of the largest volume is larger and larger until it is the right answer.</p>
-<p>By using dual pointer flexibly can skip many needless comparsion in the traversal, and enhance the efficient.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxvolume = <span class="number">0</span>, i = <span class="number">0</span>, j = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            maxvolume = Math.max(maxvolume, Math.min(height[i], height[j]) * (j - i));</span><br><span class="line">            <span class="keyword">if</span> (height[i] &lt; height[j]) i++;</span><br><span class="line">            <span class="keyword">else</span> j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxvolume;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>我本来想通过暴力解法来解这种题，因为逻辑并不复杂。但是后面又想到了一种通过使用HashMap的方法，能够将时间复杂度降为o(n)。</p>
+<p>我们要想知道数组中和等于target的两个下标，也就是想要知道对于一个数组中的数，如果target减这个数也存在数组中，那么这两个数的下标就是我们要的答案。在对数组的一次遍历中，将遍历到的数的值作为键，下标作为值，以这样一个二元组加入到一个HashMap集合中。因为通过键访问值只需要常数级的时间复杂度。所以在每一次对数组元素的访问中，查看HashMap集合中是否存在一个以target-nums[i]为键的元组，若存在，则返回它的值，它的值就是我们在此前一起传入的下标。我们要的答案就是现在的i,和通过HashMap集合找到对应的值，即原本的下标。</p>
+<p>这道题表明使用哈希表来存储需要通过值来访问得到序号的二元组是十分有效的，因为哈希表的键可以存储任意类型的元素，用值来存储整型的下标。需要注意的是，哈希表中一个键只能对应一个值，一个值却可以对应多个键，类似于函数中的单射关系。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(target - nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; map.get(target - nums[i]), i &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -381,8 +377,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/17/ds-notes-1-TwoSum/" rel="next" title="ds-notes-1-TwoSum">
-                <i class="fa fa-chevron-left"></i> ds-notes-1-TwoSum
+              <a href="/2020/02/16/python%E5%AE%9E%E7%8E%B0flybird%E5%B0%8F%E6%B8%B8%E6%88%8F/" rel="next" title="python实现flybird小游戏">
+                <i class="fa fa-chevron-left"></i> python实现flybird小游戏
               </a>
             
           </div>
@@ -390,6 +386,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" rel="prev" title="leetcode刷题笔记-11-盛最多水的容器">
+                leetcode刷题笔记-11-盛最多水的容器 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -441,17 +441,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -470,8 +461,8 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
@@ -484,7 +475,7 @@
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
                   <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-name">标签</span>
                 </a>
               </div>
             
@@ -523,22 +514,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution"><span class="nav-number">1.</span> <span class="nav-text">Solution</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -562,7 +537,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -570,7 +545,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 

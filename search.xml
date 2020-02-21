@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-27-移除元素</title>
+    <url>/2020/02/21/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<p>给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。</p>
+<p>不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。</p>
+<p>元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p>
+<p>示例：</p>
+<blockquote>
+<p>给定 nums = [0,1,2,2,3,0,4,2], val = 2,<br>函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。<br>注意这五个元素可为任意顺序。<br>你不需要考虑数组中超出新长度后面的元素。</p>
+</blockquote>
+<a id="more"></a>
+<p>此题显然应当用双指针，但与删除重复元素那道题不同的是，此题需要删除指定元素，也就是说如果两个指针如果像之前那样，从同一侧出发，快指针赋值给慢指针的方式，势必会出现很多虽然合法，但是冗余的元素。这时候应当要换一种思维方式，让一个指针访问过的元素避免被另一个指针再次访问，但依然是一个指针主要负责检查，另一个指针负责遍历。</p>
+<p>排除完特殊情况之后，首先令检查指针位于0处，遍历指针位于nums.length-1处，比较检查指针所对应的元素是否是target, 如果是的话就把遍历指针对应元素的值传入，遍历指针便可以往低位移动一次，否则就直接将检查指针向高位移动一次，继续检查，由于循环体每次要么移动检查指针，要么检查遍历指针，而无论是检查指针自身移动到的等于target的元素，还是遍历指针传入的等于target的元素，都会因为这个等于target的条件，继续被遍历指针的新元素所覆盖。所以到最后检查指针所经过的区域就是去除完所有target的数组，还保证了其他元素的完整性。</p>
+<p>双指针的应用一定要根据具体题目快速判断，灵活运用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j+<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==val)&#123;</span><br><span class="line">                nums[i] = nums[j--];</span><br><span class="line">            &#125;<span class="keyword">else</span> i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>datastructure</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-26-删除排序数组中的重复项</title>
     <url>/2020/02/21/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-26-%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/</url>
     <content><![CDATA[<p>给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</p>

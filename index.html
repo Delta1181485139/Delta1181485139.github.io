@@ -274,6 +274,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-33-%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Delta">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Delta">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/27/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-33-%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" itemprop="url">leetcode刷题笔记-33-搜索旋转排序数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-27T16:11:12+08:00">
+                2020-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  743
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
+<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
+<p>搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是 O(log n) 级别。</p>
+<p>示例：</p>
+<blockquote>
+<p>输入: nums = [4,5,6,7,0,1,2], target = 0<br>输出: 4</p>
+</blockquote>
+<p>看到这个时间复杂度必须是o(logn)级别，那么很自然的就想要要用二分法。二分法的精髓在于对一个有序数组，可以通过逐步缩小首位指针的范围，直到范围无法再缩，就能够锁定需要查找的数的位置了。</p>
+<p>但这题特殊在，它不是严格的有序数组，而如果对它进行排序，则会打乱我们要找的数的索引，所以不能排序。但即使这样，这个数组也是部分有序的，在二分查找中，只要合理的条件判断，也能够顺利进行下去。</p>
+<p>由于我设置了两个指针，所以代码可能有点冗杂，但我做这题的时候也为了追求效率，放弃了优雅，也就选了个条理更清晰的方式。</p>
+<p>主要说一下如何进行二分：首先首尾放置指针，仍然以最中间的那个数为基准来比较。根据旋转数组的特征，将中间数与目标数以及数组首位元素比较大小，将会得出目标数到底在中间数的左边还是右边，这时候就可以移动左右指针之一来缩小查找范围了。将中间数与目标数比较好理解，那么为什么还要与数组首位元素比较呢，作为旋转数组，可以知道的是首位元素一定比尾部元素大，同时也可以认为大小介于旋转点与后面那一点之间，这将是确定目标数位置的一个重要的参考，然后以旋转点为界，两侧的子数组是有序的。</p>
+<p>当然，如果想追求代码简洁，可以适当用异或来判断。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length==<span class="number">0</span>)<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums.length==<span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>]==target?<span class="number">0</span>:-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums.length==<span class="number">2</span>)<span class="keyword">return</span> nums[<span class="number">0</span>]==target?<span class="number">0</span>:(nums[<span class="number">1</span>]==target?<span class="number">1</span>:-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.length - <span class="number">1</span>, k = nums.length/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span>(k&gt;i&amp;&amp;j&gt;k)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[k]==target)<span class="keyword">return</span> k;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==target)<span class="keyword">return</span> i;</span><br><span class="line">            <span class="keyword">if</span>(nums[j]==target)<span class="keyword">return</span> j;</span><br><span class="line">            <span class="keyword">if</span>(nums[k]&gt;nums[<span class="number">0</span>])&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[k]&gt;target)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(target&gt;nums[<span class="number">0</span>])&#123;</span><br><span class="line">                        j = k;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        i = k; </span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    i = k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[k]&gt;target)&#123;</span><br><span class="line">                    j = k;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(target&gt;nums[<span class="number">0</span>])&#123;</span><br><span class="line">                        j = k;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        i = k;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            k = (i + j) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/KMP%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -337,7 +501,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.7k
+                  3k
                 </span>
               
 
@@ -353,7 +517,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  9
+                  10
                 </span>
               
             </div>
@@ -1696,170 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Delta">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Delta">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" itemprop="url">leetcode刷题笔记-11-盛最多水的容器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-17T20:35:09+08:00">
-                2020-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  515
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
-<p>说明：你不能倾斜容器，且 n 的值至少为 2。</p>
-<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"  height="200" width="500">
-
-<p>图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。</p>
-<p>示例：</p>
-<blockquote>
-<p>输入: [1,8,6,2,5,4,8,3,7]</p>
-<p>输出: 49</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/02/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1912,7 +1912,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1992,7 +1992,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">10.8k</span>
+    <span title="Site words total count">11.8k</span>
   
 </div>
 

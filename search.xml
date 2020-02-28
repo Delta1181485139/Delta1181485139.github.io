@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-19-删除链表的倒数第N个节点</title>
+    <url>/2020/02/28/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9/</url>
+    <content><![CDATA[<p>给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。</p>
+<p>示例：</p>
+<blockquote>
+<p>给定一个链表: 1-&gt;2-&gt;3-&gt;4-&gt;5, 和 n = 2.<br>当删除了倒数第二个节点后，链表变为 1-&gt;2-&gt;3-&gt;5.</p>
+</blockquote>
+<p>说明：给定的 n 保证是有效的。<br>进阶：你能尝试使用一趟扫描实现吗？</p>
+<a id="more"></a>
+<p>单向链表无法存储自己的上一个节点的位置，而这道题给出要求删除节点的次序却是倒数的。在尾部次序未知的情况下，我认为是不可能做到成功删除的。那么正常的思路应该是先遍历一遍得到链表的长度，再通过链表长度与给定的n的差值关系确定要删除元素的正序，然后再遍历一遍进行删除。</p>
+<p>但是又看到了进阶说明——用一趟扫描，也就是一趟遍历。那么也容易想到，要减少遍历次数，遇事不决双指针嘛。让快指针先移动n步，再让快慢指针一起移动，直到快指针移动到链表尾部。这么看来，确实是遍历了一遍，但本质上跟最原始的办法也没有区别啊，还多用了一个指针。遍历两遍的那个全程只动了一个指针，而这个遍历一遍，却动了两根指针。虽然在同一个循环体内，代码也是依次执行的，所以这两种方式的时间复杂度是同样的线性的。我认为这个遍历一次并没有什么太大意义。</p>
+<p>这道题需要注意的地方是，当测试员给出只包含两个节点的链表时，如果没有头节点的帮助，恐怕很难精确地处理这种情况。所以如果给出的链表没有头节点的话，手动加上头节点也是不错的选择。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!head-&gt;next)<span class="keyword">return</span> head-&gt;next;</span><br><span class="line">        <span class="function">struct ListNode <span class="title">realhead</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">        realhead.next = head;</span><br><span class="line">        ListNode* p = &amp;realhead;</span><br><span class="line">        ListNode* q = &amp;realhead;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++)q=q-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(q&amp;&amp;q-&gt;next)&#123;</span><br><span class="line">            p=p-&gt;next;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        q = p-&gt;next;</span><br><span class="line">        p-&gt;next =q-&gt;next;</span><br><span class="line">        <span class="keyword">if</span>( q == head )head = head-&gt;next;</span><br><span class="line">        <span class="keyword">delete</span> q;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-2-两数相加</title>
+    <url>/2020/02/28/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
+    <content><![CDATA[<p>给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。</p>
+<p>如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。</p>
+<p>您可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p>示例：</p>
+<blockquote>
+<p>输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>输出：7 -&gt; 0 -&gt; 8<br>原因：342 + 465 = 807</p>
+</blockquote>
+<a id="more"></a>
+<p>这种题，连数字的在链表中的排序都是按照从低位向高位，那么明摆着就是要将传统的手算加法的规则转化为链表的操作而已。</p>
+<p>需要注意的是，两个链表的加法运算，应该以长的链表结束为准来结束运算，而短的链表在缺少的部分理应用0来参与加法运算。</p>
+<p>最后还是觉得用java来写跟链表或者地址，指针有关的东西，没内味儿，下次写链表的题还是用cpp吧。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode head = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode cur = head;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>,x,y;</span><br><span class="line">        <span class="keyword">while</span>(l1 != <span class="keyword">null</span> || l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            x = l1 == <span class="keyword">null</span> ? <span class="number">0</span> : l1.val;</span><br><span class="line">            y = l2 == <span class="keyword">null</span> ? <span class="number">0</span> : l2.val;</span><br><span class="line">            <span class="keyword">int</span> sum = x + y + carry;</span><br><span class="line">            carry = sum / <span class="number">10</span>;</span><br><span class="line">            sum = sum % <span class="number">10</span>;</span><br><span class="line">            cur.next = <span class="keyword">new</span> ListNode(sum);</span><br><span class="line">            cur = cur.next;</span><br><span class="line">            <span class="keyword">if</span>(l1 != <span class="keyword">null</span>)l1 = l1.next;</span><br><span class="line">            <span class="keyword">if</span>(l2 != <span class="keyword">null</span>)l2 = l2.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(carry == <span class="number">1</span>) &#123;</span><br><span class="line">            cur.next = <span class="keyword">new</span> ListNode(carry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-33-搜索旋转排序数组</title>
     <url>/2020/02/27/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-33-%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
@@ -21,7 +62,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -73,7 +114,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -91,7 +132,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -110,7 +151,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i,j;</span><br><span class="line">        <span class="keyword">if</span>(nums.length&lt;<span class="number">2</span>)<span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = nums.length - <span class="number">2</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]&lt;nums[i+<span class="number">1</span>])&#123;</span><br><span class="line">                j = i++;</span><br><span class="line">                <span class="keyword">while</span>(i&lt;nums.length&amp;&amp;nums[i]&gt;nums[j])i++;</span><br><span class="line">                swap(nums,j++,i-<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">for</span>(i = nums.length - <span class="number">1</span>;j&lt;i;i--,j++)swap(nums,i,j);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>,i = nums.length - <span class="number">1</span>;j&lt;i;i--,j++)swap(nums,i,j);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        nums[i] ^= nums[j];</span><br><span class="line">        nums[j] ^= nums[i];</span><br><span class="line">        nums[i] ^= nums[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -131,7 +172,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -153,7 +194,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -174,7 +215,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -196,7 +237,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -221,7 +262,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -246,7 +287,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -340,7 +381,7 @@
 
 ]]></content>
       <tags>
-        <tag>datastructure</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>

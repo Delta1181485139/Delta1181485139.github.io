@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-34-在排序数组中查找元素的第一个和最后一个位置</title>
+    <url>/2020/03/06/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-34-%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。你的算法时间复杂度必须是 O(log n) 级别。如果数组中不存在目标值，返回 [-1, -1]。<br>示例：</p>
+<blockquote>
+<p>输入: nums = [5,7,7,8,8,10], target = 8<br>输出: [3,4]</p>
+</blockquote>
+<a id="more"></a>
+<p>看到这个要求的时间复杂度，那么还是考虑二分查找。对于二分查找的两个指针，一旦有一个指针的值是target的值，那么就可以直接以这个位置为终点，循环向两边查找有没有其他的相同的值，然后返回两指针的位置。要是两个指针都碰一起了还没有一个指针找到target，那么就退出循环，返回两个-1。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] searchRange(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="keyword">int</span> k = (i + j) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] == target)k = i;</span><br><span class="line">            <span class="keyword">if</span>(nums[j] == target)k = j;</span><br><span class="line">            <span class="keyword">if</span>(nums[k]&gt;target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(j!=k)j = k;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[k]&lt;target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i!=k)i = k;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                i = k;j = k;</span><br><span class="line">                <span class="keyword">while</span>(i&gt;<span class="number">0</span>&amp;&amp;nums[i]==nums[i-<span class="number">1</span>])i--;</span><br><span class="line">                <span class="keyword">while</span>(j&lt;nums.length-<span class="number">1</span>&amp;&amp;nums[j]==nums[j+<span class="number">1</span>])j++;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i,j&#125;;</span><br><span class="line">            &#125;     </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;-<span class="number">1</span>,-<span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-21-合并两个有序链表</title>
+    <url>/2020/03/06/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-21-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<p>将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。<br>示例：</p>
+<blockquote>
+<p>输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4<br>输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</p>
+</blockquote>
+<a id="more"></a>
+<p>思路十分的简单，确立一个新链表的指针，两个分别指向原有序链表的指针，从头开始比较两个链表指向节点元素的大小，把小的给新链表，小的指针后移。直到短的那个链表遍历完成。最后只要将长的链表剩下的一段全部给新链表就下了。单链表就是方便在成批的复制数据。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        ListNode* head = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode* p = l1,*q = l2,*k = head;</span><br><span class="line">        <span class="keyword">while</span>(p&amp;&amp;q)&#123;</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;val&lt;=q-&gt;val)&#123;</span><br><span class="line">                k-&gt;next = p;</span><br><span class="line">                p = p-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                k-&gt;next = q;</span><br><span class="line">                q = q-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            k = k-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        k-&gt;next = p?p:q;</span><br><span class="line">        ListNode *ans = head-&gt;next;</span><br><span class="line">        <span class="keyword">delete</span> head;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-9-回文数</title>
+    <url>/2020/03/05/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-9-%E5%9B%9E%E6%96%87%E6%95%B0/</url>
+    <content><![CDATA[<p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p>
+<a id="more"></a>
+<p>从题目可以看出，负数不可能是回文数，首先排除。对于整数，若将其反转，回文数的数值大小应该保持不变。因此思路就出来了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> reverse=<span class="number">0</span>,y = x;</span><br><span class="line">        <span class="keyword">while</span>(y!=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(reverse&gt;INT_MAX/<span class="number">10</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            reverse = reverse*<span class="number">10</span> + y%<span class="number">10</span>;</span><br><span class="line">            y/=<span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (reverse==x)?<span class="literal">true</span>:<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-20-有效的括号</title>
+    <url>/2020/03/05/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-20-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</url>
+    <content><![CDATA[<p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。<br>有效字符串需满足：<br>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
+<a id="more"></a>
+<p>栈的应用在括号匹配这一方面体现的极为契合。但有一点，栈空的时候不能弹出元素或访问栈顶元素，因此我将一个可辨识的元素压入栈底作为标识。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; brackets;</span><br><span class="line">        brackets.push(<span class="string">'0'</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;s.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s[i]==<span class="string">'('</span>||s[i]==<span class="string">'['</span>||s[i]==<span class="string">'&#123;'</span>)brackets.push(s[i]);</span><br><span class="line">            <span class="keyword">if</span>(s[i]==<span class="string">')'</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(brackets.top()==<span class="string">'('</span>)brackets.pop();</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;            </span><br><span class="line">            <span class="keyword">if</span>(s[i]==<span class="string">']'</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(brackets.top()==<span class="string">'['</span>)brackets.pop();</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;            </span><br><span class="line">            <span class="keyword">if</span>(s[i]==<span class="string">'&#125;'</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(brackets.top()==<span class="string">'&#123;'</span>)brackets.pop();</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> brackets.top()==<span class="string">'0'</span>?<span class="literal">true</span>:<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fibonacci数列算法效率对比</title>
     <url>/2020/03/03/Fibonacci%E6%95%B0%E5%88%97%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94/</url>
     <content><![CDATA[<p>由于计算时间复杂度是研究数据结构与算法的一项非常重要的工作，现在以经典的求解斐波那契数列的第n项为例，探讨各个算法的时空复杂度。</p>

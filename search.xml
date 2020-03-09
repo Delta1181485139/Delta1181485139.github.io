@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-53-最大子序和</title>
+    <url>/2020/03/09/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。<br>示例:</p>
+<blockquote>
+<p>输入: [-2,1,-3,4,-1,2,1,-5,4],<br>输出: 6<br>解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
+</blockquote>
+<p>进阶:<br>如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。</p>
+<a id="more"></a>
+<p>时间复杂度为o(n)的算法：<br>这个算法其实就是贪心算法，总是考虑加上现在遍历到的这个数是否会比现在大，会的话就算上，不会的话之前的序列就不要了，从现在这个元素开始看有没有新的序列比较大。由于有一个变量用来实时保存最大序列和，所以遍历整个序列之后，总能得到一个最大的子序和。时间复杂度o(n)，空间复杂度o(1)。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int n(1),sum(nums[0]),ans(nums[0]);</span><br><span class="line">        <span class="keyword">while</span>(n&lt;nums.size())&#123;</span><br><span class="line">            sum = max(nums[n] + sum,nums[n]);</span><br><span class="line">            ans = max(sum,ans);</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
+<blockquote>
+<p>当最大子数组有 n 个数字时：<br>若 n==1，返回此元素。<br>left_sum 为最大子数组前 n/2 个元素，在索引为 (left + right) / 2 的元素属于左子数组。<br>right_sum 为最大子数组的右子数组，为最后 n/2 的元素。<br>cross_sum 是包含左右子数组且含索引 (left + right) / 2 的最大值。<br><image src="https://pic.leetcode-cn.com/3aa2128a7ddcf1123454a6e5364792490c5edff62674f3cfd9c81cb7b5e8e522-file_1576478143567"></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">crossSum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == right) <span class="keyword">return</span> nums[left];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> leftSubsum = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">int</span> currSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = p; i &gt; left - <span class="number">1</span>; --i) &#123;</span><br><span class="line">      currSum += nums[i];</span><br><span class="line">      leftSubsum = Math.max(leftSubsum, currSum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rightSubsum = Integer.MIN_VALUE;</span><br><span class="line">    currSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = p + <span class="number">1</span>; i &lt; right + <span class="number">1</span>; ++i) &#123;</span><br><span class="line">      currSum += nums[i];</span><br><span class="line">      rightSubsum = Math.max(rightSubsum, currSum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> leftSubsum + rightSubsum;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == right) <span class="keyword">return</span> nums[left];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> p = (left + right) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> leftSum = helper(nums, left, p);</span><br><span class="line">    <span class="keyword">int</span> rightSum = helper(nums, p + <span class="number">1</span>, right);</span><br><span class="line">    <span class="keyword">int</span> crossSum = crossSum(nums, left, right, p);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Math.max(Math.max(leftSum, rightSum), crossSum);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> helper(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/maximum-subarray/solution/zui-da-zi-xu-he-by-leetcode/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-22-括号生成</title>
+    <url>/2020/03/09/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/</url>
+    <content><![CDATA[<p>给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。</p>
+<p>例如，给出 n = 3，生成结果为：</p>
+<blockquote>
+<p>[<br>  “((()))”,<br>  “(()())”,<br>  “(())()”,<br>  “()(())”,<br>  “()()()”<br>]</p>
+</blockquote>
+<a id="more"></a>
+<p>这道题一开始看到的时候，直觉告诉我要要遍历一棵树才能得到这样一个穷举的序列，但实在是太麻烦了。</p>
+<p>后面想到动态规划的思想，可以把从1个括号的组合开始，到n个括号的组合这样的一个个序列看成一个个状态。细心可以发现，第n个状态是可以用第n-1个状态推出来的。即，第n个状态就是在第n-1的所有状况的基础上多出来一对括号，现在就只需要讨论这多出来的一对括号如何摆放。</p>
+<p>假设将要加入的那一对括号固定，假设前一个状态被分为两个子序列p，q，并且p，q也同样是满足题意的两个状态，这样才能保证组合成的状态n是有效的。之后也就是反过来将已有的序列插入两个括号中四个位置中的两个位置。由于p的长度为0到n-1，对于每一个p都有q = n-1-p，因此可以有以下两种插法：</p>
+<blockquote>
+<p>“(“ + p + “)” + q<br>p + “(“ + q + “)”</p>
+</blockquote>
+<p>可以发现两种插法其实是等效的，所以只需要取一种就可以保证不重复。那么直观一些可以用递归的方法。对每一个p求对应的q，由于p和q都分别是所对应状态的一组序列，所以要将他们递归求出之后再分别遍历并两两组合，将组合的结果放入答案序列中。</p>
+<p>递归的方法很简洁直观，但递归树呈二叉树的形态发展，时间空间复杂度惊人。非递归化的方法就是在外面套一层循环，将迭代算出的结果放入定义好的数据结构中，再用已有的数据去算下一个状态。</p>
+<p>实质上这题就是要发现状态n与状态n-1之间的关系，这样会很好做。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ans;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)ans.push_back(<span class="string">""</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">string</span> p:generateParenthesis(i))</span><br><span class="line">                <span class="keyword">for</span>(<span class="built_in">string</span> q:generateParenthesis(n<span class="number">-1</span>-i))</span><br><span class="line">                    ans.push_back(<span class="string">"("</span>+p+<span class="string">")"</span>+q);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-48-旋转图像</title>
+    <url>/2020/03/08/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-48-%E6%97%8B%E8%BD%AC%E5%9B%BE%E5%83%8F/</url>
+    <content><![CDATA[<p>给定一个 n × n 的二维矩阵表示一个图像。将图像顺时针旋转 90 度。<br>说明：<br>你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。<br>示例：</p>
+<blockquote>
+<p>给定 matrix =<br>[<br>  [1,2,3],<br>  [4,5,6],<br>  [7,8,9]<br>],<br>原地旋转输入矩阵，使其变为:<br>[<br>  [7,4,1],<br>  [8,5,2],<br>  [9,6,3]<br>]</p>
+</blockquote>
+<a id="more"></a>
+<p>这题乍一看很复杂，实质上就是将矩阵逆置一次，再左右翻转一次。整个的时间复杂度是o(n^2)，n是方阵阶数。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i,j;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;matrix.length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[j][i];</span><br><span class="line">                matrix[j][i] = matrix[i][j]^matrix[j][i];</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[j][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;matrix.length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>;j&lt;matrix.length/<span class="number">2</span>;j++)&#123;</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">                matrix[i][matrix.length-j-<span class="number">1</span>] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-38-外观数列</title>
+    <url>/2020/03/08/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-38-%E5%A4%96%E8%A7%82%E6%95%B0%E5%88%97/</url>
+    <content><![CDATA[<p>「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。前五项如下：</p>
+<blockquote>
+<ol>
+<li>1</li>
+<li>11</li>
+<li>21</li>
+<li>1211</li>
+<li>111221<br>1 被读作  “one 1”  (“一个一”) , 即 11。<br>11 被读作 “two 1s” (“两个一”）, 即 21。<br>21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。</li>
+</ol>
+</blockquote>
+<p>给定一个正整数 n（1 ≤ n ≤ 30），输出外观数列的第 n 项。<br>注意：整数序列中的每一项将表示为一个字符串。</p>
+<a id="more"></a>
+<p>虽然是简单题，但读题都花了好长时间。弄懂了什么意思之后，还找了很久是不是第n个字符串和n之间有什么关系。目前是，没有。</p>
+<p>只好按照递推关系做，显然这种递推关系既可以用循环也可以用递归。虽然递归会有o(n)的空间消耗，但毕竟写起来舒服，对于n-1的字符串的扫描操作，递归和循环是一样的。循环只不过是在不用调用自身的基础上，在外面又套了一层循环而已。下面是耗费空间打败5%用户的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">countAndSay</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)<span class="keyword">return</span> <span class="string">"1"</span>;</span><br><span class="line">        <span class="built_in">string</span> str = countAndSay(n<span class="number">-1</span>);</span><br><span class="line">        <span class="built_in">string</span> strnext = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;str.size();i++)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">counter</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">while</span>(str[i]==str[i+<span class="number">1</span>])&#123;</span><br><span class="line">                counter++;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            strnext=strnext + (<span class="keyword">char</span>)(counter+<span class="number">48</span>)+str[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> strnext;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-35-搜索插入位置</title>
     <url>/2020/03/07/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-35-%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE/</url>
     <content><![CDATA[<p>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p>

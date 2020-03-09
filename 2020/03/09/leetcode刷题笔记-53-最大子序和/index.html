@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。示例：  输入:[&amp;nbsp; [ 1, 2, 3 ],&amp;nbsp; [ 4, 5, 6 ],&amp;nbsp; [ 7, 8, 9 ]]输出: [1,2,3,6,9,8,7,4,5]">
+<meta name="description" content="给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。示例:  输入: [-2,1,-3,4,-1,2,1,-5,4],输出: 6解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。  进阶:如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode刷题笔记-54-螺旋矩阵">
-<meta property="og:url" content="http://yoursite.com/2020/03/02/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-54-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/index.html">
+<meta property="og:title" content="leetcode刷题笔记-53-最大子序和">
+<meta property="og:url" content="http://yoursite.com/2020/03/09/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。示例：  输入:[&amp;nbsp; [ 1, 2, 3 ],&amp;nbsp; [ 4, 5, 6 ],&amp;nbsp; [ 7, 8, 9 ]]输出: [1,2,3,6,9,8,7,4,5]">
-<meta property="article:published_time" content="2020-03-02T09:27:27.000Z">
-<meta property="article:modified_time" content="2020-03-02T09:41:31.114Z">
+<meta property="og:description" content="给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。示例:  输入: [-2,1,-3,4,-1,2,1,-5,4],输出: 6解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。  进阶:如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。">
+<meta property="article:published_time" content="2020-03-09T07:23:48.000Z">
+<meta property="article:modified_time" content="2020-03-09T07:37:13.787Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/02/leetcode刷题笔记-54-螺旋矩阵/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/09/leetcode刷题笔记-53-最大子序和/"/>
 
 
 
 
 
-  <title>leetcode刷题笔记-54-螺旋矩阵 | Delta</title>
+  <title>leetcode刷题笔记-53-最大子序和 | Delta</title>
   
 
 
@@ -276,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-54-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/09/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-54-螺旋矩阵</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-53-最大子序和</h1>
         
 
         <div class="post-meta">
@@ -305,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-02T17:27:27+08:00">
-                2020-03-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T15:23:48+08:00">
+                2020-03-09
               </time>
             
 
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  494
+                  648
                 </span>
               
 
@@ -374,15 +374,19 @@
       
 
       
-        <p>给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。<br>示例：</p>
+        <p>给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。<br>示例:</p>
 <blockquote>
-<p>输入:<br>[<br>&nbsp; [ 1, 2, 3 ],<br>&nbsp; [ 4, 5, 6 ],<br>&nbsp; [ 7, 8, 9 ]<br>]<br>输出: [1,2,3,6,9,8,7,4,5]</p>
+<p>输入: [-2,1,-3,4,-1,2,1,-5,4],<br>输出: 6<br>解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
 </blockquote>
+<p>进阶:<br>如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。</p>
 <a id="more"></a>
-<p>这道题的意思也就是说需要换一种方式输出这个二维数组，那么就需要我们去为此制定一条规则。</p>
-<p>对于整个数组，指针的移动一共可以有四种方向，因此指定四种状态。在循环中每种不同的状态对应的指针移动策略都不同，并且要有边界判断，当到达这个边界的时候边界要缩小，并且切换下一种状态。而这四种状态是不断地轮流切换的。而循环的终止条件可以设立为答案数组中的元素个数大于等于原矩阵中元素个数的时候。</p>
-<p>这个规则还是很容易想的，但卡住人的还是在边界判断上，比如下面表示左或上边界的那个start，我就在那里卡了很久，本来我在第三第四种状态的边界条件成立的时候都把start++了，但事实证明触及左边界或上边界的时候只需要在先触及的那一次加就够了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">spiralOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(ans);</span><br><span class="line">        <span class="keyword">if</span>(matrix.size()==<span class="number">0</span>)<span class="keyword">return</span> ans;</span><br><span class="line">        bool row(true),column(true);</span><br><span class="line">        int m(matrix.size()),n(matrix[0].size());</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">start</span><span class="params">(<span class="number">0</span>)</span></span>;    </span><br><span class="line">        int i(0),j(0);</span><br><span class="line">        <span class="keyword">while</span>(ans.size()&lt;matrix.size()*matrix[<span class="number">0</span>].size())&#123;</span><br><span class="line">            ans.push_back(matrix[i][j]);</span><br><span class="line">            <span class="keyword">if</span>(row&amp;&amp;column)&#123;</span><br><span class="line">                <span class="keyword">if</span>(++j&gt;=n)&#123;--j;++i;column=!column;--n;&#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(row&amp;&amp;!column)&#123;</span><br><span class="line">                <span class="keyword">if</span>(++i&gt;=m)&#123;--i;--j;row = !row;--m;&#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!row&amp;&amp;!column)&#123;</span><br><span class="line">                <span class="keyword">if</span>(--j&lt;start)&#123;++j;--i;column = !column;++start;&#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!row&amp;&amp;column)&#123;</span><br><span class="line">                <span class="keyword">if</span>(--i&lt;start)&#123;++i;++j;row = !row;&#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;    </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度为o(n)的算法：<br>这个算法其实就是贪心算法，总是考虑加上现在遍历到的这个数是否会比现在大，会的话就算上，不会的话之前的序列就不要了，从现在这个元素开始看有没有新的序列比较大。由于有一个变量用来实时保存最大序列和，所以遍历整个序列之后，总能得到一个最大的子序和。时间复杂度o(n)，空间复杂度o(1)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int n(1),sum(nums[0]),ans(nums[0]);</span><br><span class="line">        <span class="keyword">while</span>(n&lt;nums.size())&#123;</span><br><span class="line">            sum = max(nums[n] + sum,nums[n]);</span><br><span class="line">            ans = max(sum,ans);</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
+<blockquote>
+<p>当最大子数组有 n 个数字时：<br>若 n==1，返回此元素。<br>left_sum 为最大子数组前 n/2 个元素，在索引为 (left + right) / 2 的元素属于左子数组。<br>right_sum 为最大子数组的右子数组，为最后 n/2 的元素。<br>cross_sum 是包含左右子数组且含索引 (left + right) / 2 的最大值。<br><image src="https://pic.leetcode-cn.com/3aa2128a7ddcf1123454a6e5364792490c5edff62674f3cfd9c81cb7b5e8e522-file_1576478143567"></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">crossSum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == right) <span class="keyword">return</span> nums[left];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> leftSubsum = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">int</span> currSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = p; i &gt; left - <span class="number">1</span>; --i) &#123;</span><br><span class="line">      currSum += nums[i];</span><br><span class="line">      leftSubsum = Math.max(leftSubsum, currSum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rightSubsum = Integer.MIN_VALUE;</span><br><span class="line">    currSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = p + <span class="number">1</span>; i &lt; right + <span class="number">1</span>; ++i) &#123;</span><br><span class="line">      currSum += nums[i];</span><br><span class="line">      rightSubsum = Math.max(rightSubsum, currSum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> leftSubsum + rightSubsum;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == right) <span class="keyword">return</span> nums[left];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> p = (left + right) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> leftSum = helper(nums, left, p);</span><br><span class="line">    <span class="keyword">int</span> rightSum = helper(nums, p + <span class="number">1</span>, right);</span><br><span class="line">    <span class="keyword">int</span> crossSum = crossSum(nums, left, right, p);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Math.max(Math.max(leftSum, rightSum), crossSum);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> helper(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/maximum-subarray/solution/zui-da-zi-xu-he-by-leetcode/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
 
 
       
@@ -414,8 +418,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/01/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-29-%E4%B8%A4%E6%95%B0%E7%9B%B8%E9%99%A4/" rel="next" title="leetcode刷题笔记-29-两数相除">
-                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-29-两数相除
+              <a href="/2020/03/09/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/" rel="next" title="leetcode刷题笔记-22-括号生成">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-22-括号生成
               </a>
             
           </div>
@@ -423,10 +427,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/02/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-7-%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/" rel="prev" title="leetcode刷题笔记-7-整数反转">
-                leetcode刷题笔记-7-整数反转 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

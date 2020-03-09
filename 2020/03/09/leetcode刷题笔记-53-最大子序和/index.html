@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。示例:  输入: [-2,1,-3,4,-1,2,1,-5,4],输出: 6解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。  进阶:如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。">
 <meta property="article:published_time" content="2020-03-09T07:23:48.000Z">
-<meta property="article:modified_time" content="2020-03-09T07:37:13.787Z">
+<meta property="article:modified_time" content="2020-03-09T07:46:34.831Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  648
+                  688
                 </span>
               
 
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -382,7 +382,7 @@
 <a id="more"></a>
 <p>时间复杂度为o(n)的算法：<br>这个算法其实就是贪心算法，总是考虑加上现在遍历到的这个数是否会比现在大，会的话就算上，不会的话之前的序列就不要了，从现在这个元素开始看有没有新的序列比较大。由于有一个变量用来实时保存最大序列和，所以遍历整个序列之后，总能得到一个最大的子序和。时间复杂度o(n)，空间复杂度o(1)。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int n(1),sum(nums[0]),ans(nums[0]);</span><br><span class="line">        <span class="keyword">while</span>(n&lt;nums.size())&#123;</span><br><span class="line">            sum = max(nums[n] + sum,nums[n]);</span><br><span class="line">            ans = max(sum,ans);</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
+<p>当然还有一种形式上差不了太多，就是多一个指针，用滑动窗口的方法也能做出来，算是动态规划。至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
 <blockquote>
 <p>当最大子数组有 n 个数字时：<br>若 n==1，返回此元素。<br>left_sum 为最大子数组前 n/2 个元素，在索引为 (left + right) / 2 的元素属于左子数组。<br>right_sum 为最大子数组的右子数组，为最后 n/2 的元素。<br>cross_sum 是包含左右子数组且含索引 (left + right) / 2 的最大值。<br><image src="https://pic.leetcode-cn.com/3aa2128a7ddcf1123454a6e5364792490c5edff62674f3cfd9c81cb7b5e8e522-file_1576478143567"></p>
 </blockquote>

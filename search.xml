@@ -11,7 +11,7 @@
 <a id="more"></a>
 <p>时间复杂度为o(n)的算法：<br>这个算法其实就是贪心算法，总是考虑加上现在遍历到的这个数是否会比现在大，会的话就算上，不会的话之前的序列就不要了，从现在这个元素开始看有没有新的序列比较大。由于有一个变量用来实时保存最大序列和，所以遍历整个序列之后，总能得到一个最大的子序和。时间复杂度o(n)，空间复杂度o(1)。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int n(1),sum(nums[0]),ans(nums[0]);</span><br><span class="line">        <span class="keyword">while</span>(n&lt;nums.size())&#123;</span><br><span class="line">            sum = max(nums[n] + sum,nums[n]);</span><br><span class="line">            ans = max(sum,ans);</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
+<p>当然还有一种形式上差不了太多，就是多一个指针，用滑动窗口的方法也能做出来，算是动态规划。至于题目里面说到的那个“更为精妙的分治法”，这个问题貌似确实能用分治法，但更为精妙就…没感受出来。<br>以下是leetcode官方题解中的分治法，时间复杂度o(nlog(n))，空间复杂度o(log(n))</p>
 <blockquote>
 <p>当最大子数组有 n 个数字时：<br>若 n==1，返回此元素。<br>left_sum 为最大子数组前 n/2 个元素，在索引为 (left + right) / 2 的元素属于左子数组。<br>right_sum 为最大子数组的右子数组，为最后 n/2 的元素。<br>cross_sum 是包含左右子数组且含索引 (left + right) / 2 的最大值。<br><image src="https://pic.leetcode-cn.com/3aa2128a7ddcf1123454a6e5364792490c5edff62674f3cfd9c81cb7b5e8e522-file_1576478143567"></p>
 </blockquote>
@@ -456,7 +456,7 @@
     <url>/2020/02/26/KMP%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p>这几天复习到数据结构的串的模式匹配，看到KMP算法那么寥寥几行的代码，原本觉得这部分内容很简单，直到我开始尝试去理解它，我才发现我跟大佬的差别。</p>
 <a id="more"></a>
-<p>之后我花了整整一天半的时间研究这个算法，期间除了吃饭睡觉拉屎，去楼下药店帮拿了一点口罩之外，没有干其他任何事，总算是理解的差不多了。总结一下这个算法，对于模式串本身，如果经常出现重复的子串，用KMP算法确实可以比朴素模式匹配算法快上不少，但要是模式串前后几乎没几个一样的字符时，KMP算法就是用来秀操作的，因为我相信绝大多数的模式串都是短小精悍的，关键词什么的。要是自己写的话还容易纠结于下标的控制。虽然好像听说考研只会在选择题里考手工算next数组，但我还是想把这个无聊的算法彻底弄明白，里面的求next数组算法的原理，可能会对研究编译原理构造词法分析器的有穷自动机有启发。下面谈谈我目前为止对这个算法的思考。（ps:以下所有代码的指针用法欠妥）</p>
+<p>之后我花了整整一天半的时间研究这个算法，期间除了吃饭睡觉拉屎，去楼下药店帮拿了一点口罩之外，没有干其他任何事，总算是理解的差不多了。总结一下这个算法，对于模式串本身，如果经常出现重复的子串，用KMP算法确实可以比朴素模式匹配算法快上不少，但要是模式串前后几乎没几个一样的字符时，KMP算法就是用来秀操作的，因为我相信绝大多数的模式串都是短小精悍的，关键词什么的。要是自己写的话还容易纠结于下标的控制。虽然好像听说考研只会在选择题里考手工算next数组，但我还是想把这个无聊的算法彻底弄明白。下面谈谈我目前为止对这个算法的思考。（ps:以下所有代码的指针用法欠妥）</p>
 <h1 id="KMP算法的基本思路"><a href="#KMP算法的基本思路" class="headerlink" title="KMP算法的基本思路"></a>KMP算法的基本思路</h1><p>KMP算法，是名分别为K、M、P的三个美国大佬发明的，算是对传统的朴素模式匹配算法的改进。我们先规定，讨论模式串下标均从1开始。朴素模式匹配算法就不谈了，这个有脑子就能想出来，但朴素模式匹配算法存在一个弊端——当模式串有较多重复元素存在时，主串指针i其实做了很多没有必要的回溯。</p>
 <p>而如果想跳过这些没有必要比较的情况，那么就可以想到，主串指针是没有必要回退的，因为当发生与模式串失配的情况时，可以确定的是，此前成功匹配的若干元素形成的字串，其实就是模式串的一个真字串，那么对于这样的一个字串，它的头部和尾部如果发生了重复，就只需要往回移动模式串指针就好了，但是又不需要往回移到初始位置，因为我们看到他的头部和尾部发生了重复，又由于这个头部重复的部分与现在主串指针前的那个模式串真字串重复，而这部分就是真字串的尾部，所以最有利的做法应该是将模式串指针移动至头部重复字串的后一位，再来与当前的主串指针比较。这样，就避免了主串的回溯，单就这个算法本身，简单来看时间复杂度应该是o(n)。</p>
 <p>以下是KMP主代码，对于模式串每一个位置发生失配模式串指针所应该回溯的位置，用一个叫next的整型数组来存储，发生失配时直接用里面的数据来对模式串指针进行回溯。</p>

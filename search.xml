@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-36-有效的数独</title>
+    <url>/2020/03/15/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/</url>
+    <content><![CDATA[<p>判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。</p>
+<ol>
+<li>数字 1-9 在每一行只能出现一次。 </li>
+<li>数字 1-9 在每一列只能出现一次。 </li>
+<li>数字 1-9 在每一个以粗实线分隔的 3x3宫内只能出现一次。<image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png">
+数独部分空格内已填入了数字，空白格用 '.' 表示。
+说明：
+
+</li>
+</ol>
+<blockquote>
+<ul>
+<li>一个有效的数独（部分已被填充）不一定是可解的。</li>
+<li>只需要根据以上规则，验证已经填入的数字是否有效即可。</li>
+<li>给定数独序列只包含数字 1-9 和字符 ‘.’ 。</li>
+<li>给定数独永远是 9x9 形式的。</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<p>采用三个二维数组来存储每一行每一列每一个九宫格对应数字的个数，遍历一遍进行计数，一旦发现有个数大于2的数字便返回数独无效的信号。常数级时间复杂度。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;,column[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;,box[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>); i &lt; <span class="number">9</span>; i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>); j &lt; <span class="number">9</span>; j++)</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] != <span class="string">'.'</span>)</span><br><span class="line">                   <span class="keyword">if</span>(( ++row[board[i][j]-<span class="string">'1'</span>][i] &gt; <span class="number">1</span>) </span><br><span class="line">                   ||(++column[board[i][j]-<span class="string">'1'</span>][j] &gt;<span class="number">1</span>) </span><br><span class="line">                   ||(++box[board[i][j]-<span class="string">'1'</span>][(i/<span class="number">3</span>)*<span class="number">3</span> + j/<span class="number">3</span>] &gt;<span class="number">1</span>))</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-122-买卖股票的最佳时机II</title>
     <url>/2020/03/14/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII/</url>
     <content><![CDATA[<p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。<br>示例：</p>
@@ -668,7 +698,7 @@
 <h1 id="KMP算法的基本思路"><a href="#KMP算法的基本思路" class="headerlink" title="KMP算法的基本思路"></a>KMP算法的基本思路</h1><p>KMP算法，是名分别为K、M、P的三个美国大佬发明的，算是对传统的朴素模式匹配算法的改进。我们先规定，讨论模式串下标均从1开始。朴素模式匹配算法就不谈了，这个有脑子就能想出来，但朴素模式匹配算法存在一个弊端——当模式串有较多重复元素存在时，主串指针i其实做了很多没有必要的回溯。</p>
 <p>而如果想跳过这些没有必要比较的情况，那么就可以想到，主串指针是没有必要回退的，因为当发生与模式串失配的情况时，可以确定的是，此前成功匹配的若干元素形成的字串，其实就是模式串的一个真字串，那么对于这样的一个字串，它的头部和尾部如果发生了重复，就只需要往回移动模式串指针就好了，但是又不需要往回移到初始位置，因为我们看到他的头部和尾部发生了重复，又由于这个头部重复的部分与现在主串指针前的那个模式串真字串重复，而这部分就是真字串的尾部，所以最有利的做法应该是将模式串指针移动至头部重复字串的后一位，再来与当前的主串指针比较。这样，就避免了主串的回溯，单就这个算法本身，简单来看时间复杂度应该是o(n)。</p>
 <p>以下是KMP主代码，对于模式串每一个位置发生失配模式串指针所应该回溯的位置，用一个叫next的整型数组来存储，发生失配时直接用里面的数据来对模式串指针进行回溯。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">KMPmatch</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(needle==<span class="string">""</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	int i(0), j(0);</span><br><span class="line">	<span class="keyword">int</span> *next = getNext(needle);</span><br><span class="line">	<span class="keyword">int</span> *nextval = getNextVal(needle,next);</span><br><span class="line">	<span class="keyword">delete</span>[] next;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; haystack.size())&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == <span class="number">-1</span>||haystack[i] == needle[j])&#123;i++;j++;&#125;</span><br><span class="line">		<span class="keyword">else</span> j = nextval[j];</span><br><span class="line">		<span class="keyword">if</span> (j == needle.size())&#123;</span><br><span class="line">			<span class="keyword">delete</span>[] nextval;</span><br><span class="line">			<span class="keyword">return</span> (i - j);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">KMPmatch</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(needle==<span class="string">""</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	int i(0), j(0);</span><br><span class="line">	<span class="keyword">int</span> *next = getNext(needle);</span><br><span class="line">	<span class="keyword">int</span> *nextval = getNextVal(needle,next);</span><br><span class="line">	<span class="keyword">delete</span>[] next;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; haystack.size())&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == <span class="number">-1</span>||haystack[i] == needle[j])&#123;i++;j++;&#125;</span><br><span class="line">		<span class="keyword">else</span> j = nextval[j];</span><br><span class="line">		<span class="keyword">if</span> (j == needle.size())&#123;</span><br><span class="line">			<span class="keyword">delete</span>[] nextval;</span><br><span class="line">			<span class="keyword">return</span> i - j;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="确定模式串指针的回溯位置"><a href="#确定模式串指针的回溯位置" class="headerlink" title="确定模式串指针的回溯位置"></a>确定模式串指针的回溯位置</h1><p>但问题来了，如何确定在模式串的不同位置发生失配时模式串指针需要回溯的位置呢？我们可以发现，这些位置的确定，只跟模式串有关，并且对于每一个需要求的位置，只跟从模式串当前位置截断，取前者的这个字串有关。我们如果要来求这个神秘的next数组，就只需要看包含模式串第一位的模式串的各个字串就好。根据上述的推理，这个位置应该是这个字串前后重复的部分+1。到这里，我们可能自以为问题就解决了，以后我们遇到每一个模式串，手动去算一下它的next数组就好了。</p>
 <p>可是呢，懒人总是有的，他就是不想去算这个next数组，觉得太麻烦了，怎么办呢，交给计算机算吧，所以又展开了一系列头脑风暴，被认为是KMP算法的核心，next数组的求解以及其原理。</p>
 <h1 id="next数组代码实现原理"><a href="#next数组代码实现原理" class="headerlink" title="next数组代码实现原理"></a>next数组代码实现原理</h1><p>为了放松一下，先来看下代码吧：</p>

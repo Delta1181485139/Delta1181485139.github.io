@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-40-组数总和II</title>
+    <url>/2020/03/16/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-40-%E7%BB%84%E6%95%B0%E6%80%BB%E5%92%8CII/</url>
+    <content><![CDATA[<p>给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。candidates 中的每个数字在每个组合中只能使用一次。<br>说明：</p>
+<ul>
+<li>所有数字（包括目标数）都是正整数。</li>
+<li>解集不能包含重复的组合。 </li>
+</ul>
+<blockquote>
+<p>输入: candidates = [10,1,2,7,6,1,5], target = 8,<br>所求解集为:<br>[   [1, 7],  [1, 2, 5],   [2, 6],   [1, 1, 6] ]</p>
+</blockquote>
+<a id="more"></a>
+<p>与上一题不同的是，这里候选序列中的元素可能有相同的元素，但每个元素只能用一次。因此在递归的时候应该带入的循环初值为当前层的循环次数。这题比较讨厌的地方在于递归的时候难以处理候选序列有相同的元素的情况，因为这些相同的元素各只能用一次。遍历的时候去重实在是一件很麻烦的事情。所以我只好先用一个集合来存结果，再把结果存成向量。</p>
+<p>一定要好好掌握STL的一些容器和算法，这样也好在一筹莫展的时候取取巧。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">combinationSum2</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        sort(candidates.begin(),candidates.end());</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">        recall(candidates,target,<span class="built_in">queue</span>,<span class="number">0</span>,res);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">ans</span><span class="params">(res.begin(),res.end())</span></span>;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recall</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates,<span class="keyword">int</span> target, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">queue</span>,<span class="keyword">int</span> begin,<span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; ans)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin);i&lt;candidates.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(target - candidates[i]&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                recall(candidates,target - candidates[i],<span class="built_in">queue</span>,i+<span class="number">1</span>,ans);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(target - candidates[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                ans.insert(<span class="built_in">queue</span>);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-36-有效的数独</title>
     <url>/2020/03/15/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/</url>
     <content><![CDATA[<p>判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。</p>

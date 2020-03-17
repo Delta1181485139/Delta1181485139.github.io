@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="math," />
+  <meta name="keywords" content="leetcode," />
 
 
 
@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="要考研了，复习高数不定积分那一块的时候竟然发现有一些三角函数居然都没见过，特此记录一下他们与sin，cos，tan之间的关系，主要是正割余割。至于和差化积那些转换关系，既然考研不要求就不记了。">
+<meta name="description" content="给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。说明：  num1 和 num2 的长度小于110。 num1 和 num2 只包含数字 0-9。  num1 和 num2 均不以零开头，除非是数字0 本身。 不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="三角函数关系">
-<meta property="og:url" content="http://yoursite.com/2019/12/19/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%85%B3%E7%B3%BB/index.html">
+<meta property="og:title" content="leetcode刷题笔记-43-字符串相乘">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-43-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="要考研了，复习高数不定积分那一块的时候竟然发现有一些三角函数居然都没见过，特此记录一下他们与sin，cos，tan之间的关系，主要是正割余割。至于和差化积那些转换关系，既然考研不要求就不记了。">
-<meta property="article:published_time" content="2019-12-19T03:41:01.000Z">
-<meta property="article:modified_time" content="2020-02-19T04:13:00.128Z">
+<meta property="og:description" content="给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。说明：  num1 和 num2 的长度小于110。 num1 和 num2 只包含数字 0-9。  num1 和 num2 均不以零开头，除非是数字0 本身。 不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。">
+<meta property="article:published_time" content="2020-03-17T08:33:08.000Z">
+<meta property="article:modified_time" content="2020-03-17T08:55:33.637Z">
 <meta property="article:author" content="Delta">
-<meta property="article:tag" content="math">
+<meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/12/19/三角函数关系/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/leetcode刷题笔记-43-字符串相乘/"/>
 
 
 
 
 
-  <title>三角函数关系 | Delta</title>
+  <title>leetcode刷题笔记-43-字符串相乘 | Delta</title>
   
 
 
@@ -276,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/19/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%85%B3%E7%B3%BB/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-43-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">三角函数关系</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-43-字符串相乘</h1>
         
 
         <div class="post-meta">
@@ -305,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-19T11:41:01+08:00">
-                2019-12-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T16:33:08+08:00">
+                2020-03-17
               </time>
             
 
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  133
+                  496
                 </span>
               
 
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -374,17 +374,18 @@
       
 
       
-        <p>要考研了，复习高数不定积分那一块的时候竟然发现有一些三角函数居然都没见过，特此记录一下他们与sin，cos，tan之间的关系，主要是正割余割。至于和差化积那些转换关系，既然考研不要求就不记了。</p>
-<a id="more"></a>
-<h2 id="倒数关系"><a href="#倒数关系" class="headerlink" title="倒数关系"></a>倒数关系</h2><blockquote>
-<p>sin a * csc a=1<br>cos a * sec a=1<br>tana * cota=1</p>
-</blockquote>
-<h2 id="商数关系"><a href="#商数关系" class="headerlink" title="商数关系"></a>商数关系</h2><blockquote>
-<p>tana=sin a / cos a<br>cota=cos a / sin a</p>
-</blockquote>
-<h2 id="平方关系"><a href="#平方关系" class="headerlink" title="平方关系"></a>平方关系</h2><blockquote>
-<p>(sin a)^2 + (cos a)^2=1<br>1+(tan a)^2 = (sec a)^2<br>1+(cot a)^2 = (csc a)^2</p>
-</blockquote>
+        <p>给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。<br>说明：</p>
+<ul>
+<li>num1 和 num2 的长度小于110。 num1 和 num2 只包含数字 0-9。 </li>
+<li>num1 和 num2 均不以零开头，除非是数字0 本身。</li>
+<li>不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。<a id="more"></a>
+按照题目要求，那就是要按照乘法竖式的规则来进行两个字符串的运算，但如果像我们平常手算那样，先将每一位乘以每一位，再将其错位累加，在算法设计上不好实现。但其实竖式里是能够边乘边加的，实质上就是将两个数按位分解。例如(154<em>28)=(100+50+4)</em>(20+8)。因此有以下过程：<image src="http://m.qpic.cn/psc?/V13qphfI0VLybb/Q0hl7JtPp.HvfTovsHHuIhxwBgQaKeiuG9o5fXOau.R2dlkaW.99u3ZTt8mCejDJjboGSw.PCiCzf5O5bgrcpw!!/mnull&bo=UQbiBVEG4gUDCSw!&rf=photolist&t=5">
+先将结果串初始化，其长度不会超过乘数与被乘数之积。外层循环从乘数串的尾部开始往回遍历，内层循环从被乘数的尾部开始往回遍历。将两者相乘之后的个位数应该放在结果串的(i+j+1)位置处（从上图中标红处可以看出i+j+1的位置），并且将高位加到(i+j)处，最后将结果串前面的所有0删除就可以了。逻辑其实就是这么简单，但要将其理清楚还是挺费时间的。做这种逻辑题的时候一定要在纸上画，才能容易找到将其抽象化成代码的方法。
+
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">multiply</span><span class="params">(<span class="built_in">string</span> num1, <span class="built_in">string</span> num2)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">res</span><span class="params">(num1.size()+num2.size(),<span class="string">'0'</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(num2.size()<span class="number">-1</span>);i&gt;<span class="number">-1</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(num1.size()<span class="number">-1</span>);j&gt;<span class="number">-1</span>;j--)&#123;</span><br><span class="line">                <span class="keyword">int</span> temp=(res[i+j+<span class="number">1</span>]-<span class="string">'0'</span>)+(num1[j]-<span class="string">'0'</span>)*(num2[i]-<span class="string">'0'</span>);</span><br><span class="line">                res[i+j+<span class="number">1</span>]=temp%<span class="number">10</span>+<span class="string">'0'</span>;</span><br><span class="line">                res[i+j]+=temp/<span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;num1.size()+num2.size();i++)<span class="keyword">if</span>(res[i]!=<span class="string">'0'</span>)<span class="keyword">return</span> res.substr(i);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -402,7 +403,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/math/" rel="tag"># math</a>
+            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
           
         </div>
       
@@ -415,15 +416,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/03/16/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/" rel="next" title="leetcode刷题笔记-104-二叉树的最大深度">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-104-二叉树的最大深度
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/16/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" rel="prev" title="leetcode刷题笔记-1-两数之和">
-                leetcode刷题笔记-1-两数之和 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -475,17 +476,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -556,22 +548,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#倒数关系"><span class="nav-number">1.</span> <span class="nav-text">倒数关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#商数关系"><span class="nav-number">2.</span> <span class="nav-text">商数关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平方关系"><span class="nav-number">3.</span> <span class="nav-text">平方关系</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

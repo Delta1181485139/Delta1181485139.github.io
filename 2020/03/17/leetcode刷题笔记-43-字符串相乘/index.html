@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。说明：  num1 和 num2 的长度小于110。 num1 和 num2 只包含数字 0-9。  num1 和 num2 均不以零开头，除非是数字0 本身。 不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。">
 <meta property="article:published_time" content="2020-03-17T08:33:08.000Z">
-<meta property="article:modified_time" content="2020-03-17T08:55:33.637Z">
+<meta property="article:modified_time" content="2020-03-18T08:43:02.730Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -379,7 +379,7 @@
 <li>num1 和 num2 的长度小于110。 num1 和 num2 只包含数字 0-9。 </li>
 <li>num1 和 num2 均不以零开头，除非是数字0 本身。</li>
 <li>不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。<a id="more"></a>
-按照题目要求，那就是要按照乘法竖式的规则来进行两个字符串的运算，但如果像我们平常手算那样，先将每一位乘以每一位，再将其错位累加，在算法设计上不好实现。但其实竖式里是能够边乘边加的，实质上就是将两个数按位分解。例如(154<em>28)=(100+50+4)</em>(20+8)。因此有以下过程：<image src="http://m.qpic.cn/psc?/V13qphfI0VLybb/Q0hl7JtPp.HvfTovsHHuIhxwBgQaKeiuG9o5fXOau.R2dlkaW.99u3ZTt8mCejDJjboGSw.PCiCzf5O5bgrcpw!!/mnull&bo=UQbiBVEG4gUDCSw!&rf=photolist&t=5">
+按照题目要求，那就是要按照乘法竖式的规则来进行两个字符串的运算，但如果像我们平常手算那样，先将每一位乘以每一位，再将其错位累加，在算法设计上不好实现。但其实竖式里是能够边乘边加的，实质上就是将两个数按位分解。例如(154<em>28)=(100+50+4)</em>(20+8)。因此有以下过程：<image src="https://lh3.googleusercontent.com/pb7TlUvcHR_VBvOu7PjqBEL57SYGzY_EB-sW31G74jDKOpdR0ZigGcCioLqjs3xj_5pBp0xd4kd5cT-NtAjQgJCwqIHie6xASmdnexShlEYgQ-X3CxxOH0F9r3KfjzUa2Mhxqyk_ttFsFNYgOqQakbhZ68e3f627jOVdeljdL86Sj9HP2jxGJaWQwDYWKqxjlwQK7TrJXQQftq9AbMyeJwRvts3ZTKeCStAImzXYwqBc7NFf6OEdWM0DN9nb68TVehVsFUSpOjQSFX4HcObjFDOx3CIHv-akf6xHdlhXAv7v6TV2HASIDWF9mpELCOV4DCkIVY8dJr3xtAWdXsg73tntG9Z6bBdVYHJLqAaBpZ9ZuHeHBzikywK-yeVGFKRD2AiOX5ABw0h80PCX4T0zuZxV5G0PJ-lN2BBcCEj2EGDYl9-ExJgwB5egAMXR7648k3zZ8ZjaRjXGIpRscRFyuYKVSY--MmUoVxXdYoDzvIxKtd-HGgLuqGOoJ4j4shMJIW9HP1pzkhZRwSzx1VRZ7Il4aPJrXQcWONSYF_n4gH92RwH0Ex44sA1OcIBbj5Vko0c2gnr3Uu4HxODrkJgugY5I0PrHYn05FWugROb2fUxohwi9U0rgc-NFWkDceAVEug1V8kfE2eu8kHDaVqzFB8rlt5saQ8CM22M_ajiC8HnwqtS5U-emRSM6prqv=w903-h840-no">
 先将结果串初始化，其长度不会超过乘数与被乘数之积。外层循环从乘数串的尾部开始往回遍历，内层循环从被乘数的尾部开始往回遍历。将两者相乘之后的个位数应该放在结果串的(i+j+1)位置处（从上图中标红处可以看出i+j+1的位置），并且将高位加到(i+j)处，最后将结果串前面的所有0删除就可以了。逻辑其实就是这么简单，但要将其理清楚还是挺费时间的。做这种逻辑题的时候一定要在纸上画，才能容易找到将其抽象化成代码的方法。
 
 </li>

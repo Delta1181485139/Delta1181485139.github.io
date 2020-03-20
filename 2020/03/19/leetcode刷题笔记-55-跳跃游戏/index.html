@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个非负整数数组，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。判断你是否能够到达最后一个位置。示例：  输入: [2,3,1,1,4]输出: true解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。">
 <meta property="article:published_time" content="2020-03-19T05:15:12.000Z">
-<meta property="article:modified_time" content="2020-03-19T07:40:27.642Z">
+<meta property="article:modified_time" content="2020-03-20T07:54:32.425Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -381,7 +381,7 @@
 <a id="more"></a>
 <h1 id="回溯法"><a href="#回溯法" class="headerlink" title="回溯法"></a>回溯法</h1><p>由于这道题归到了树那一类的题，因此看完题目之后很自然的会往基于递归回溯的方面想。其实就是穷举，基本思想就是如果在当前的位置下，所有能够到达的那些位置是符合条件能够到达最后一个位置的位置，那么当前这个位置也是符合条件的位置，那么由此可以写出基本的穷举解法。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canJump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> can(<span class="number">0</span>,nums,stat);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">can</span><span class="params">(<span class="keyword">int</span> begin,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(begin==nums.size()<span class="number">-1</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin + <span class="number">1</span>);i&lt;=min(begin+nums[begin],(<span class="keyword">int</span>)nums.size()<span class="number">-1</span>);i++)</span><br><span class="line">            <span class="keyword">if</span>(can(i,nums,stat))<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>这个解法的效率是很低下的，这个写出来一跑是肯定超时的。空间复杂度o(n)，需要的栈空间大小跟n呈线性关系。时间复杂度o(2^n)。证明如下：<br><image src="https://lh3.googleusercontent.com/0clchBhT0eT4X_OQJmx-g1SMoZew7X9jWR-cIxgITaLNdAsQ4x8hat7kjJDQ2m3SE90RQpuK_eeJ90UVH-b42i0qMvwbzD8guxzh37g7SiZ1vBTgpNDDKPmKgdd19AS9-MAbnrpvECZp7ypYIfvfH8CCY-tpb-k4KDiP0Zw4Mk7piLGugeYQHucEerHy2FpUHIFwPztiFe7UiEmpTleTctRmzPZ8301vCAEMBZZ3wg5h2nFxzDfG6xbeghLjDuPUJuaK_YWEYoimnZBOXfPI48QHUWKNZWqJIVkhP6wn0ECzX7ZhzQ8nw09RNgcf-2jeFCIezHA9dFreeRetGNdmZM35-VLExcT4dYUZDG95Kaqnnc_p4e1Daw_qBlce3GLe-mTuRaFvoMSGmOcnEDr_Rxaflix5euEhx1gxFMd3Q2nGwOjsdMYYAXMK0NV5hXHtnSTKzDk7Jq76mW5zAeFGsN2-5ddk2MWPU0RKqQblZFLvTGiZ9IFvfveTb2Lpk1A58dBLbFgowOM1aiBY1ovK4e-2-KxgZjJfuWlCiZguHCu2YAesWgQjoLnr0Alzgf0KfeOzk2Yh6hfxwaj-sYlhGXEpen0JmmE5hKFkWBw0wweh9JeXMciYPJOU_ZXlrVr_dQPqyLYMTWN4vEnAqlvohxzeZmLnPpzgMmitm38WVmnRU2Jf1xoSnsVvjGvW=w986-h572-no"></p>
+<p>这个解法的效率是很低下的，这个写出来一跑是肯定超时的。空间复杂度o(n)，需要的栈空间大小跟n呈线性关系。时间复杂度o(2^n)。证明如下：<br><image src="https://s1.ax1x.com/2020/03/20/8gEouQ.md.png"></p>
 <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="自顶而下"><a href="#自顶而下" class="headerlink" title="自顶而下"></a>自顶而下</h2><p>事实上，回溯法的弊端就在于重复得计算了大量已经知道结果的位置。那么对于回溯法的一种优化方式就是将已经得到结果的位置记录下来，如果递归进行到该位置那么可以直接使用该位置的结果进行回溯，而不需要再把这个位置继续递归计算一遍。那么为了记录每一个位置对于最后位置的到达情况，可以用一个辅助数组来记录。辅助数组长度与原数组长度相同，下标一一对应。用三个状态来表示当前位置对最后的位置可达的情况，比如-1代表情况未知，0代表不可达，1代表可达。因此将辅助数组初始化为最后一位为1，因为最后一位到最后一位当然是可达的，其余位设为-1，都还未知。那么在回溯的过程中每成功判断一个位置的情况之后都需要记录在辅助数组上，所以往下递归只针对那么没有计算到的位置。所以递归的终止条件，也就是回溯的开始条件就是当该位的状态已知，要么0要么1的时候。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canJump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">stat</span><span class="params">(nums.size()<span class="number">-1</span>,<span class="number">-1</span>)</span></span>;</span><br><span class="line">        stat.push_back(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> can(<span class="number">0</span>,nums,stat);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">can</span><span class="params">(<span class="keyword">int</span> begin,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; stat)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(stat[begin]!=<span class="number">-1</span>)<span class="keyword">return</span> stat[begin]==<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin + <span class="number">1</span>);i&lt;=min(begin+nums[begin],(<span class="keyword">int</span>)nums.size()<span class="number">-1</span>);i++)</span><br><span class="line">            <span class="keyword">if</span>(can(i,nums,stat))&#123;</span><br><span class="line">                stat[begin]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        stat[begin]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这个解法利用空间换时间，节省了大量重复的计算，空间复杂度为o(2n)=o(n)，但在leetcode上跑的时候超内存了，它给的测试用例太恶心了，一屏幕的数字。时间复杂度o(n^2)，即对于每个位置的元素都要将该元素后面的元素遍历一遍。</p>
@@ -433,6 +433,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/19/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/" rel="prev" title="leetcode刷题笔记-58-最后一个单词的长度">
+                leetcode刷题笔记-58-最后一个单词的长度 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +517,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -609,7 +613,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">30.4k</span>
+    <span title="Site words total count">30.3k</span>
   
 </div>
 

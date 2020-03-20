@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。 示例：  例如，给定数组 nums &#x3D; [-1，2，1，-4], 和 target &#x3D; 1.与 target 最接近的三个数的和为 2. (-1 + 2 + 1 &#x3D; 2).">
 <meta property="article:published_time" content="2020-02-19T08:53:21.000Z">
-<meta property="article:modified_time" content="2020-02-28T08:34:38.666Z">
+<meta property="article:modified_time" content="2020-03-20T12:05:37.507Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  497
+                  506
                 </span>
               
 
@@ -381,7 +381,7 @@
 </blockquote>
 <a id="more"></a>
 
-<p>此题的遍历方式与之前的类似，这题简单在只需要返回那个最接近目标数的三数和因此不需要去重，稍微复杂在这个最接近。</p>
+<p>此题的遍历方式与之前的寻找三数之和等于0类似，这题简单在只需要返回那个最接近目标数的三数和因此不需要去重，稍微复杂在这个最接近。</p>
 <p>首先还是先对数组进行一次排序，以便指针的全面查找。用一个变量ans来存储目前最接近目标数的结果，初值可随意赋三个确定数组元素的和，比如初始ans = nums[0] + nums[1] + nums[2]。</p>
 <p>令指针i做最外层循环，j，k做内层循环，始终保持i &lt; j &lt; k。因此对于每一个i，j的初值为i + 1，k的初值均为nums.length - 1, 比较此时算出的和与此前算得的ans，若更接近目标数则替换，k与j同时移动，若算出的和比target小，则移动指针j，若大，则移动k，否则便是相等，可直接返回，因为此时与目标数是最接近为0，且不可能存在更接近的数了。搜寻直到j &gt;= k，再看下一个的i，对应的j，k。</p>
 <p>总之，在数组里要同时访问一定数目的元素的指针设定和移动是大同小异的，应当要会融会贯通。</p>
@@ -502,7 +502,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -582,7 +582,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">30.3k</span>
+    <span title="Site words total count">30.4k</span>
   
 </div>
 

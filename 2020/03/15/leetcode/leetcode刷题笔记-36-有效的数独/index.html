@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。  数字 1-9 在每一行只能出现一次。  数字 1-9 在每一列只能出现一次。  数字 1-9 在每一个以粗实线分隔的 3x3宫内只能出现一次。 数独部分空格内已填入了数字，空白格用 &#39;.&#39; 表示。 说明：      一个有效的数独（部分已被填充）不一定是可解的。 只需要根据以上规则，验证已经填入的数字是否有效">
 <meta property="article:published_time" content="2020-03-15T07:37:43.000Z">
-<meta property="article:modified_time" content="2020-03-15T07:52:41.523Z">
+<meta property="article:modified_time" content="2020-03-22T10:01:31.121Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -393,6 +393,7 @@
 </ul>
 </blockquote>
 <a id="more"></a>
+<hr>
 <p>采用三个二维数组来存储每一行每一列每一个九宫格对应数字的个数，遍历一遍进行计数，一旦发现有个数大于2的数字便返回数独无效的信号。常数级时间复杂度。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;,column[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;,box[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>); i &lt; <span class="number">9</span>; i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>); j &lt; <span class="number">9</span>; j++)</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] != <span class="string">'.'</span>)</span><br><span class="line">                   <span class="keyword">if</span>(( ++row[board[i][j]-<span class="string">'1'</span>][i] &gt; <span class="number">1</span>) </span><br><span class="line">                   ||(++column[board[i][j]-<span class="string">'1'</span>][j] &gt;<span class="number">1</span>) </span><br><span class="line">                   ||(++box[board[i][j]-<span class="string">'1'</span>][(i/<span class="number">3</span>)*<span class="number">3</span> + j/<span class="number">3</span>] &gt;<span class="number">1</span>))</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -510,7 +511,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -523,7 +524,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -590,7 +591,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

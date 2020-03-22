@@ -89,7 +89,7 @@
 <meta property="og:image" content="https://github.com/Delta1181485139/images/blob/master/algorithms/flybird2.png?raw=true">
 <meta property="og:image" content="https://github.com/Delta1181485139/images/blob/master/algorithms/flybird3.png?raw=true">
 <meta property="article:published_time" content="2020-02-16T13:05:05.000Z">
-<meta property="article:modified_time" content="2020-03-20T08:58:50.137Z">
+<meta property="article:modified_time" content="2020-03-22T09:55:29.571Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -380,7 +380,7 @@
       
         <p>前段时间了解到python里pygame这个库，突发奇想用python来做一些有趣的小东西，随即就想到了读初中时候那个火了好一阵子失传已久的小游戏–flybird。 游戏逻辑很简单，可以用来体验一下pygame这个强大的将游戏开发专注于游戏逻辑本身的模块。</p>
 <a id="more"></a>
-
+<hr>
 <h1 id="整个小游戏的生命周期"><a href="#整个小游戏的生命周期" class="headerlink" title="整个小游戏的生命周期"></a>整个小游戏的生命周期</h1><h2 id="小游戏预览图"><a href="#小游戏预览图" class="headerlink" title="小游戏预览图"></a>小游戏预览图</h2><img src="https://github.com/Delta1181485139/images/blob/master/algorithms/flybird1.png?raw=true">
 <img src="https://github.com/Delta1181485139/images/blob/master/algorithms/flybird2.png?raw=true">
 <img src="https://github.com/Delta1181485139/images/blob/master/algorithms/flybird3.png?raw=true">
@@ -393,7 +393,7 @@
 
 <h2 id="游戏机制"><a href="#游戏机制" class="headerlink" title="游戏机制"></a>游戏机制</h2><p>设计机制是游戏处于一个循环体内，不断刷新窗口内的像素位置，形成动画。以下循环展示了进入游戏的初始界面，首先是第一个<strong>for</strong>循环内的<strong>pygame.event.get()</strong>，所有的监听器处于这个消息队列中，每次循环都对其进行一次遍历。在我们的游戏中一个是要监听游戏关闭事件<strong>pygame.QUIT</strong>，另一个就是鼠标点击事件<strong>pygame.MOUSEBUTTONDOWN</strong>，通过返回鼠标的点击位置来判断是否开始游戏，或是对游戏内小鸟的控制。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">    <span class="keyword">if</span> event.type == pygame.QUIT:</span><br><span class="line">        exit()          <span class="comment">#游戏的退出</span></span><br><span class="line">    <span class="keyword">elif</span> event.type == pygame.MOUSEBUTTONDOWN:</span><br><span class="line">        <span class="keyword">if</span> pygame.mouse.get_pressed()[<span class="number">0</span>]:</span><br><span class="line">            loc = pygame.mouse.get_pos()</span><br><span class="line">            <span class="keyword">if</span> (loc[<span class="number">0</span>] &gt; width / <span class="number">2</span> <span class="number">-90</span>) <span class="keyword">and</span> (loc[<span class="number">0</span>] &lt; width / <span class="number">2</span> +<span class="number">90</span>) <span class="keyword">and</span> (loc[<span class="number">1</span>] &gt; height / <span class="number">2</span> <span class="number">-80</span>) <span class="keyword">and</span> (loc [<span class="number">1</span>] &lt; height / <span class="number">2</span> +<span class="number">80</span>):</span><br><span class="line">                start_fly(screen <span class="comment">#进入start_fly表示进入开始游戏之后的循环体</span></span><br></pre></td></tr></table></figure>
-
+<hr>
 <h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><p>这个项目没有使用任何的图片素材，因此游戏画面内所有的元素由<strong>pygame.draw</strong>模块绘制完成，并且为了达到这种像素风，仅仅使用了<strong>pygame.draw.rect</strong>来完成基本矩形的绘制。以下谈到的像素均为自己定义的像素，而非实际像素。</p>
 <h2 id="需要用到的类"><a href="#需要用到的类" class="headerlink" title="需要用到的类"></a>需要用到的类</h2><p>游戏画面采取的是笛卡尔坐标系，以窗口左上角为坐标原点，x轴正方向往屏幕右侧，y轴正方向往屏幕下侧。</p>
 <ul>
@@ -428,7 +428,7 @@
 </ul>
 <p><strong>score</strong> 用来存储当前分数，游戏结束的时候返回游戏分数这个参数至主界面并显示</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#每过一个障碍物加一分，显示分数</span></span><br><span class="line">        score_ten = Element( (<span class="number">10</span>,<span class="number">10</span>),(<span class="number">5</span>,<span class="number">5</span>), LETTER[ int (score / <span class="number">10</span>) ] )</span><br><span class="line">        score_one = Element( (<span class="number">10</span>,<span class="number">10</span>),(<span class="number">5</span>,<span class="number">5</span>), LETTER[ score % <span class="number">10</span>] )</span><br><span class="line">        score_ten.move((<span class="number">10</span>,<span class="number">0</span>))</span><br><span class="line">        score_one.move((<span class="number">60</span>,<span class="number">0</span>))</span><br><span class="line">        score_ten.draw(screen)</span><br><span class="line">        score_one.draw(screen)</span><br></pre></td></tr></table></figure>
-
+<hr>
 <h1 id="游戏元素的动画"><a href="#游戏元素的动画" class="headerlink" title="游戏元素的动画"></a>游戏元素的动画</h1><p>所有的游戏动画均为平移，因此使用 <strong>class Element:</strong> 里的 <strong>move(location)</strong> 和 <strong>setSpeed(speed)</strong> 足以完成所有的动画效果。小鸟处于确定x坐标的竖直区域运动，云和障碍物不断的左移即可。</p>
 <h2 id="开始游戏"><a href="#开始游戏" class="headerlink" title="开始游戏"></a>开始游戏</h2><p>在遍历消息队列中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> pygame.mouse.get_pressed()[<span class="number">0</span>]:</span><br><span class="line">	loc = pygame.mouse.get_pos()</span><br><span class="line">                 <span class="comment">#开始新游戏</span></span><br><span class="line">       <span class="keyword">if</span> (loc[<span class="number">0</span>] &gt; width / <span class="number">2</span> - <span class="number">90</span>) <span class="keyword">and</span> (loc[<span class="number">0</span>] &lt; width / <span class="number">2</span> + <span class="number">90</span>) <span class="keyword">and</span> (loc[<span class="number">1</span>] &gt; height / <span class="number">2</span> - <span class="number">80</span>) <span class="keyword">and</span> (loc[<span class="number">1</span>] &lt; height / <span class="number">2</span> + <span class="number">80</span>):</span><br><span class="line">       	score = start_fly(screen)</span><br></pre></td></tr></table></figure>
@@ -439,9 +439,11 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">elif</span> event.type == pygame.MOUSEBUTTONDOWN:</span><br><span class="line">        mouse = pygame.mouse.get_pressed()</span><br><span class="line">        <span class="keyword">if</span> mouse[<span class="number">2</span>]:</span><br><span class="line">bird.speed[<span class="number">1</span>] -= <span class="number">25</span></span><br></pre></td></tr></table></figure>
 <h2 id="障碍物的移动以及判断小鸟是否与障碍物相撞"><a href="#障碍物的移动以及判断小鸟是否与障碍物相撞" class="headerlink" title="障碍物的移动以及判断小鸟是否与障碍物相撞"></a>障碍物的移动以及判断小鸟是否与障碍物相撞</h2><p>（由于一开始游戏难度过大， 我将障碍物设置为空心，即小鸟不会和障碍物的正下方或正上方相撞，但会和障碍物的侧边相撞）<br>通过传入一定范围内的随机参数ran控制障碍物从最右端开始向左平移的初始位置。在每个障碍物对象经过小鸟的位置令分数+1，便可完成分数的记录。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">obstacle_animation</span><span class="params">(obstacle,ran,bird_height)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> obstacle.shifting[<span class="number">0</span>] &lt; - (obstacle.scale[<span class="number">1</span>] * obstacle.pixelScale[<span class="number">1</span>]):</span><br><span class="line">        obstacle.move((size[<span class="number">0</span>], obstacle.shifting[<span class="number">1</span>] + ran * (obstacle.scale[<span class="number">1</span>] * obstacle.pixelScale[<span class="number">1</span>]) ))</span><br><span class="line">    obstacle.move(( obstacle.shifting[<span class="number">0</span>] - <span class="number">1</span>, obstacle.shifting[<span class="number">1</span>] ))</span><br><span class="line">    obstacle.draw(screen)</span><br><span class="line">    <span class="keyword">if</span> (obstacle.shifting[<span class="number">0</span>] &lt; size[<span class="number">0</span>] / <span class="number">2</span>) <span class="keyword">and</span> (obstacle.shifting[<span class="number">0</span>] &gt; size[<span class="number">0</span>] / <span class="number">2</span> - <span class="number">60</span>):   <span class="comment">#可能发生碰撞的矩形区域</span></span><br><span class="line">        <span class="keyword">if</span> obstacle.shifting[<span class="number">1</span>] &lt; <span class="number">0</span>:  <span class="comment">#和上管道相撞的区域</span></span><br><span class="line">            <span class="keyword">if</span> obstacle.shifting[<span class="number">1</span>] + <span class="number">375</span> &gt;= bird_height: <span class="comment">#和上管道右侧相撞的区域</span></span><br><span class="line">                <span class="keyword">if</span> obstacle.shifting[<span class="number">0</span>] &lt; size[<span class="number">0</span>] / <span class="number">2</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">elif</span> obstacle.shifting[<span class="number">0</span>] &lt; size[<span class="number">0</span>] / <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">if</span> obstacle.shifting[<span class="number">1</span>] + <span class="number">375</span> &gt;=bird_height:</span><br><span class="line">                    <span class="keyword">return</span>  <span class="literal">True</span></span><br><span class="line">                <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> obstacle.shifting[<span class="number">1</span>] &lt; bird_height:</span><br><span class="line">            <span class="keyword">if</span> obstacle.shifting[<span class="number">0</span>] &lt; size[<span class="number">0</span>] / <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> obstacle.shifting[<span class="number">0</span>] &lt; size[<span class="number">0</span>] / <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> obstacle.shifting[<span class="number">1</span>] &lt; bird_height:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<hr>
 <h1 id="小游戏的打包"><a href="#小游戏的打包" class="headerlink" title="小游戏的打包"></a>小游戏的打包</h1><p>(已安装<strong>pyinstaller</strong>)<br>在命令行窗口，进入到游戏入口文件的路径下输入命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -w -F 文件名.py 文件名.py...</span><br></pre></td></tr></table></figure>
 <p>打包完成之后可执行文件处于<strong>dist</strong>目录下。</p>
+<hr>
 <h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>pygame确实十分的方便，功能其实远不止这个小游戏所用到的这些，而我的这种自己建类绘制图形其实没有什么必要，直接导入图片资源，pygame就能够构造以这个图片资源为基础的surface对象，并提供了许多方法来操作，远比上述自己创造的类方法要灵活，最主要的是，在设计2D游戏的过程中，完全不需要花大量时间在游戏框架的构造上，一个小游戏一天便可开发完成。</p>
 
       
@@ -566,7 +568,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -579,7 +581,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -662,7 +664,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

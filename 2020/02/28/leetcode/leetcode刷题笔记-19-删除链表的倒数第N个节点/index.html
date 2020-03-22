@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。 示例：  给定一个链表: 1-&gt;2-&gt;3-&gt;4-&gt;5, 和 n &#x3D; 2.当删除了倒数第二个节点后，链表变为 1-&gt;2-&gt;3-&gt;5.  说明：给定的 n 保证是有效的。进阶：你能尝试使用一趟扫描实现吗？">
 <meta property="article:published_time" content="2020-02-28T08:36:13.000Z">
-<meta property="article:modified_time" content="2020-02-28T08:49:26.357Z">
+<meta property="article:modified_time" content="2020-03-22T09:59:16.970Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -381,6 +381,7 @@
 </blockquote>
 <p>说明：给定的 n 保证是有效的。<br>进阶：你能尝试使用一趟扫描实现吗？</p>
 <a id="more"></a>
+<hr>
 <p>单向链表无法存储自己的上一个节点的位置，而这道题给出要求删除节点的次序却是倒数的。在尾部次序未知的情况下，我认为是不可能做到成功删除的。那么正常的思路应该是先遍历一遍得到链表的长度，再通过链表长度与给定的n的差值关系确定要删除元素的正序，然后再遍历一遍进行删除。</p>
 <p>但是又看到了进阶说明——用一趟扫描，也就是一趟遍历。那么也容易想到，要减少遍历次数，遇事不决双指针嘛。让快指针先移动n步，再让快慢指针一起移动，直到快指针移动到链表尾部。这么看来，确实是遍历了一遍，但本质上跟最原始的办法也没有区别啊，还多用了一个指针。遍历两遍的那个全程只动了一个指针，而这个遍历一遍，却动了两根指针。虽然在同一个循环体内，代码也是依次执行的，所以这两种方式的时间复杂度是同样的线性的。我认为这个遍历一次并没有什么太大意义。</p>
 <p>这道题需要注意的地方是，当测试员给出只包含两个节点的链表时，如果没有头节点的帮助，恐怕很难精确地处理这种情况。所以如果给出的链表没有头节点的话，手动加上头节点也是不错的选择。</p>
@@ -500,7 +501,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -513,7 +514,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -580,7 +581,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

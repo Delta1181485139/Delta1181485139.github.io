@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。 返回被除数 dividend 除以除数 divisor 得到的商。示例：  输入: dividend &#x3D; 10, divisor &#x3D; 3输出: 3输入: dividend &#x3D; 7, divisor &#x3D; -3输出: -2  说明：  被除数和除数均为 32 位有符号整数。除数不为 0">
 <meta property="article:published_time" content="2020-03-01T13:01:17.000Z">
-<meta property="article:modified_time" content="2020-03-01T14:06:20.239Z">
+<meta property="article:modified_time" content="2020-03-22T10:00:40.904Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -384,6 +384,7 @@
 <p>被除数和除数均为 32 位有符号整数。<br>除数不为 0。<br>假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−231,  231 − 1]。本题中，如果除法结果溢出，则返回 231 − 1。</p>
 </blockquote>
 <a id="more"></a>
+<hr>
 <p>起初看到这道题的时候我以为我二十分钟必AK，但事实还是证明我太小看这道难度中等的题了。一开始很容易想到，将除法转化为减法，每减一次就让答案加一，直到把被除数减得比除数要小，那么就返回。这样确实简单，但这样的话如果遇到大数除小数的情况，时间开销就会非常大。</p>
 <p>要想减少时间开销，就得减少用减法的次数，但又不能用乘除法。那就只剩下移位运算了，用移位再加上加减法理论上可以代替任何的乘除法。例如，10=2^3<br>+2^1。</p>
 <p>计算机组成原理里面有提及到计算机内部的除法运算，在这时候就可以用高级语言的移位运算来模拟一遍了。而算法步骤就是由除法运算的竖式得来。在循环体中，先将被除数向右移位，从可移动的最大值开始往小试，直到刚好比除数大，因为在这个时候我们才可以开始往竖式上填入商中一位。之后将得到的这一位加到答案中，这里要注意每一位都差了一个数量级，因此要将答案左移之后再加上去。而竖式的每一步，被除数其实都在减少，那么减少的数应该是商中那一位的数值乘以除数，为了将剩下的位数补齐，所以需要将除数左移至与被除数对齐。之后再用新的被除数来除。</p>
@@ -505,7 +506,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -518,7 +519,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -585,7 +586,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

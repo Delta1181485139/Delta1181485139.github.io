@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个 n × n 的二维矩阵表示一个图像。将图像顺时针旋转 90 度。说明：你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。示例：  给定 matrix &#x3D;[  [1,2,3],  [4,5,6],  [7,8,9]],原地旋转输入矩阵，使其变为:[  [7,4,1],  [8,5,2],  [9,6,3]]">
 <meta property="article:published_time" content="2020-03-08T06:57:28.000Z">
-<meta property="article:modified_time" content="2020-03-08T07:05:49.087Z">
+<meta property="article:modified_time" content="2020-03-22T10:02:41.217Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -379,6 +379,7 @@
 <p>给定 matrix =<br>[<br>  [1,2,3],<br>  [4,5,6],<br>  [7,8,9]<br>],<br>原地旋转输入矩阵，使其变为:<br>[<br>  [7,4,1],<br>  [8,5,2],<br>  [9,6,3]<br>]</p>
 </blockquote>
 <a id="more"></a>
+<hr>
 <p>这题乍一看很复杂，实质上就是将矩阵逆置一次，再左右翻转一次。整个的时间复杂度是o(n^2)，n是方阵阶数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i,j;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;matrix.length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[j][i];</span><br><span class="line">                matrix[j][i] = matrix[i][j]^matrix[j][i];</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[j][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;matrix.length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">0</span>;j&lt;matrix.length/<span class="number">2</span>;j++)&#123;</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">                matrix[i][matrix.length-j-<span class="number">1</span>] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">                matrix[i][j] = matrix[i][j]^matrix[i][matrix.length-j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -496,7 +497,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -509,7 +510,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -576,7 +577,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

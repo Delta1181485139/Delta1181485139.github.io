@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。必须原地修改，只允许使用额外常数空间。 以下是一些例子，输入位于左侧列，其相应输出位于右侧列。  1,2,3 → 1,3,23,2,1 → 1,2,31,1,5 → 1,5,1">
 <meta property="article:published_time" content="2020-02-22T05:56:33.000Z">
-<meta property="article:modified_time" content="2020-02-28T08:35:04.034Z">
+<meta property="article:modified_time" content="2020-03-22T10:00:54.323Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -380,7 +380,7 @@
 <p><code>1,2,3</code> → <code>1,3,2</code><br><code>3,2,1</code> → <code>1,2,3</code><br><code>1,1,5</code> → <code>1,5,1</code></p>
 </blockquote>
 <a id="more"></a>
-
+<hr>
 <p>根据题意，要将一个数组表达的数字重排列成一个比原来大，但要尽量小的一个数，如果这样的数不存在则返回重排列成表达最小的数。因此显然要从低位开始比较，也就是从数组的尾部沿着一个升序往回找，直到寻找路径不升反降为止。再考虑替换升序数组的后一位，最后将原来所谓的升序数组反转即可。</p>
 <p>具体操作是：令遍历升序数组的指针i位于数组尾部，往回寻找升序数组结束的位置，比如遍历到某一位，发现遍历的上一位的值比目前这一位要大，这时候用指针j记录下这一位的位置，再让指针i往原数组的尾部遍历，找到一位刚好比指针j对应元素大的元素，将这两个元素的位置互换，此时指针j后面部分的元素必然是降序的，因此将它们反转就能得到答案。</p>
 <p>这题表明，遍历数组之前要充分搞透原数组向目标数组的变化规律（可以用画图的方法），再用代码实现就显得游刃有余了。</p>
@@ -499,7 +499,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -512,7 +512,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -579,7 +579,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

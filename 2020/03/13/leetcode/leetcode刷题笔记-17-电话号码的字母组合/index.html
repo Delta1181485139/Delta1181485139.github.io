@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。示例：  输入：”23”输出：[“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].  说明:尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。">
 <meta property="article:published_time" content="2020-03-13T08:44:30.000Z">
-<meta property="article:modified_time" content="2020-03-13T08:55:23.554Z">
+<meta property="article:modified_time" content="2020-03-22T09:58:56.476Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -380,6 +380,7 @@
 </blockquote>
 <p>说明:尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。</p>
 <a id="more"></a>
+<hr>
 <p>这类要求得到可能的所有情况的题，是肯定需要穷举一遍的。因此思路很快就出来了，但由于可能给出的数字个数不确定，因此循环难以达到效果，所以想到递归。那么这题就转化为树的深度优先遍历了，并要用一个序列来存储每一条路径。用一个循环去访问树的同一层的节点。树的层数由候选序列的长度决定，因此递归传入的候选序列长度每次都要减一，直到候选序列变为零意味着递归需要终止。</p>
 <p>这题对现在的我来说依然是一道思路五分钟，调bug两小时的题，看来还是要锻炼清晰的思路才行。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; keyboard&#123; <span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"ghi"</span>,<span class="string">"jkl"</span>,<span class="string">"mno"</span>,<span class="string">"pqrs"</span>,<span class="string">"tuv"</span>,<span class="string">"wxyz"</span> &#125;;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">letterCombinations</span><span class="params">(<span class="built_in">string</span> digits)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ans;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">queue</span><span class="params">(<span class="string">""</span>)</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(digits!=<span class="string">""</span>)recall(digits, <span class="built_in">queue</span>, ans);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recall</span><span class="params">(<span class="built_in">string</span> digits, <span class="built_in">string</span>&amp; <span class="built_in">queue</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; ans)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!digits.size()) &#123;ans.push_back(<span class="built_in">queue</span>);<span class="keyword">return</span>;&#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j(<span class="number">0</span>);j &lt; keyboard[digits[<span class="number">0</span>]<span class="number">-50</span>].size();j++) &#123;</span><br><span class="line">            <span class="built_in">queue</span> += keyboard[digits[<span class="number">0</span>]<span class="number">-50</span>][j];</span><br><span class="line">            recall(digits.substr(<span class="number">1</span>, digits.size() <span class="number">-1</span>), <span class="built_in">queue</span>, ans);</span><br><span class="line">            <span class="built_in">queue</span> = <span class="built_in">queue</span>.substr(<span class="number">0</span>, <span class="built_in">queue</span>.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -498,7 +499,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -511,7 +512,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -578,7 +579,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

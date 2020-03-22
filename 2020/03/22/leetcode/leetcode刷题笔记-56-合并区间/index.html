@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给出一个区间的集合，请合并所有重叠的区间。示例：  输入: [[1,3],[2,6],[8,10],[15,18]]输出: [[1,6],[8,10],[15,18]]解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].">
 <meta property="article:published_time" content="2020-03-22T09:18:57.000Z">
-<meta property="article:modified_time" content="2020-03-22T09:45:30.970Z">
+<meta property="article:modified_time" content="2020-03-22T10:03:56.195Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -379,6 +379,7 @@
 <p>输入: [[1,3],[2,6],[8,10],[15,18]]<br>输出: [[1,6],[8,10],[15,18]]<br>解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].</p>
 </blockquote>
 <a id="more"></a>
+<hr>
 <p>最初的想法是先将原数组排序之后，用两个相邻的迭代器，迭代顺序从左往右，判断两者是否能够合并，如果可以那么就删除右迭代器指向的元素，右迭代器指向被删除的元素的后一个元素。如果不能合并，那么就两个迭代器都后移一位，当然，这两个迭代器也可以用一个来实现，因为他们总是相邻的。当信心满满地提交时，结果让人震惊，竟然在运行时间上只击败了5%的人，c++跑了两千多毫秒，但我还觉得当前这个算法已经还不错了。</p>
 <p>于是我仔细检查代码中很耗时间的部分。一个应该是sort的排序，另一个是erase的删除元素的部分。但排序在算法中是有必要的，而删除元素主要是慢在vector中删除任意元素的时间复杂度是线性的，即在顺序存储中删除中间元素会将后面所有元素前移一位。那么也没有办法在不删除原数组元素的情况下对合并之后的元素进行筛选呢。很容易想到时间换空间，那么算法也需要进行微调。</p>
 <p>先声明一个存储空间来存合并之后或无需合并的元素，再排序。还是用两个迭代器，但在这里就必须是两个了，而不能用一个来代替。可看作快慢指针，慢指针指向第一个元素，快指针指向第二个元素，如果两者能够合并，合并的结果给慢指针，快指针后移一位，如果两者无法合并，这时候才将慢指针元素压入存储空间中，然后慢指针直接跳到快指针的位置，快指针再后移。在结束迭代之后，还要记得将慢指针的元素再往存储空间压入一次。之后返回这个存储空间。</p>
@@ -424,6 +425,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/22/c++/vector%E5%AE%B9%E5%99%A8%E6%B5%85%E6%9E%90/" rel="prev" title="vector容器浅析">
+                vector容器浅析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +500,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -508,7 +513,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -575,7 +580,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

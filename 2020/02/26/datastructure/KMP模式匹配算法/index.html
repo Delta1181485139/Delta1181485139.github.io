@@ -87,7 +87,7 @@
 <meta property="og:description" content="这几天复习到数据结构的串的模式匹配，看到KMP算法那么寥寥几行的代码，原本觉得这部分内容很简单，直到我开始尝试去理解它，我才发现我跟大佬的差别。">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMyLnpoaW1nLmNvbS92Mi00N2IyNmRiNjY1OTM3NzQyMGY0MzI2YzMyOTZiYWE5OV9iLndlYnA?x-oss-process=image/format,png">
 <meta property="article:published_time" content="2020-02-26T09:24:29.000Z">
-<meta property="article:modified_time" content="2020-03-14T07:36:56.155Z">
+<meta property="article:modified_time" content="2020-03-22T09:54:56.409Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="datastructure">
 <meta name="twitter:card" content="summary">
@@ -379,6 +379,7 @@
         <p>这几天复习到数据结构的串的模式匹配，看到KMP算法那么寥寥几行的代码，原本觉得这部分内容很简单，直到我开始尝试去理解它，我才发现我跟大佬的差别。</p>
 <a id="more"></a>
 <p>之后我花了整整一天半的时间研究这个算法，期间除了吃饭睡觉拉屎，去楼下药店帮拿了一点口罩之外，没有干其他任何事，总算是理解的差不多了。总结一下这个算法，对于模式串本身，如果经常出现重复的子串，用KMP算法确实可以比朴素模式匹配算法快上不少，但要是模式串前后几乎没几个一样的字符时，KMP算法就是用来秀操作的，因为我相信绝大多数的模式串都是短小精悍的，关键词什么的。要是自己写的话还容易纠结于下标的控制。虽然好像听说考研只会在选择题里考手工算next数组，但我还是想把这个无聊的算法彻底弄明白。下面谈谈我目前为止对这个算法的思考。</p>
+<hr>
 <h1 id="KMP算法的基本思路"><a href="#KMP算法的基本思路" class="headerlink" title="KMP算法的基本思路"></a>KMP算法的基本思路</h1><p>KMP算法，是名分别为K、M、P的三个美国大佬发明的，算是对传统的朴素模式匹配算法的改进。我们先规定，讨论模式串下标均从1开始。朴素模式匹配算法就不谈了，这个有脑子就能想出来，但朴素模式匹配算法存在一个弊端——当模式串有较多重复元素存在时，主串指针i其实做了很多没有必要的回溯。</p>
 <p>而如果想跳过这些没有必要比较的情况，那么就可以想到，主串指针是没有必要回退的，因为当发生与模式串失配的情况时，可以确定的是，此前成功匹配的若干元素形成的字串，其实就是模式串的一个真字串，那么对于这样的一个字串，它的头部和尾部如果发生了重复，就只需要往回移动模式串指针就好了，但是又不需要往回移到初始位置，因为我们看到他的头部和尾部发生了重复，又由于这个头部重复的部分与现在主串指针前的那个模式串真字串重复，而这部分就是真字串的尾部，所以最有利的做法应该是将模式串指针移动至头部重复字串的后一位，再来与当前的主串指针比较。这样，就避免了主串的回溯，单就这个算法本身，简单来看时间复杂度应该是o(n)。</p>
 <p>以下是KMP主代码，对于模式串每一个位置发生失配模式串指针所应该回溯的位置，用一个叫next的整型数组来存储，发生失配时直接用里面的数据来对模式串指针进行回溯。</p>
@@ -394,6 +395,7 @@
 <p>这个算法巧妙的利用已知条件递推下一个答案，直到得到所有的答案。可是到了这里，大多数人觉得KMP算法告一段落了，但，还没完。</p>
 <h1 id="KMP算法的优化"><a href="#KMP算法的优化" class="headerlink" title="KMP算法的优化"></a>KMP算法的优化</h1><p>目前的next数组令模式串的j指针在失配的回跳，但有的时候会连续回跳，而每一次的回跳都伴随着与主串的比较，如果每次回跳到的那个模式串的值等于目前失配的值的话，那还不如让模式串指针一次性跳到后面目标位置，一样的值就没有必要再次比较了。所以就引出了KMP算法的优化措施，将next数组转化为nextval数组，用来避免模式串j指针回跳之后的值等于目前的值而做的重复的比较。那么将next数组转化为nextval数组的方法也很简单，下标的定义仍然值得注意：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">getNextval</span><span class="params">(<span class="built_in">string</span> s,<span class="keyword">int</span>* next)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* nextval = <span class="keyword">new</span> <span class="keyword">int</span>[s.size()+<span class="number">1</span>];</span><br><span class="line">	nextval[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">1</span>); i &lt; s.size()+<span class="number">1</span>; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span> (s[next[i]] == s[i]) &#123;</span><br><span class="line">			nextval[i] = nextval[next[i]];</span><br><span class="line">		&#125;<span class="keyword">else</span> nextval[i] = next[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nextval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>算上求next数组这一部分，整个KMP模式匹配算法的时间复杂度就大致是o(m+n)了，m是模式串的长度，n是主串的长度。网上其他的讲解基本会用到前缀后缀的概念，那样可能讲述起来会更严谨，但也不易懂。但总的来说，困扰大部分人的是难以理解如何让自己来匹配自己，但准确来讲，是用自己的尾部去匹配自己的头部，然后就是头部尾部指针的初值设定，搞清楚这两点，那就成功十之八九了。</p>
 <p>不过我感觉我上述抽象的地方描述的也不算好，但算法这种东西，就是得花时间去磨，有些部分确实是难以言传的。总之，懂的人自然懂，不懂的人花时间磨，总能磨出来的。最后，向那些脑洞大开想出这种奇葩算法的三人组致敬。</p>
 
@@ -519,7 +521,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -532,7 +534,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -615,7 +617,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.5k</span>
+    <span title="Site words total count">33.6k</span>
   
 </div>
 

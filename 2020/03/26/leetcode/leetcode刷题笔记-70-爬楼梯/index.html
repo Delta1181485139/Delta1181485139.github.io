@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。   字符&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;数值I&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1V&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;5">
+<meta name="description" content="假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode刷题笔记-13-罗马数字转整数">
-<meta property="og:url" content="http://yoursite.com/2020/03/12/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-13-%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/index.html">
+<meta property="og:title" content="leetcode刷题笔记-70-爬楼梯">
+<meta property="og:url" content="http://yoursite.com/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-70-%E7%88%AC%E6%A5%BC%E6%A2%AF/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。   字符&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;数值I&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1V&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;5">
-<meta property="article:published_time" content="2020-03-12T06:21:09.000Z">
-<meta property="article:modified_time" content="2020-03-22T09:58:24.433Z">
+<meta property="og:description" content="假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。">
+<meta property="article:published_time" content="2020-03-26T08:35:25.000Z">
+<meta property="article:modified_time" content="2020-03-26T08:41:37.262Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/12/leetcode/leetcode刷题笔记-13-罗马数字转整数/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/26/leetcode/leetcode刷题笔记-70-爬楼梯/"/>
 
 
 
 
 
-  <title>leetcode刷题笔记-13-罗马数字转整数 | Delta</title>
+  <title>leetcode刷题笔记-70-爬楼梯 | Delta</title>
   
 
 
@@ -276,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-13-%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-70-%E7%88%AC%E6%A5%BC%E6%A2%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-13-罗马数字转整数</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-70-爬楼梯</h1>
         
 
         <div class="post-meta">
@@ -305,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T14:21:09+08:00">
-                2020-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-26T16:35:25+08:00">
+                2020-03-26
               </time>
             
 
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  494
+                  403
                 </span>
               
 
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -374,22 +374,12 @@
       
 
       
-        <p>罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。</p>
-<blockquote>
-<p> 字符&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数值<br>I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>V&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5<br>X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10<br>L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50<br>C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100<br>D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;500<br>M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1000</p>
-</blockquote>
-<p>例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：</p>
-<blockquote>
-<ul>
-<li>I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。</li>
-<li>X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 </li>
-<li>C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。</li>
-</ul>
-</blockquote>
-<p> 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。<br> <a id="more"></a></p>
-<hr>
-<p> 这题就是对整数转罗马数字的求逆，对于多分支结构果真还是switch舒服一些，算是遍历串的很基础的内容。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">ans</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;s.size();i++)&#123;</span><br><span class="line">            <span class="keyword">switch</span>(s[i])&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'M'</span>:ans+=<span class="number">1000</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'D'</span>:ans+=<span class="number">500</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'C'</span>:<span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'D'</span>)&#123;ans+=<span class="number">400</span>;i++;&#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'M'</span>)&#123;ans+=<span class="number">900</span>;i++;&#125;<span class="keyword">else</span> ans+=<span class="number">100</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'L'</span>:ans+=<span class="number">50</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'X'</span>:<span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'L'</span>)&#123;ans+=<span class="number">40</span>;i++;&#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'C'</span>)&#123;ans+=<span class="number">90</span>;i++;&#125;<span class="keyword">else</span> ans+=<span class="number">10</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'V'</span>:ans+=<span class="number">5</span>;<span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'I'</span>:<span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'V'</span>)&#123;ans+=<span class="number">4</span>;i++;&#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[i+<span class="number">1</span>]==<span class="string">'X'</span>)&#123;ans+=<span class="number">9</span>;i++;&#125;<span class="keyword">else</span> ans+=<span class="number">1</span>;<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。</p>
+<a id="more"></a>
+<p>题目给出的递推关系让人很容易想到动态规划，就是用一个数组，从前两层已知的台阶开始往后累加推算，可以得到到达最后一层台阶的走法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>]=dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">2</span>);i&lt;=n;i++)</span><br><span class="line">            dp[i] += (dp[i<span class="number">-2</span>] + dp[i<span class="number">-1</span>]);</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里时间复杂度为o(n)，但写完之后我看着下下来的代码，眼里飘过一层似曾相识的景象，这不就是算第n+1项的斐波那契数嘛，那就只好在搬出尘封已久的快速幂算法了(时间复杂度o(logn))：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; m&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">return</span> fibonacci(n+<span class="number">1</span>,m);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m)</span></span>&#123;</span><br><span class="line">	    n-=<span class="number">2</span>;</span><br><span class="line">	    <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; sum&#123; <span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span> &#125;;</span><br><span class="line">	    <span class="keyword">while</span> (n!=<span class="number">0</span>)&#123;</span><br><span class="line">		    <span class="keyword">if</span> (n &amp; <span class="number">1</span>)matrix_Multiplication(sum, m, <span class="number">2</span>);</span><br><span class="line">		    n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">		    matrix_Multiplication(m, m, <span class="number">2</span>);</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">return</span> sum[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">matrix_Multiplication</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m1, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m2, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	    <span class="keyword">long</span>* ans = <span class="keyword">new</span> <span class="keyword">long</span>[n*n];</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n;i++) &#123;</span><br><span class="line">		    <span class="keyword">for</span> (<span class="keyword">int</span> j(<span class="number">0</span>); j &lt; n; j++)&#123;</span><br><span class="line">			    <span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">			    <span class="keyword">for</span> (<span class="keyword">int</span> k(<span class="number">0</span>);k &lt; n;k++) &#123;</span><br><span class="line">				    sum += m1[i+k*n] * m2[k+j*n];</span><br><span class="line">			    &#125;</span><br><span class="line">			    ans[i+j*n] = sum;</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	    m1.clear();</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n * n;i++)m1.push_back(ans[i]);</span><br><span class="line">	    <span class="keyword">delete</span>[] ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -421,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/11/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-39-%E7%BB%84%E6%95%B0%E6%80%BB%E5%92%8C/" rel="next" title="leetcode刷题笔记-39-组数总和">
-                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-39-组数总和
+              <a href="/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-69-x%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9/" rel="next" title="leetcode刷题笔记-69-x的平方根">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-69-x的平方根
               </a>
             
           </div>
@@ -430,10 +420,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/12/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-88-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/" rel="prev" title="leetcode刷题笔记-88-合并两个有序数组">
-                leetcode刷题笔记-88-合并两个有序数组 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

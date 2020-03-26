@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-69-x的平方根</title>
+    <url>/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-69-x%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9/</url>
+    <content><![CDATA[<p>实现 int sqrt(int x) 函数。计算并返回 x 的平方根，其中 x 是非负整数。由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。</p>
+<a id="more"></a>
+<hr>
+<p>因为正整数的算数平方根必然存在于0和这个数之间，并且只需要求整数部分，那么问题就转化为了有序序列中的查找问题，自然想到二分查找法。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=<span class="number">1</span>)<span class="keyword">return</span> x;</span><br><span class="line">        int i(0),j(x);</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(x/k&lt;k)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(x/k&gt;k)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> k;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>除去二分法之外，这题还可以用牛顿迭代法。牛顿迭代法非常适合用来求解方程的根，而问题可以转化成解 x - n^2 = 0这个方程，同时也就是x已知，寻找 f(n) = x - n^2 这个函数的零点 。牛顿迭代法的思想是这样，首先在定义域上任取一点 i 作为函数零点的初始近似值，函数在这一点的切线将会于x轴交于一个距离真正零点更近的点，之后用这个点来代替 i，并用现在的 i 去找下一个 i，直到满足需要的精度为止。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">double</span> <span class="title">i</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">abs</span>(i/<span class="number">2</span>-x/(<span class="number">2</span>*i))&gt;=<span class="number">1</span>)</span><br><span class="line">            i=i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">        <span class="keyword">return</span> i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>虽然二分法和牛顿迭代法的时间复杂度都是o(logn)，但经测试，牛顿迭代法的性能还是要好上不少，因为牛顿迭代法收敛的速度非常快。</p>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-67-二进制求和</title>
+    <url>/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-67-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B1%82%E5%92%8C/</url>
+    <content><![CDATA[<p>给定两个二进制字符串，返回他们的和（用二进制表示）。输入为非空字符串且只包含数字 1 和 0。<br>示例：</p>
+<blockquote>
+<p>输入: a = “1010”, b = “1011”<br>输出: “10101”</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>这道题顺道用来复习一下算术逻辑单元里面的串行加法器原理。就是直接套每一位的和表达式和进位表达式。</p>
+<blockquote>
+<ul>
+<li>和表达式：N = A ⊕ B ⊕ CARRY</li>
+<li>进位表达式：CARRY = AB + (A ⊕ B)CARRY</li>
+</ul>
+</blockquote>
+<p>但其实调bug调了很久，犯了一些低级错误，尤其是以后再也不敢把( + )看作按位或了( | )。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">addBinary</span><span class="params">(<span class="built_in">string</span> a, <span class="built_in">string</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(a==<span class="string">"0"</span>&amp;&amp;b==<span class="string">"0"</span>)<span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">ans</span><span class="params">(a.size()&gt;b.size()?a:b)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">carry</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(a.size()<span class="number">-1</span>),j(b.size()<span class="number">-1</span>),k(ans.size()<span class="number">-1</span>);k&gt;=<span class="number">0</span>;i--,j--)&#123;</span><br><span class="line">            int A(i&lt;0?0:a[i]-48), B(j&lt;0?0:b[j]-48);</span><br><span class="line">            ans[k--] = (A^B^carry) + <span class="number">48</span>;yihuo</span><br><span class="line">            carry = A &amp; B | (A ^ B) &amp; carry;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> carry&gt;<span class="number">0</span>?<span class="string">'1'</span>+ans:ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-63-最小路径和</title>
+    <url>/2020/03/25/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-64-%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。<br>示例：</p>
+<blockquote>
+<p>输入:<br>[[1,3,1],<br>[1,5,1],<br>[4,2,1]]<br>输出: 7<br>解释: 因为路径 1→3→1→1→1的总和最小。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>一开始看到这种求最小路径的差点就陷入贪心的坑里了，还好看到示例就是个反驳贪心法的很好的例子。那么剩下就只有动态规划了，由于只能往右或往下，所以要求到当下的格子的最短路径长度，只需要算出当下格子上方格子的最短路径长度和左方格子的最短路径长度，再加上当下格子的权重即可，因为路径要么从上方来要么从左方来。当然第一行和第一列只需要分别累加它们的左方和上方即可，这样遍历一次二维数组就可以算得到左上角到最右下角的最短路径长度。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;grid.size();i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;grid[<span class="number">0</span>].size();j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span>&amp;&amp;j&gt;<span class="number">0</span>)grid[i][j] += grid[i][j<span class="number">-1</span>];</span><br><span class="line">                <span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;j==<span class="number">0</span>)grid[i][j] += grid[i<span class="number">-1</span>][j];</span><br><span class="line">                <span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;j&gt;<span class="number">0</span>)grid[i][j] += min(grid[i<span class="number">-1</span>][j],grid[i][j<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> grid[grid.size()<span class="number">-1</span>][grid[<span class="number">0</span>].size()<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-63-不同路径II</title>
+    <url>/2020/03/25/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/</url>
+    <content><![CDATA[<p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？<br><image src="https://github.com/Delta1181485139/images/blob/master/algorithms/leetcode_62_1.png?raw=true"></p>
+<a id="more"></a>
+<hr>
+<p>这道题比上一题稍微复杂一些，在一些格子增加了障碍，因此也不能用简单的组合数来算。还得要动态规划，但也就是在上一题的基础上，增加了对格子和将要走的下一个格子一个障碍判断。不过给的测试数据挺恶心的，要排除掉在第一个格子放障碍的情况，另外算出来的数字会越界，所以为了能存尽量大的整数我就用了一个64位的无符号整型。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">        int height(obstacleGrid.size()),width(obstacleGrid[0].size());</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;&gt; <span class="title">dp</span><span class="params">(height,<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;(width,<span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>]!=<span class="number">1</span>)</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;height;i++)</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;width;j++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&lt;width<span class="number">-1</span>&amp;&amp;obstacleGrid[i][j+<span class="number">1</span>]!=<span class="number">1</span>)dp[i][j+<span class="number">1</span>]+=dp[i][j];</span><br><span class="line">                    <span class="keyword">if</span>(i&lt;height<span class="number">-1</span>&amp;&amp;obstacleGrid[i+<span class="number">1</span>][j]!=<span class="number">1</span>)dp[i+<span class="number">1</span>][j]+=dp[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[height<span class="number">-1</span>][width<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-62-不同路径</title>
     <url>/2020/03/25/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-62-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/</url>
     <content><![CDATA[<p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。问总共有多少条不同的路径？<br><image src="https://github.com/Delta1181485139/images/blob/master/algorithms/leetcode_62_1.png?raw=true"></p>
@@ -8,7 +79,7 @@
 <hr>
 <p>这是一道典型的动态规划的题目，从起始点开始到方格中的每一个点的方法数都能够通过之前的点递推出来。比如说在当前的位置，如果能够往右走，那么右边那个点的方法数就是在原来的基础上加上到当前位置的方法数，如果能够往下走，道理也是一样的。一开始起始位初始化为1（起始位到起始位的方法数当然是1），其他位置由于还没有计算初始化为0。遍历所有位置一遍可以计算出最右下角的位置的数字。动态规划的时间复杂度为o(m*n)。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&gt; <span class="title">dp</span><span class="params">(m,<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;(n,<span class="number">0</span>))</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;m;i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;n;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i+<span class="number">1</span>&lt;m)dp[i+<span class="number">1</span>][j]+=dp[i][j];</span><br><span class="line">                <span class="keyword">if</span>(j+<span class="number">1</span>&lt;n)dp[i][j+<span class="number">1</span>]+=dp[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>除此之外，这还是一道排列组合问题，由于可以走的方向只有右和下，那么从起点到终点的长度则固定为 m + n - 2，问题就可以变成从长度为m + n - 2的路径种，求向下的m - 1条路径与向右的n - 1条路径有多少种组合。为了计算效率只要取两者中的小者带入公式即可。公式为：C(上标:min(m,n)，下标:m+n-2)。另外用循环来算组合数的时候，首先为了避免整数溢出，一定要一边乘一边除，另外为了避免除法丢失精度，乘除法应当从1和max(m,n)开始。该算法时间复杂度为o(min(m,n))。</p>
+<p>除此之外，这还是一道排列组合问题，由于可以走的方向只有右和下，那么从起点到终点的长度则固定为 m + n - 2，问题就可以变成从长度为m + n - 2的路径中求向下的m - 1条路径与向右的n - 1条路径有多少种组合。为了计算效率只要取两者中的小者带入公式即可。公式为：C(上标:min(m,n)，下标:m+n-2)。另外用循环来算组合数的时候，首先为了避免整数溢出，一定要一边乘一边除，另外为了避免除法丢失精度，乘除法应当从1和max(m,n)开始。该算法时间复杂度为o(min(m,n))。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">long</span> <span class="title">res</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        int len(min(m,n)),j(max(m,n)),i(1);</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=len<span class="number">-1</span>)res = res*j++/i++;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 ]]></content>

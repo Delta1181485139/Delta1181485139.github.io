@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-75-颜色分类</title>
+    <url>/2020/03/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-75-%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<p>给定一个包含红色、白色和蓝色，一共 n 个元素的数组，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。此题中，我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。<br>注意:<br>不能使用代码库中的排序函数来解决这道题。</p>
+<blockquote>
+<p>示例:<br>输入: [2,0,2,1,1,0]<br>输出: [0,0,1,1,2,2]</p>
+</blockquote>
+<p>进阶：</p>
+<ul>
+<li>一个直观的解决方案是使用计数排序的两趟扫描算法。首先，迭代计算出0、1 和 2 元素的个数，然后按照0、1、2的排序，重写当前数组。</li>
+<li>你能想出一个仅使用常数空间的一趟扫描算法吗？<a id="more"></a>
+</li>
+</ul>
+<hr>
+<p>这题的原型是荷兰国旗问题，对应红白蓝三色。那么翻译一下其实就是要将一个只包含三个不同的元素的序列排序。众所周知，用常规的排序算法时间复杂度不会低于o(nlogn)，为了达到一趟扫描肯定需要利用到不同元素只有三个这个条件。</p>
+<p>整体来看，0，1，2这三个元素在排好序的序列当中应该是所有0在最左边，所有2在最右边，中间是1。换句话说，我们只需要将1和2的位置放好，剩下1的位置是不需要管的。当然如果选择排好0和1的位置也可以，原理是一样的。</p>
+<p>因此设立三个指针，<code>zero</code>用来指示排好序的0序列的后一位置，<code>two</code>用来指示排好序的2序列的前一位置，<code>i</code>用来遍历这个序列并作比较。</p>
+<ul>
+<li>如果i的值小于<code>zero</code>或者大于<code>two</code>，说明在满足条件的区间内是已经排好序的，所以直接将i右移。</li>
+<li>如果i的值在<code>zero</code>和<code>two</code>之间，那么将<code>num[i]</code>分别与<code>num[zero]</code>和<code>num[two]</code>作比较：<ol>
+<li>如果<code>num[i]</code>等于0，将<code>num[i]</code>与<code>num[zero]</code>值交换，并将<code>zero</code>后移一位。</li>
+<li>如果<code>num[i]</code>等于2，将<code>num[i]</code>与<code>num[two]</code>值交换，并将<code>two</code>前移一位。</li>
+<li>如果<code>num[i]</code>等于1，将<code>i</code>后移一位。</li>
+</ol>
+</li>
+</ul>
+<p>这样便可以在一次遍历结束之后完成对序列的排序。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int zero(0),two(nums.size()-1),i(0);</span><br><span class="line">        <span class="keyword">while</span> (i&lt;nums.size())</span><br><span class="line">            <span class="keyword">if</span>(i&gt;=zero&amp;&amp;i&lt;=two)</span><br><span class="line">                <span class="keyword">if</span>(nums[i]==<span class="number">0</span>)swap(nums[i],nums[zero++]);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(nums[i]==<span class="number">2</span>)swap(nums[i],nums[two--]);</span><br><span class="line">                <span class="keyword">else</span> i++;</span><br><span class="line">            <span class="keyword">else</span> i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-74-搜索二维矩阵</title>
+    <url>/2020/03/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-74-%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5/</url>
+    <content><![CDATA[<p>编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：</p>
+<ul>
+<li>每行中的整数从左到右按升序排列。 </li>
+<li>每行的第一个整数大于前一行的最后一个整数。<a id="more"></a>
+</li>
+</ul>
+<hr>
+<p>二分查找，可以用两种方式，一种是把二维数组看成一维数组，再进行二分查找，时间复杂度是o(log(mn))。还有一种是先对行首进行二分查找，再对选定行进行二分查找，时间复杂度为o(logm + logn)。两个方法的效率是一样的，我使用的是后者。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">searchMatrix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() == <span class="number">0</span>||matrix[<span class="number">0</span>].size() == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        int i(0),j(matrix.size()-1),J;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() &gt; <span class="number">1</span>)<span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&gt;target)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j&gt;=<span class="number">0</span>)<span class="keyword">for</span>(i = <span class="number">0</span>,J = matrix[<span class="number">0</span>].size()<span class="number">-1</span>;i&lt;=J;)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+J)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[j][k]&gt;target)J = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[j][k]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-73-矩阵置零</title>
+    <url>/2020/03/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-73-%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6/</url>
+    <content><![CDATA[<p>给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。<br>示例：</p>
+<blockquote>
+<p>输入:<br>[<br>  [1,1,1],<br>  [1,0,1],<br>  [1,1,1]<br>]<br>输出:<br>[<br>  [1,0,1],<br>  [0,0,0],<br>  [1,0,1]<br>]</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>题目要求原地算法，就是空间复杂度要是常数级。可以用两次遍历矩阵中元素来完成。第一遍每检查到一个为零的元素，将该行和该列的所有元素置成一个不相关的数，这个数看情况可以取一个大数。第二遍遍历再将矩阵中所有值为这个大数的地方置零。这个大数可以看作一个需要置零的标记。不能直接置零的原因是按照规则，如果直接置零，整个矩阵将会全为零。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> UNCONCERNED = <span class="number">8848</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>); i&lt;matrix.size();i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j(<span class="number">0</span>); j&lt;matrix[<span class="number">0</span>].size();j++)</span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j] == <span class="number">0</span>)&#123;</span><br><span class="line">                    matrix[i][j] = UNCONCERNED;</span><br><span class="line">                    setRowColumn(matrix,i,j,UNCONCERNED);</span><br><span class="line">                &#125;   </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : matrix)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;j : i)</span><br><span class="line">                <span class="keyword">if</span>(j==UNCONCERNED)</span><br><span class="line">                    j = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setRowColumn</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix,<span class="keyword">int</span> row,<span class="keyword">int</span> column,<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : matrix[row])</span><br><span class="line">            i = i == <span class="number">0</span>? i :num;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : matrix)&#123;</span><br><span class="line">            i[column] = i[column] == <span class="number">0</span>? i[column] :num;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-71-简化路径</title>
+    <url>/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-71-%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84/</url>
+    <content><![CDATA[<p>以 Unix 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。请注意，返回的规范路径必须始终以斜杠 / 开头，并且两个目录名之间必须只有一个斜杠 /。最后一个目录名（如果存在）不能以 / 结尾。此外，规范路径必须是表示绝对路径的最短字符串。</p>
+<a id="more"></a>
+<blockquote>
+<p>示例 1：<br>输入：”/home/“<br>输出：”/home”<br> 解释：注意，最后一个目录名后面没有斜杠。 </p>
+</blockquote>
+<blockquote>
+<p>示例 2：<br>输入：”/../“<br>输出：”/“<br>解释：从根目录向上一级是不可行的，因为根是你可以到达的最高级。</p>
+</blockquote>
+<blockquote>
+<p>示例 3：<br>输入：”/home//foo/“ 输出：”/home/foo” 解释：在规范路径中，多个连续斜杠需要用一个斜杠替换。</p>
+</blockquote>
+<blockquote>
+<p>示例 4：<br>输入：”/a/./b/../../c/“ 输出：”/c” </p>
+</blockquote>
+<blockquote>
+<p>示例 5：<br>输入：”/a/../../b/../c//.//“ 输出：”/c” </p>
+</blockquote>
+<blockquote>
+<p>示例 6：<br>输入：”/a//b////c/d//././/..” 输出：”/a/b/c”</p>
+</blockquote>
+<hr>
+<p>此题是面像示例编程，对着示例一个一个看符不符合。但主要还是要想到用字符串流来处理字符串，getline函数有一种重载形式可以根据分隔符来读取流中的字符串，之后再配合栈的使用，便可以很好的格式化题目给的路径。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">simplifyPath</span><span class="params">(<span class="built_in">string</span> path)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(path)</span></span>;</span><br><span class="line">        <span class="built_in">list</span>&lt;<span class="built_in">string</span>&gt; strs;</span><br><span class="line">        string format(""), tmp = ("");</span><br><span class="line">        <span class="keyword">while</span>(getline(ss, tmp, <span class="string">'/'</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span>(tmp == <span class="string">""</span> || tmp == <span class="string">"."</span>)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(tmp == <span class="string">".."</span> &amp;&amp; !strs.empty())strs.pop_back();</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(tmp != <span class="string">".."</span>)strs.push_back(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">string</span> str:strs) format +=  <span class="string">"/"</span> + str;</span><br><span class="line">        <span class="keyword">return</span> format.empty()?<span class="string">"/"</span>:format;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-70-爬楼梯</title>
     <url>/2020/03/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-70-%E7%88%AC%E6%A5%BC%E6%A2%AF/</url>
     <content><![CDATA[<p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。</p>
@@ -25,7 +126,7 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=<span class="number">1</span>)<span class="keyword">return</span> x;</span><br><span class="line">        int i(0),j(x);</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(x/k&lt;k)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(x/k&gt;k)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> k;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>除去二分法之外，这题还可以用牛顿迭代法。牛顿迭代法非常适合用来求解方程的根，而问题可以转化成解 x - n^2 = 0这个方程，同时也就是x已知，寻找 f(n) = x - n^2 这个函数的零点 。牛顿迭代法的思想是这样，首先在定义域上任取一点 i 作为函数零点的初始近似值，函数在这一点的切线将会于x轴交于一个距离真正零点更近的点，之后用这个点来代替 i，并用现在的 i 去找下一个 i，直到满足需要的精度为止。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">double</span> <span class="title">i</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">abs</span>(i/<span class="number">2</span>-x/(<span class="number">2</span>*i))&gt;=<span class="number">1</span>)</span><br><span class="line">            i=i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">        <span class="keyword">return</span> i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>虽然二分法和牛顿迭代法的时间复杂度都是o(logn)，但经测试，牛顿迭代法的性能还是要好上不少，因为牛顿迭代法收敛的速度非常快。</p>
+<p>虽然二分法和牛顿迭代法的时间复杂度都是o(logn)，但经测试，牛顿迭代法的性能还是要好上不少。</p>
 ]]></content>
       <tags>
         <tag>leetcode</tag>

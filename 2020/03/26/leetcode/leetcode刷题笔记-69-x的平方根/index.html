@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="实现 int sqrt(int x) 函数。计算并返回 x 的平方根，其中 x 是非负整数。由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。">
 <meta property="article:published_time" content="2020-03-26T07:59:17.000Z">
-<meta property="article:modified_time" content="2020-03-26T08:14:08.434Z">
+<meta property="article:modified_time" content="2020-03-26T08:54:54.490Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -337,7 +337,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  431
+                  416
                 </span>
               
 
@@ -381,7 +381,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=<span class="number">1</span>)<span class="keyword">return</span> x;</span><br><span class="line">        int i(0),j(x);</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(x/k&lt;k)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(x/k&gt;k)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> k;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>除去二分法之外，这题还可以用牛顿迭代法。牛顿迭代法非常适合用来求解方程的根，而问题可以转化成解 x - n^2 = 0这个方程，同时也就是x已知，寻找 f(n) = x - n^2 这个函数的零点 。牛顿迭代法的思想是这样，首先在定义域上任取一点 i 作为函数零点的初始近似值，函数在这一点的切线将会于x轴交于一个距离真正零点更近的点，之后用这个点来代替 i，并用现在的 i 去找下一个 i，直到满足需要的精度为止。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">double</span> <span class="title">i</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">abs</span>(i/<span class="number">2</span>-x/(<span class="number">2</span>*i))&gt;=<span class="number">1</span>)</span><br><span class="line">            i=i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">        <span class="keyword">return</span> i/<span class="number">2</span>+x/(<span class="number">2</span>*i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>虽然二分法和牛顿迭代法的时间复杂度都是o(logn)，但经测试，牛顿迭代法的性能还是要好上不少，因为牛顿迭代法收敛的速度非常快。</p>
+<p>虽然二分法和牛顿迭代法的时间复杂度都是o(logn)，但经测试，牛顿迭代法的性能还是要好上不少。</p>
 
       
     </div>
@@ -496,7 +496,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +594,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">37.8k</span>
+    <span title="Site words total count">39.5k</span>
   
 </div>
 

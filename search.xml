@@ -1,13 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-91-解码方法</title>
+    <url>/2020/03/31/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-91-%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<blockquote>
+<p>‘A’ -&gt; 1<br>‘B’ -&gt; 2<br>…<br>‘Z’ -&gt; 26</p>
+</blockquote>
+<p>给定一个只包含数字的非空字符串，请计算解码方法的总数。<br>示例：</p>
+<blockquote>
+<p>输入: “226”<br>输出: 3<br>解释: 它可以解码为 “BZ” (2 26), “VF” (22 6), 或者 “BBF” (2 2 6) 。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>这道题也算是动态规划的经典题，算是上楼梯的升级版，但还是让我想了很久才想通。总的来说，当前的状态是被前两种状态唯一确定的。首先可以用一个数组来存给定编码的每一位之前所对应的可能编码数。重要的情况是当编码位为0的时候，因为0不能单独编码。</p>
+<p>来分析一下状态方程：</p>
+<ul>
+<li>当s[i]=0的时候，由于0是不能单独编码的，必须借助前一位是1或者是2的情况来编码。<ol>
+<li>如果前一位是1或2，这个时候s[i-1]被s[i]捆绑到了一起，使得s[i-1]也不能单独编码，由于s[i]和s[i-1]的捆绑是唯一的，所以dp[i]位的可能编码数由dp[i-2]来确定。即dp[i]=dp[i-2]。</li>
+<li>如果前一位不是1且不是2，那么这个编码是错误的，所以直接返回0。</li>
+</ol>
+</li>
+<li>当s[i]!=0的时候。<ol>
+<li>如果s[i-1]是否能够与s[i]组成合法的两位数，即s[i-1]s[i]在1到26的闭区间内，如果符合，那么dp[i]的数目由两种编码方式所确定。一种是s[i]与s[i-1]分开编码，这种方式编码的可能性为dp[i-1]种；另一种是s[i]与s[i-1]一起编码，这种编码方式的可能性为dp[i-2]种，道理和上文所说的与0捆绑的情况是一样的。所以将两种情况汇总，就是dp[i]=dp[i-1]+dp[i-2]种。</li>
+<li>如果s[i-1]与s[i]无法捆绑成合法两位数，那么由于s[i]单独编码，相比前一项的可能情况数没有额外增加，所以dp[i]=dp[i-1]。</li>
+</ol>
+</li>
+</ul>
+<p>以上便是所有需要考虑的情况，再设置初始条件dp数组前两位为1,dp[1]才开始对应着s[0]，原因是，可以将dp[0]理解为字符串为空时可能的编码数，把它规定为1，就是唯一对应编码也为空的情况。另外，再排除掉特殊情况，字符串第一位为0的时候就可以直接认定不合法返回0。</p>
+<p>综上的时间复杂度为o(n)，空间复杂度为o(n)，n为字符串的长度。但我们可以知道，dp数组的每一位都是由前两位唯一确定的，因此我们只需要用两个变量保留当前位的前两位数值即可，而不用存下整个数组。因此经过优化可以将空间复杂度降为o(1)。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDecodings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[<span class="number">0</span>] == <span class="string">'0'</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        int last2(1),last1(1),tmp;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">1</span>);i&lt;s.size();i++)&#123;</span><br><span class="line">            tmp = last1;</span><br><span class="line">            <span class="keyword">if</span>(s[i]==<span class="string">'0'</span>)</span><br><span class="line">                <span class="keyword">if</span>(s[i<span class="number">-1</span>]!=<span class="string">'1'</span>&amp;&amp;s[i<span class="number">-1</span>]!=<span class="string">'2'</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">else</span> last1 = last2;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i<span class="number">-1</span>]==<span class="string">'1'</span>||(s[i<span class="number">-1</span>]==<span class="string">'2'</span>&amp;&amp;s[i]&lt;<span class="string">'7'</span>))</span><br><span class="line">                last1 += last2;</span><br><span class="line">            last2 = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> last1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-90-子集II</title>
+    <url>/2020/03/31/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-90-%E5%AD%90%E9%9B%86II/</url>
+    <content><![CDATA[<p>给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。说明：解集不能包含重复的子集。<br>示例：</p>
+<blockquote>
+<p>输入: [1,2,2]<br>输出:<br>[<br>  [2],<br>  [1],<br>  [1,2,2],<br>  [2,2],<br>  [1,2],<br>  []<br>]</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>这题的难点在于去重，对于回溯法来说，如何去重应该去分析递归树。经过分析发现，为了满足题目条件，我们需要保证递归树中相同层的元素只能出现一次，而不同层级是可以存在相同元素的。再看代码中，对于同一层级元素的遍历处于递归函数那个for循环中，因此现在要做的是，只让同一层的相同元素出现一次，对于这一点，在一个排好序的数组中，之接用当前项去和前一项比较就可以很容易得出答案了，所以如果存在重复，就直接跳到下一步循环。综上，对于和递归有关的算法，为了研究去重问题，递归树是一个非常重要的参考。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ans;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">subsetsWithDup</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        sort(nums.begin(),nums.end());</span><br><span class="line">        recall(nums,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recall</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums,<span class="keyword">int</span> begin)</span></span>&#123;</span><br><span class="line">        ans.push_back(<span class="built_in">queue</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin);i&lt;nums.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i&gt;begin&amp;&amp;nums[i]==nums[i<span class="number">-1</span>])<span class="keyword">continue</span>;</span><br><span class="line">            <span class="built_in">queue</span>.push_back(nums[i]);</span><br><span class="line">            recall(nums,i+<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">queue</span>.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-89-格雷编码</title>
+    <url>/2020/03/31/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-89-%E6%A0%BC%E9%9B%B7%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>格雷编码是一个二进制数字系统，在该系统中，两个连续的数值仅有一个位数的差异。给定一个代表编码总位数的非负整数 n，打印其格雷编码序列。格雷编码序列必须以 0 开头。</p>
+<a id="more"></a>
+<p>该题是为了输出给定位数的格雷码，那么根据格雷码的计算法则，第n位的格雷码，从n的最右侧开始，每一位与它的左边一位做异或运算，得到当前位的格雷码的数值，以此类推，最左边那一位与0异或。将这个方法简化，就是将n与n右移一位的数按位异或，就得到了从0开始的第n个格雷码。</p>
+<p>当然这题作为中等题，大概要追求一下类似动态规划的方法，由递推关系得出格雷码，因此这样算出的格雷码不一定和标准算法中的一样，以后有时间可以尝试一下。</p>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;<span class="number">1</span>&lt;&lt;n;i++)</span><br><span class="line">            ans.push_back(i^i&gt;&gt;<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-86-分隔链表</title>
+    <url>/2020/03/30/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-86-%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<p>给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。你应当保留两个分区中每个节点的初始相对位置。<br>示例：</p>
+<blockquote>
+<p>输入: head = 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;2, x = 3<br>输出: 1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>这道题主要思想是另开两条链表，遍历原链表，大于等于目标值的放在一条链表中，小于目标值的放在另一条链表中，最后将两条链表拼接就达到了题目的要求。要注意的是大于等于的链表的末尾需要置空，不然可能导致该链表的最后一位还指向了小于的那条链表中的节点。因为没审好题，漏看了大于等于的那个等于，花了很长时间调试。下次一定要审题！</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">partition</span><span class="params">(ListNode* head, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        ListNode* less(new ListNode(-1)),*more(new ListNode(-1)),*les(less),*mor(more);</span><br><span class="line">        <span class="keyword">for</span>(ListNode* i(head);i;i = i-&gt;next)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i-&gt;val&lt;x)&#123;</span><br><span class="line">                les-&gt;next = i;</span><br><span class="line">                les = i;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                mor-&gt;next = i;</span><br><span class="line">                mor = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mor-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        les-&gt;next = more-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> less-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-82-删除链表中的重复元素II</title>
     <url>/2020/03/29/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-82-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0II/</url>
     <content><![CDATA[<p>给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中没有重复出现的数字。</p>
 <p>示例：</p>
 <blockquote>
-<p>输入: 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5</p>
-<p>输出: 1-&gt;2-&gt;5</p>
+<p>输入: 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5<br>输出: 1-&gt;2-&gt;5</p>
 </blockquote>
 <a id="more"></a>
 <hr>
@@ -23,8 +102,7 @@
     <content><![CDATA[<p>给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。</p>
 <p>示例：</p>
 <blockquote>
-<p>输入: 1-&gt;1-&gt;2-&gt;3-&gt;3</p>
-<p>输出: 1-&gt;2-&gt;3</p>
+<p>输入: 1-&gt;1-&gt;2-&gt;3-&gt;3<br>输出: 1-&gt;2-&gt;3</p>
 </blockquote>
 <a id="more"></a>
 <hr>

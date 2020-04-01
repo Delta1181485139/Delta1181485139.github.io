@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="格雷编码是一个二进制数字系统，在该系统中，两个连续的数值仅有一个位数的差异。给定一个代表编码总位数的非负整数 n，打印其格雷编码序列。格雷编码序列必须以 0 开头。">
 <meta property="article:published_time" content="2020-03-31T12:42:31.000Z">
-<meta property="article:modified_time" content="2020-03-31T12:48:04.623Z">
+<meta property="article:modified_time" content="2020-04-01T01:47:02.877Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -376,9 +376,9 @@
       
         <p>格雷编码是一个二进制数字系统，在该系统中，两个连续的数值仅有一个位数的差异。给定一个代表编码总位数的非负整数 n，打印其格雷编码序列。格雷编码序列必须以 0 开头。</p>
 <a id="more"></a>
+<hr>
 <p>该题是为了输出给定位数的格雷码，那么根据格雷码的计算法则，第n位的格雷码，从n的最右侧开始，每一位与它的左边一位做异或运算，得到当前位的格雷码的数值，以此类推，最左边那一位与0异或。将这个方法简化，就是将n与n右移一位的数按位异或，就得到了从0开始的第n个格雷码。</p>
 <p>当然这题作为中等题，大概要追求一下类似动态规划的方法，由递推关系得出格雷码，因此这样算出的格雷码不一定和标准算法中的一样，以后有时间可以尝试一下。</p>
-<hr>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;<span class="number">1</span>&lt;&lt;n;i++)</span><br><span class="line">            ans.push_back(i^i&gt;&gt;<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
@@ -494,7 +494,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -592,7 +592,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">44.3k</span>
+    <span title="Site words total count">44.7k</span>
   
 </div>
 

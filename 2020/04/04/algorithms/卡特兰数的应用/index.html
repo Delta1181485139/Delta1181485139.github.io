@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="由于计算时间复杂度是研究数据结构与算法的一项非常重要的工作，现在以经典的求解斐波那契数列的第n项为例，探讨各个算法的时空复杂度。">
+<meta name="description" content="卡特兰数(Catalan number)是组合数学中一个常出现在各种计数问题的数列，它的前几项为：  $1,1,2,5,14,42,132,429,1430,4862,16796…$">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Fibonacci数列解法">
-<meta property="og:url" content="http://yoursite.com/2020/03/03/algorithms/Fibonacci%E6%95%B0%E5%88%97%E8%A7%A3%E6%B3%95/index.html">
+<meta property="og:title" content="卡特兰数的应用">
+<meta property="og:url" content="http://yoursite.com/2020/04/04/algorithms/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="由于计算时间复杂度是研究数据结构与算法的一项非常重要的工作，现在以经典的求解斐波那契数列的第n项为例，探讨各个算法的时空复杂度。">
-<meta property="article:published_time" content="2020-03-03T10:53:54.000Z">
-<meta property="article:modified_time" content="2020-04-04T13:40:03.419Z">
+<meta property="og:description" content="卡特兰数(Catalan number)是组合数学中一个常出现在各种计数问题的数列，它的前几项为：  $1,1,2,5,14,42,132,429,1430,4862,16796…$">
+<meta property="article:published_time" content="2020-04-04T13:46:47.000Z">
+<meta property="article:modified_time" content="2020-04-04T15:36:50.450Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="algorithms">
 <meta name="twitter:card" content="summary">
@@ -119,12 +119,12 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/03/algorithms/Fibonacci数列解法/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/04/algorithms/卡特兰数的应用/"/>
 
 
 
 
-  <title>Fibonacci数列解法 | Delta</title>
+  <title>卡特兰数的应用 | Delta</title>
   
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/algorithms/Fibonacci%E6%95%B0%E5%88%97%E8%A7%A3%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/04/algorithms/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Fibonacci数列解法</h1>
+          <h1 class="post-title" itemprop="name headline">卡特兰数的应用</h1>
         
 
         <div class="post-meta">
@@ -304,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-03T18:53:54+08:00">
-                2020-03-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-04T21:46:47+08:00">
+                2020-04-04
               </time>
             
 
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k
+                  1.3k
                 </span>
               
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  5
                 </span>
               
             </div>
@@ -373,83 +373,56 @@
       
 
       
-        <p>由于计算时间复杂度是研究数据结构与算法的一项非常重要的工作，现在以经典的求解斐波那契数列的第n项为例，探讨各个算法的时空复杂度。<br><a id="more"></a></p>
-<h1 id="斐波那契数列简介"><a href="#斐波那契数列简介" class="headerlink" title="斐波那契数列简介"></a>斐波那契数列简介</h1><p>斐波那契数列（Fibonacci sequence），又称黄金分割数列，因数学家列昂纳多·斐波那契（Leonardoda Fibonacci）以兔子繁殖为例子而引入，故又称为“兔子数列”，指的是这样一个数列：</p>
+        <p>卡特兰数(Catalan number)是组合数学中一个常出现在各种计数问题的数列，它的前几项为：</p>
 <blockquote>
-<p>$1、1、2、3、5、8、13、21、34、……$</p>
+<p>$1,1,2,5,14,42,132,429,1430,4862,16796…$</p>
 </blockquote>
-<p>在数学上，斐波那契数列以如下被以递推的方法定义：</p>
+<a id="more"></a>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
+<li>卡特兰数的定义式：</li>
+</ul>
 <script type="math/tex; mode=display">
-F(1)=1，F(2)=1, F(n)=F(n - 1)+F(n - 2)（n \ge 3，n \in N^*）</script><p>在现代物理、准晶体结构、化学等领域，斐波纳契数列都有直接的应用。</p>
-<p>由斐波那契的定义式可看出，这是一个递归定义，由前后递推关系得出的一个数列。</p>
-<hr>
-<h1 id="递归解法"><a href="#递归解法" class="headerlink" title="递归解法"></a>递归解法</h1><p>直接由定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">Fibonacci</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">3</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> Fibonacci(n - <span class="number">1</span>) + Fibonacci(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Fibonacci(<span class="number">30</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>递归的时间复杂度计算方式为递归的次数乘以函数体内执行的语句数，而在这里只涉及到递归的次数。每个函数均要调用两次递归，递归的深度为$(n-2)$，那么容易得到这种算法的时间复杂度为$O(2^n)$。</p>
-<p>如果要从数值上准确计算执行时间，那么就是将数列的一般公式</p>
+Catalan(n)=\begin{cases}1,n=0;\\\\\sum^{n-1}_{i=0}Catalan(i)*Catalan(n-1-i),n>0
+\end{cases}</script><ul>
+<li>采用数学方法可得其通项解为:</li>
+</ul>
 <script type="math/tex; mode=display">
-F(n)=F(n - 1)+F(n - 2)（n \ge 3，n \in N^*）</script><p>转化为二阶常系数齐次差分方程。</p>
-<p>当$F(0)=1，F(1)=1$时，为了求$F(n)$，可以得到特征方程为$x^2-x-1=0$，解得$x=\frac{(1\pm\sqrt5)}2$ ，<br>因此$F(n)$的通解为$F(n)=C1(\frac{(1+\sqrt5)}2)^n + C2(\frac{(1-\sqrt5)}2)^n$，再将$F(0)=1，F(1)=1$作为初值带入解得$C1，C2$。因此其资源消耗是极其恐怖的，假设要求数列的第五项，其所对应的递归树如图所示：</p>
-<pre class="mermaid">graph TB
-d1("fbi(5)")-->d2("fbi(4)")
-d2("fbi(4)")-->d4("fbi(3)")
-d4("fbi(3)")-->d8("fbi(2)")
-d1("fbi(5)")-->d3("fbi(3)")
-d3("fbi(3)")-->d6("fbi(2)")
-d2("fbi(4)")-->d5("fbi(2)")
-d3("fbi(3)")-->d7("fbi(1)")
-d4("fbi(3)")-->d9("fbi(1)")</pre>
-
-
-
-<p>可以从图中看到，数列第三项计算了两次，数列第二项计算了三次，数列第一项计算了三次。这个算法慢的本质其实是调用了过多重复计算的项。</p>
-<h2 id="空间复杂度分析"><a href="#空间复杂度分析" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h2><p>递归算法的空间复杂度等于递归深度乘以每次递归需要的辅助空间，因此应该是$O(n)$。</p>
-<hr>
-<h1 id="尾递归解法"><a href="#尾递归解法" class="headerlink" title="尾递归解法"></a>尾递归解法</h1><p>由于照抄定义的直接递归解法效率过低，这里就提出了一种优化方案，以减少重复计算数列中项的次数，但代价是要传入两个初值作为参数，换句话说，这样递归的方向就是把普通递归的方向反过来：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">Fibonacci</span><span class="params">(<span class="keyword">long</span> a, <span class="keyword">long</span> b, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">3</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">3</span>)<span class="keyword">return</span> a + b;</span><br><span class="line">	<span class="keyword">return</span> Fibonacci(b, a + b, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Fibonacci(<span class="number">1</span>,<span class="number">1</span>,<span class="number">30</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="时间复杂度分析-1"><a href="#时间复杂度分析-1" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>由于尾递归将所有的运算提到递归语句之前因此减少了大量的回调，可直接返回递归最深层的返回值。而从该递归的递推关系可以理解为，要求前两项为1，1的斐波那契数列，那就不断的调用自身的累加计算，结束条件就是加够(n-2)次，因此递归深度就是(n-2)，由此可得时间复杂度为$O(n)$。递归树如下：</p>
-<pre class="mermaid">graph LR
-d1("fbi(1,1,5)")-->d2("fbi(1,2,4)")
-d2("fbi(1,2,4)")-->d3("fbi(2,3,3)")
-d3("fbi(2,3,3)")-->d4("fbi(3,5,2)")</pre>
-
-
-
-<p>尾递归在改善递效率上有着很好的效果。</p>
-<h2 id="空间复杂度分析-1"><a href="#空间复杂度分析-1" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h2><p>尾递归依然是递归，在空间的开销上就注定比较大，因为递归深度为(n-2)，因此斐波那契数列的尾递归算法空间复杂度为$O(n)$。</p>
-<hr>
-<h1 id="循环算法"><a href="#循环算法" class="headerlink" title="循环算法"></a>循环算法</h1><p>这种算法算是抛弃了递归的弊端，直接将递推公式写在了循环里，也可以理解为动态规划的思想，但事实上，循环和递归本身也有许多相似之处，他们对于初值，运算的条件都有限制。这是一种性能尚佳，容易想出的算法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	int j(1), k(1);</span><br><span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">3</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; n; i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> t = k;</span><br><span class="line">		k = j + t;</span><br><span class="line">		<span class="keyword">if</span> (k &lt; <span class="number">0</span>)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		j = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> j + k;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	fibonacci(<span class="number">30</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="时间复杂度分析-2"><a href="#时间复杂度分析-2" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>根据循环的条件以及终止条件可以看出，循环体将执行(n-3)次，因此时间复杂度为$O(n)$。</p>
-<h2 id="空间复杂度分析-2"><a href="#空间复杂度分析-2" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h2><p>由于该算法只使用了常数级的辅助空间，因此原地工作的空间复杂度为$O(1)$。</p>
-<hr>
-<h1 id="矩阵快速幂解法"><a href="#矩阵快速幂解法" class="headerlink" title="矩阵快速幂解法"></a>矩阵快速幂解法</h1><h2 id="快速幂算法"><a href="#快速幂算法" class="headerlink" title="快速幂算法"></a>快速幂算法</h2><p>首先介绍一下快速幂算法，在计算机中，如果要计算$m^n$，通常的朴素算法是在循环中将m乘n次，但是有些时候这种算法的效率较为低下。</p>
-<p>不妨设想，假如我要在记事本中将 “ hello world! “ 这句话复制1000份，如果是朴素算法，那就是连按1000下的p。但我们显然有更高效的方法，比如先将一句话复制10遍，再全选，再复制10遍，再全选，再复制10遍。转化为代数式就是：<script type="math/tex">1000=10^3=10^0*10^1*10^2</script></p>
-<p>这样做的效率将大大增加，快速幂的思想就是源于此，本质就是通过指数的分解，降低进行乘法的次数，因此该算法重点研究的就是指数的分解。</p>
-<p>以上是快速幂在手算中比较直观的体验，但是在计算机中，效率还会更高。因为二进制表示法中，移位可以代替大量的乘除法，并且开销极小。</p>
-<p>下面来看计算$3^{13}$，为了将其分解为能够进行移位运算的模式，需要将指数拆分成2的次幂的和，并确保项数最小。那么就可以拆分成：<script type="math/tex">13=1*2^3+1*2^2+0*2^1+1*2^0</script></p>
-<p>的形式，而这也正好契合了二进制数的基本形态，13的二进制恰好是1101，因此可以从低位至高位依次扫描每一位。进一步观察，拆分之后的每一项的前者与后者呈平方关系，并且系数由二进制数的对应位所确定。因此算法的基本框架就成型了。很显然，系数为0的项数是不需要算的，并且需要计算的乘法只包括前一项向后一项的平方递推，还有该位系数为1时可以将对应的该项乘入结果。</p>
-<h2 id="矩阵快速幂"><a href="#矩阵快速幂" class="headerlink" title="矩阵快速幂"></a>矩阵快速幂</h2><p>但如何将快速幂运算与斐波那契数列的求解结合呢。<br>由斐波那契数列的定义式：$F(1)=1，F(2)=1, F(n)=F(n - 1)+F(n - 2)（n \ge 3，n \in N^*）$</p>
-<p>如果将其写成矩阵形式，将会是：</p>
+\begin{align}
+Catalan(n)&=C^n_{2n}-C^{n+1}_{2n},将其化简得\\
+&=\frac{1}{n+1}C^n_{2n}
+\end{align}</script><ul>
+<li>由此可推出其递推式：</li>
+</ul>
 <script type="math/tex; mode=display">
-\begin{vmatrix}
-1&1\\1&0
-\end{vmatrix}\times
-\begin{vmatrix}
-F(n-1)\\F(n)
-\end{vmatrix}=
-\begin{vmatrix}
-F(n-2)\\F(n-1)
-\end{vmatrix}</script><p>那么其与幂运算之间的关系将会一目了然，由于初值为 <script type="math/tex">\begin{vmatrix}1\\1
-\end{vmatrix}</script>，</p>
-<p>现在要求解斐波那契数列就能转化为求 <script type="math/tex">\begin{vmatrix}1\\1
-\end{vmatrix}\times\begin{vmatrix}1&1\\1&0\end{vmatrix}^{n-2}</script>，</p>
-<p>其结果的第一行第一行第一列的元素就是我们所要求的斐波那契数列的第n项。根据快速幂运算的原理，只是通过拆分指数的方式就能达到提高效率的目的。因此只需要将对普通数的快速幂运算中的底数换为矩阵，将乘法换为矩阵乘法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">matrix_Multiplication</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m1, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m2, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">long</span>* ans = <span class="keyword">new</span> <span class="keyword">long</span>[n*n];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n;i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j(<span class="number">0</span>); j &lt; n; j++)&#123;</span><br><span class="line">			<span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k(<span class="number">0</span>);k &lt; n;k++) &#123;</span><br><span class="line">				sum += m1[i+k*n] * m2[k+j*n];</span><br><span class="line">			&#125;</span><br><span class="line">			ans[i+j*n] = sum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	m1.clear();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n * n;i++)m1.push_back(ans[i]);</span><br><span class="line">	<span class="keyword">delete</span>[] ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n-=<span class="number">2</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; sum&#123; <span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (n!=<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span> (n &amp; <span class="number">1</span>)matrix_Multiplication(sum, m, <span class="number">2</span>);</span><br><span class="line">		n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">		matrix_Multiplication(m, m, <span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; m&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</span><br><span class="line">	fibonacci(<span class="number">30</span>, m);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="时间复杂度分析-3"><a href="#时间复杂度分析-3" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>由于上述用到的矩阵乘法恒为计算二阶方阵的乘法，因此单次乘法计算运行时间为常数级。由于每一次拆项都将n右移一位，而结束条件是n右移到0的时候。将n右移一位就相当于将n除以2，因此循环体内语句进行的次数应该为$log_2n$，因此时间复杂度为$Olog(n)$。</p>
-<h2 id="空间复杂度分析-3"><a href="#空间复杂度分析-3" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h2><p>由于该算法只用到了常数级的辅助空间，因此空间复杂度为$O(1)$。</p>
-<hr>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>个人是对于斐波那契数列的美妙之处十分的赞叹，而光是该数列的求解算法就能直接列出来四种。并且也可以看出，算法的高效与否，在于程序员的倾注程度，比如说如果就按照定义来的递归求解，这根本不费脑子，却有着极低的效率，再看矩阵的幂运算，为了其算法的高效，在主算法之前还要做矩阵相关的铺垫。可以说，为了提高运行效率，写多几行代码是很有必要的，就好像是程序员替愚蠢的CPU想到了很多避免重复计算的情况，所以要写下来告诉CPU。这四个算法也告诉我们，递归一定要慎用。</p>
+\begin{align}
+Catalan(n+1)&=\frac{1}{n+2}C^{n+1}_{2n+2}\\
+&=\frac{1}{n+2}\frac{(2n+2)(2n+1)\cdot\cdot\cdot(n+3)(n+2)}{(n+1)!}\\
+&=\frac{(2n+2)(2n+1)\cdot\cdot\cdot(n+3)}{(n+1)n!}\\
+&=\frac{(2n+2)(2n+1)}{(n+2)(n+1)}\frac{2n(2n-1)\cdot\cdot\cdot(n+3)(n+2)(n+1)}{(n+1)n!}\\
+&=\frac{(2n+2)(2n+1)}{(n+2)(n+1)}Catalan(n)\\
+&=\frac{4n+2}{n+2}Catalan(n)
+\end{align}</script><hr>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="出栈序列个数问题"><a href="#出栈序列个数问题" class="headerlink" title="出栈序列个数问题"></a>出栈序列个数问题</h2><p>问题：有一个容量足够大的栈，n个元素以一定的顺序入栈，出栈顺序有多少种？</p>
+<p>这个问题最开始遇到是在学数据结构栈的时候，要求手动去推导n个元素的出栈序列数。但没想到这会与后来遇到的卡特兰数关系如此紧密。</p>
+<h3 id="通项解"><a href="#通项解" class="headerlink" title="通项解"></a>通项解</h3><p>为了找到这个问题的一个通解，可以做以下考虑：</p>
+<ul>
+<li>对于一个长度为n的序列，每个元素的入栈记为+1，每个元素的出栈记为-1。</li>
+<li>那么将所有的+1-1进行组合，可以得到组合数$C^n_{2n}$，但难道这就是所谓的出栈序列个数吗，答案当然是否定的。</li>
+<li>我们少考虑了栈空却仍然出栈的这种异常操作，根据我们指定的以上规则，在任何时候所有以往+1-1的总数不能小于0。因此我们可以在进行枚举的每一个元素出栈序列的时候进行记录，第一次发现此时之前的总数等于-1，可以知道当前序列是违规序列，那么将包括当前元素的出栈操作以及之前所有的出栈入栈操作进行取相反数，即+1变-1，-1变+1，这样可以得到一个新的序列，并且这个序列对于刚才遇到的违规序列映射是双射的。</li>
+<li>换句话说，每个第一次发现总和等于-1的序列都能够唯一对应一个具有n+1个+1，n-1个-1的新序列，那么将这个序列算组合数就是$C^{n+1}_{2n}$，这个数就是所有违规序列的总数。</li>
+<li>所以符合条件的出栈序列数应该是总序列数减违规序列数，即$C^n_{2n}-C^{n+1}_{2n}$。</li>
+<li>很容易发现，这个式子就是卡特兰数的通项形式。</li>
+</ul>
+<h3 id="动态规划解"><a href="#动态规划解" class="headerlink" title="动态规划解"></a>动态规划解</h3><p>对于一个长度为n的入栈序列，我们要求的解是$f(n)$考虑数列中的某一个元素x的一种特定情况，就是它出栈的时候，可以肯定的是，在排在x之前的所有元素都已经确保入栈成功了(不一定已经出栈，可能还在栈中)，并且排在这个元素后面的所有元素都已经确保出栈成功了。</p>
+<ul>
+<li>对于x之前的入栈成功的元素，它们的出栈顺序肯定是唯一的，但是它们的入栈顺序可以有多种，这个问题就变成了，已知一段序列一种出栈顺序，求这段序列可能的入栈顺序。这个子问题和父问题构成了反函数的关系，并且是一一对应的，那么当然可以套用解原来问题的方法。假设x之前有x-1个元素，那么我们想知道$f(x-1)$是多少。</li>
+<li>对于x之后已经出栈的元素，我们可以知道，它们的入栈肯定是在x及之前的元素之后，出栈肯定是在x及之前的元素之前，由此可以发现后面假设是(n-1-x)个元素，它们的出栈的组合完全与之前的元素没有任何关系。那么我们想知道对于后面这些元素$f(n-1-x)$的解。</li>
+<li>如果我们同时知道了$f(x-1)$和$f(n-1-x)$，就等于知道了对于x的出栈的这种情况，有$f(x-1)*f(n-1-x)$种组合。</li>
+<li>x作为长度为n序列中的任意一个元素，我们如果知道对于每一个x，可以对他们进行求和，由此可以得到$f(n)$的一般解为$\sum^{n-1}_{i=0}f(i)*f(n-i-1)$。</li>
+<li>当n为0时，它不存在出栈序列，可以理解为它只有一种出栈序列，那就是不存在。当n为1时，显然出栈序列只有一种，以此类推，通过一般式可以推n为出任一项的解。</li>
+<li>这时又能发现，我们解出来的$f(n)$就是卡特兰数的定义式。</li>
+</ul>
+<p>（…未完待续）</p>
 
       
     </div>
@@ -480,8 +453,8 @@ F(n-2)\\F(n-1)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/03/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0/" rel="next" title="leetcode刷题笔记-8-字符串转换整数">
-                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-8-字符串转换整数
+              <a href="/2020/04/04/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-96-%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/" rel="next" title="leetcode刷题笔记-96-不同的二叉搜索树">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-96-不同的二叉搜索树
               </a>
             
           </div>
@@ -489,10 +462,6 @@ F(n-2)\\F(n-1)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-20-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/" rel="prev" title="leetcode刷题笔记-20-有效的括号">
-                leetcode刷题笔记-20-有效的括号 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -573,7 +542,7 @@ F(n-2)\\F(n-1)
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -653,7 +622,7 @@ F(n-2)\\F(n-1)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#斐波那契数列简介"><span class="nav-number">1.</span> <span class="nav-text">斐波那契数列简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归解法"><span class="nav-number">2.</span> <span class="nav-text">递归解法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析"><span class="nav-number">2.1.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度分析"><span class="nav-number">2.2.</span> <span class="nav-text">空间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尾递归解法"><span class="nav-number">3.</span> <span class="nav-text">尾递归解法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-1"><span class="nav-number">3.1.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度分析-1"><span class="nav-number">3.2.</span> <span class="nav-text">空间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#循环算法"><span class="nav-number">4.</span> <span class="nav-text">循环算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-2"><span class="nav-number">4.1.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度分析-2"><span class="nav-number">4.2.</span> <span class="nav-text">空间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵快速幂解法"><span class="nav-number">5.</span> <span class="nav-text">矩阵快速幂解法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速幂算法"><span class="nav-number">5.1.</span> <span class="nav-text">快速幂算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵快速幂"><span class="nav-number">5.2.</span> <span class="nav-text">矩阵快速幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-3"><span class="nav-number">5.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度分析-3"><span class="nav-number">5.4.</span> <span class="nav-text">空间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用"><span class="nav-number">2.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#出栈序列个数问题"><span class="nav-number">2.1.</span> <span class="nav-text">出栈序列个数问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通项解"><span class="nav-number">2.1.1.</span> <span class="nav-text">通项解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态规划解"><span class="nav-number">2.1.2.</span> <span class="nav-text">动态规划解</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -687,7 +656,7 @@ F(n-2)\\F(n-1)
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">45.7k</span>
+    <span title="Site words total count">47k</span>
   
 </div>
 

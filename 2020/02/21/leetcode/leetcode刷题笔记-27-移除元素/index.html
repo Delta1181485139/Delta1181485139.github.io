@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。 示例：  给定 nums &#x3D; [0,1,2,2,3,0,4,2], val &#x3D; 2,函数应该返回新的长度 5, 并且 nums 中的前">
 <meta property="article:published_time" content="2020-02-21T12:51:59.000Z">
-<meta property="article:modified_time" content="2020-03-22T10:00:07.865Z">
+<meta property="article:modified_time" content="2020-04-04T08:37:15.797Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -385,9 +385,7 @@
 <hr>
 <p>此题显然应当用双指针，但与删除重复元素那道题不同的是，此题需要删除指定元素，也就是说如果两个指针如果像之前那样，从同一侧出发，快指针赋值给慢指针的方式，势必会出现很多虽然合法，但是冗余的元素。这时候应当要换一种思维方式，让一个指针访问过的元素避免被另一个指针再次访问，但依然是一个指针主要负责检查，另一个指针负责遍历。</p>
 <p>排除完特殊情况之后，首先令检查指针位于0处，遍历指针位于nums.length-1处，比较检查指针所对应的元素是否是target, 如果是的话就把遍历指针对应元素的值传入，遍历指针便可以往低位移动一次，否则就直接将检查指针向高位移动一次，继续检查，由于循环体每次要么移动检查指针，要么检查遍历指针，而无论是检查指针自身移动到的等于target的元素，还是遍历指针传入的等于target的元素，都会因为这个等于target的条件，继续被遍历指针的新元素所覆盖。所以到最后检查指针所经过的区域就是去除完所有target的数组，还保证了其他元素的完整性。</p>
-<p>双指针的应用一定要根据具体题目快速判断，灵活运用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j+<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==val)&#123;</span><br><span class="line">                nums[i] = nums[j--];</span><br><span class="line">            &#125;<span class="keyword">else</span> i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>双指针的应用一定要根据具体题目快速判断，灵活运用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j+<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==val)&#123;</span><br><span class="line">                nums[i] = nums[j--];</span><br><span class="line">            &#125;<span class="keyword">else</span> i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -502,7 +500,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -600,7 +598,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -611,6 +609,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1093,6 +1099,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

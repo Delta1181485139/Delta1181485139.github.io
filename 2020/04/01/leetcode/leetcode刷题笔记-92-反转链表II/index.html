@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。说明:1 ≤ m ≤ n ≤ 链表长度。示例:  输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m &#x3D; 2, n &#x3D; 4输出: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL">
 <meta property="article:published_time" content="2020-04-01T13:24:48.000Z">
-<meta property="article:modified_time" content="2020-04-01T13:34:50.020Z">
+<meta property="article:modified_time" content="2020-04-04T08:41:57.940Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -376,12 +376,11 @@
       
         <p>反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。<br>说明:1 ≤ m ≤ n ≤ 链表长度。<br>示例:</p>
 <blockquote>
-<p>输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4<br>输出: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
-</blockquote>
-<a id="more"></a>
+<p>输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4<br>输出: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL<br><a id="more"></a></p>
 <hr>
-<p>只需要使用三个指针，中间指针记录正在遍历的节点，另外两个指针分别指向前驱和后继节点，当遍历到第m个节点的时候，记录下前驱节点和当前节点，当计数器的值大于等于m的时候将中间节点的后继节点设置为前驱，然后三个指针整体后移，循环至计数器的值为n的时候，在完成节点指针后继回指向前驱之后，将m节点的前驱的后继设置为现在计数为n的节点，将m节点的后继设置为现在三个指针的最后一个指针指向的节点，这个时候最后一个指针有可能为空，所以只要每次最后一个指针后移的时候做判断就可以知道该让其后移还是置空。做完上述操作即可退出循环，因此时间复杂度为o(n)，n为链表反转的右边界位置。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">ListNode* <span class="title">h</span><span class="params">(<span class="keyword">new</span> ListNode(<span class="number">-1</span>))</span></span>;</span><br><span class="line">        h-&gt;next = head;</span><br><span class="line">        ListNode* front(nullptr),*behind(nullptr),*i(h),*j(head),*k(head-&gt;next);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> count(<span class="number">1</span>);;i=j,j=k,k=k-&gt;next?k-&gt;next:<span class="literal">nullptr</span>,count++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(count==m)&#123;</span><br><span class="line">                front = i;</span><br><span class="line">                behind = j;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(count&gt;=m)&#123;</span><br><span class="line">                j-&gt;next = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(count==n)&#123;</span><br><span class="line">                front-&gt;next = j;</span><br><span class="line">                behind-&gt;next = k?k:<span class="literal">nullptr</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> h-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>只需要使用三个指针，中间指针记录正在遍历的节点，另外两个指针分别指向前驱和后继节点，当遍历到第m个节点的时候，记录下前驱节点和当前节点，当计数器的值大于等于m的时候将中间节点的后继节点设置为前驱，然后三个指针整体后移，循环至计数器的值为n的时候，在完成节点指针后继回指向前驱之后，将m节点的前驱的后继设置为现在计数为n的节点，将m节点的后继设置为现在三个指针的最后一个指针指向的节点，这个时候最后一个指针有可能为空，所以只要每次最后一个指针后移的时候做判断就可以知道该让其后移还是置空。做完上述操作即可退出循环，因此时间复杂度为$O(n)$，n为链表反转的右边界位置。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">ListNode* <span class="title">h</span><span class="params">(<span class="keyword">new</span> ListNode(<span class="number">-1</span>))</span></span>;</span><br><span class="line">        h-&gt;next = head;</span><br><span class="line">        ListNode* front(nullptr),*behind(nullptr),*i(h),*j(head),*k(head-&gt;next);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> count(<span class="number">1</span>);;i=j,j=k,k=k-&gt;next?k-&gt;next:<span class="literal">nullptr</span>,count++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(count==m)&#123;</span><br><span class="line">                front = i;</span><br><span class="line">                behind = j;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(count&gt;=m)&#123;</span><br><span class="line">                j-&gt;next = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(count==n)&#123;</span><br><span class="line">                front-&gt;next = j;</span><br><span class="line">                behind-&gt;next = k?k:<span class="literal">nullptr</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> h-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
       
     </div>
     
@@ -495,7 +494,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -593,7 +592,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -604,6 +603,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1086,6 +1093,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

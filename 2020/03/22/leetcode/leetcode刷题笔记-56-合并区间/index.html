@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给出一个区间的集合，请合并所有重叠的区间。示例：  输入: [[1,3],[2,6],[8,10],[15,18]]输出: [[1,6],[8,10],[15,18]]解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].">
 <meta property="article:published_time" content="2020-03-22T09:18:57.000Z">
-<meta property="article:modified_time" content="2020-03-22T10:03:56.195Z">
+<meta property="article:modified_time" content="2020-04-04T08:38:38.067Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -383,9 +383,7 @@
 <p>最初的想法是先将原数组排序之后，用两个相邻的迭代器，迭代顺序从左往右，判断两者是否能够合并，如果可以那么就删除右迭代器指向的元素，右迭代器指向被删除的元素的后一个元素。如果不能合并，那么就两个迭代器都后移一位，当然，这两个迭代器也可以用一个来实现，因为他们总是相邻的。当信心满满地提交时，结果让人震惊，竟然在运行时间上只击败了5%的人，c++跑了两千多毫秒，但我还觉得当前这个算法已经还不错了。</p>
 <p>于是我仔细检查代码中很耗时间的部分。一个应该是sort的排序，另一个是erase的删除元素的部分。但排序在算法中是有必要的，而删除元素主要是慢在vector中删除任意元素的时间复杂度是线性的，即在顺序存储中删除中间元素会将后面所有元素前移一位。那么也没有办法在不删除原数组元素的情况下对合并之后的元素进行筛选呢。很容易想到时间换空间，那么算法也需要进行微调。</p>
 <p>先声明一个存储空间来存合并之后或无需合并的元素，再排序。还是用两个迭代器，但在这里就必须是两个了，而不能用一个来代替。可看作快慢指针，慢指针指向第一个元素，快指针指向第二个元素，如果两者能够合并，合并的结果给慢指针，快指针后移一位，如果两者无法合并，这时候才将慢指针元素压入存储空间中，然后慢指针直接跳到快指针的位置，快指针再后移。在结束迭代之后，还要记得将慢指针的元素再往存储空间压入一次。之后返回这个存储空间。</p>
-<p>提交完之后，运行时间终于降到了20ms，击败了95%的人。如果还想再优化，就应该在排序上下功夫了。时间复杂度大概是o(nlogn)，主要还是排序费时间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">merge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; intervals)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(intervals.size()&lt;<span class="number">2</span>)<span class="keyword">return</span> intervals;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ans;</span><br><span class="line">        sort(intervals.begin(), intervals.end());</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt;::iterator j(intervals.begin()),i(j+1);</span><br><span class="line">        <span class="keyword">for</span> (;i != intervals.end();i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j-&gt;at(<span class="number">1</span>) &gt;= i-&gt;at(<span class="number">0</span>)) j-&gt;at(<span class="number">1</span>) = max(j-&gt;at(<span class="number">1</span>), i-&gt;at(<span class="number">1</span>));</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                ans.push_back(*j);</span><br><span class="line">                j = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans.push_back(*j);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>提交完之后，运行时间终于降到了20ms，击败了95%的人。如果还想再优化，就应该在排序上下功夫了。时间复杂度大概是$O(nlogn)$，主要还是排序费时间。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">merge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; intervals)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(intervals.size()&lt;<span class="number">2</span>)<span class="keyword">return</span> intervals;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ans;</span><br><span class="line">        sort(intervals.begin(), intervals.end());</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt;::iterator j(intervals.begin()),i(j+1);</span><br><span class="line">        <span class="keyword">for</span> (;i != intervals.end();i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j-&gt;at(<span class="number">1</span>) &gt;= i-&gt;at(<span class="number">0</span>)) j-&gt;at(<span class="number">1</span>) = max(j-&gt;at(<span class="number">1</span>), i-&gt;at(<span class="number">1</span>));</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                ans.push_back(*j);</span><br><span class="line">                j = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans.push_back(*j);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -500,7 +498,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +596,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -609,6 +607,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1091,6 +1097,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

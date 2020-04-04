@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。">
 <meta property="article:published_time" content="2020-03-26T08:35:25.000Z">
-<meta property="article:modified_time" content="2020-03-26T08:41:37.262Z">
+<meta property="article:modified_time" content="2020-04-04T08:40:19.739Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -374,13 +374,10 @@
       
 
       
-        <p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。</p>
-<a id="more"></a>
-<p>题目给出的递推关系让人很容易想到动态规划，就是用一个数组，从前两层已知的台阶开始往后累加推算，可以得到到达最后一层台阶的走法。</p>
+        <p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数。<br><a id="more"></a><br>题目给出的递推关系让人很容易想到动态规划，就是用一个数组，从前两层已知的台阶开始往后累加推算，可以得到到达最后一层台阶的走法。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>]=dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">2</span>);i&lt;=n;i++)</span><br><span class="line">            dp[i] += (dp[i<span class="number">-2</span>] + dp[i<span class="number">-1</span>]);</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>这里时间复杂度为o(n)，但写完之后我看着下下来的代码，眼里飘过一层似曾相识的景象，这不就是算第n+1项的斐波那契数嘛，那就只好在搬出尘封已久的快速幂算法了(时间复杂度o(logn))：</p>
+<p>这里时间复杂度为$O(n)$，但写完之后我看着下下来的代码，眼里飘过一层似曾相识的景象，这不就是算第n+1项的斐波那契数嘛，那就只好在搬出尘封已久的快速幂算法了(时间复杂度$O(logn)$：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; m&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">return</span> fibonacci(n+<span class="number">1</span>,m);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m)</span></span>&#123;</span><br><span class="line">	    n-=<span class="number">2</span>;</span><br><span class="line">	    <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; sum&#123; <span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span> &#125;;</span><br><span class="line">	    <span class="keyword">while</span> (n!=<span class="number">0</span>)&#123;</span><br><span class="line">		    <span class="keyword">if</span> (n &amp; <span class="number">1</span>)matrix_Multiplication(sum, m, <span class="number">2</span>);</span><br><span class="line">		    n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">		    matrix_Multiplication(m, m, <span class="number">2</span>);</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">return</span> sum[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">matrix_Multiplication</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m1, <span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt;&amp; m2, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	    <span class="keyword">long</span>* ans = <span class="keyword">new</span> <span class="keyword">long</span>[n*n];</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n;i++) &#123;</span><br><span class="line">		    <span class="keyword">for</span> (<span class="keyword">int</span> j(<span class="number">0</span>); j &lt; n; j++)&#123;</span><br><span class="line">			    <span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">			    <span class="keyword">for</span> (<span class="keyword">int</span> k(<span class="number">0</span>);k &lt; n;k++) &#123;</span><br><span class="line">				    sum += m1[i+k*n] * m2[k+j*n];</span><br><span class="line">			    &#125;</span><br><span class="line">			    ans[i+j*n] = sum;</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	    m1.clear();</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> i(<span class="number">0</span>);i &lt; n * n;i++)m1.push_back(ans[i]);</span><br><span class="line">	    <span class="keyword">delete</span>[] ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -495,7 +492,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -593,7 +590,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -604,6 +601,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1086,6 +1091,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

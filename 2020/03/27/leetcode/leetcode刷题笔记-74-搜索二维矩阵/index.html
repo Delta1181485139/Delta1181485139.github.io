@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：  每行中的整数从左到右按升序排列。  每行的第一个整数大于前一行的最后一个整数。">
 <meta property="article:published_time" content="2020-03-27T06:58:35.000Z">
-<meta property="article:modified_time" content="2020-03-27T07:03:19.584Z">
+<meta property="article:modified_time" content="2020-04-04T08:40:55.692Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -381,9 +381,7 @@
 </li>
 </ul>
 <hr>
-<p>二分查找，可以用两种方式，一种是把二维数组看成一维数组，再进行二分查找，时间复杂度是o(log(mn))。还有一种是先对行首进行二分查找，再对选定行进行二分查找，时间复杂度为o(logm + logn)。两个方法的效率是一样的，我使用的是后者。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">searchMatrix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() == <span class="number">0</span>||matrix[<span class="number">0</span>].size() == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        int i(0),j(matrix.size()-1),J;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() &gt; <span class="number">1</span>)<span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&gt;target)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j&gt;=<span class="number">0</span>)<span class="keyword">for</span>(i = <span class="number">0</span>,J = matrix[<span class="number">0</span>].size()<span class="number">-1</span>;i&lt;=J;)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+J)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[j][k]&gt;target)J = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[j][k]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>二分查找，可以用两种方式，一种是把二维数组看成一维数组，再进行二分查找，时间复杂度是$O(log(mn))$。还有一种是先对行首进行二分查找，再对选定行进行二分查找，时间复杂度为$O(logm + logn)$。两个方法的效率是一样的，我使用的是后者。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">searchMatrix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() == <span class="number">0</span>||matrix[<span class="number">0</span>].size() == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        int i(0),j(matrix.size()-1),J;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size() &gt; <span class="number">1</span>)<span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&gt;target)j = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[k][<span class="number">0</span>]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j&gt;=<span class="number">0</span>)<span class="keyword">for</span>(i = <span class="number">0</span>,J = matrix[<span class="number">0</span>].size()<span class="number">-1</span>;i&lt;=J;)&#123;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+J)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(matrix[j][k]&gt;target)J = k<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[j][k]&lt;target)i = k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -498,7 +496,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -596,7 +594,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -607,6 +605,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1089,6 +1095,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。 例如，给出 n &#x3D; 3，生成结果为：  [  “((()))”,  “(()())”,  “(())()”,  “()(())”,  “()()()”]">
 <meta property="article:published_time" content="2020-03-09T06:49:38.000Z">
-<meta property="article:modified_time" content="2020-03-22T09:59:43.711Z">
+<meta property="article:modified_time" content="2020-04-04T08:37:03.989Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -377,11 +377,10 @@
         <p>给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。</p>
 <p>例如，给出 n = 3，生成结果为：</p>
 <blockquote>
-<p>[<br>  “((()))”,<br>  “(()())”,<br>  “(())()”,<br>  “()(())”,<br>  “()()()”<br>]</p>
-</blockquote>
-<a id="more"></a>
+<p>[<br>  “((()))”,<br>  “(()())”,<br>  “(())()”,<br>  “()(())”,<br>  “()()()”<br>]<br><a id="more"></a></p>
 <hr>
 <p>这道题一开始看到的时候，直觉告诉我要要遍历一棵树才能得到这样一个穷举的序列，但实在是太麻烦了。</p>
+</blockquote>
 <p>后面想到动态规划的思想，可以把从1个括号的组合开始，到n个括号的组合这样的一个个序列看成一个个状态。细心可以发现，第n个状态是可以用第n-1个状态推出来的。即，第n个状态就是在第n-1的所有状况的基础上多出来一对括号，现在就只需要讨论这多出来的一对括号如何摆放。</p>
 <p>假设将要加入的那一对括号固定，假设前一个状态被分为两个子序列p，q，并且p，q也同样是满足题意的两个状态，这样才能保证组合成的状态n是有效的。之后也就是反过来将已有的序列插入两个括号中四个位置中的两个位置。由于p的长度为0到n-1，对于每一个p都有q = n-1-p，因此可以有以下两种插法：</p>
 <blockquote>
@@ -389,9 +388,7 @@
 </blockquote>
 <p>可以发现两种插法其实是等效的，所以只需要取一种就可以保证不重复。那么直观一些可以用递归的方法。对每一个p求对应的q，由于p和q都分别是所对应状态的一组序列，所以要将他们递归求出之后再分别遍历并两两组合，将组合的结果放入答案序列中。</p>
 <p>递归的方法很简洁直观，但递归树呈二叉树的形态发展，时间空间复杂度惊人。非递归化的方法就是在外面套一层循环，将迭代算出的结果放入定义好的数据结构中，再用已有的数据去算下一个状态。</p>
-<p>实质上这题就是要发现状态n与状态n-1之间的关系，这样会很好做。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ans;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)ans.push_back(<span class="string">""</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">string</span> p:generateParenthesis(i))</span><br><span class="line">                <span class="keyword">for</span>(<span class="built_in">string</span> q:generateParenthesis(n<span class="number">-1</span>-i))</span><br><span class="line">                    ans.push_back(<span class="string">"("</span>+p+<span class="string">")"</span>+q);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>实质上这题就是要发现状态n与状态n-1之间的关系，这样会很好做。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ans;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)ans.push_back(<span class="string">""</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">string</span> p:generateParenthesis(i))</span><br><span class="line">                <span class="keyword">for</span>(<span class="built_in">string</span> q:generateParenthesis(n<span class="number">-1</span>-i))</span><br><span class="line">                    ans.push_back(<span class="string">"("</span>+p+<span class="string">")"</span>+q);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -506,7 +503,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -604,7 +601,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -615,6 +612,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1097,6 +1102,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

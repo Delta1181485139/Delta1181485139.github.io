@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="实现 pow(x, n) ，即计算 x 的 n 次幂函数。说明:   -100.0 &lt; x &lt; 100.0  n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。">
 <meta property="article:published_time" content="2020-03-20T11:51:08.000Z">
-<meta property="article:modified_time" content="2020-03-23T04:02:21.063Z">
+<meta property="article:modified_time" content="2020-04-04T08:38:21.353Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -378,14 +378,12 @@
 <blockquote>
 <ul>
 <li>-100.0 &lt; x &lt; 100.0 </li>
-<li>n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。</li>
+<li>n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。<a id="more"></a>
+</li>
 </ul>
-</blockquote>
-<a id="more"></a>
 <hr>
-<p>快速幂算法将传统的循环乘法的时间复杂度降至o(logn)。详情见之前研究斐波那契数列的快速幂解法。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">long</span> <span class="title">N</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(N&lt;<span class="number">0</span>)N=-N;</span><br><span class="line">        <span class="function"><span class="keyword">double</span> <span class="title">sum</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(N&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(N&amp;<span class="number">1</span>)sum*=x;</span><br><span class="line">            x*=x;</span><br><span class="line">            N&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n&lt;<span class="number">0</span>?<span class="number">1</span>/sum:sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>快速幂算法将传统的循环乘法的时间复杂度降至$O(logn)$。详情见之前研究斐波那契数列的快速幂解法。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">long</span> <span class="title">N</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(N&lt;<span class="number">0</span>)N=-N;</span><br><span class="line">        <span class="function"><span class="keyword">double</span> <span class="title">sum</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(N&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(N&amp;<span class="number">1</span>)sum*=x;</span><br><span class="line">            x*=x;</span><br><span class="line">            N&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n&lt;<span class="number">0</span>?<span class="number">1</span>/sum:sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 
       
     </div>
@@ -500,7 +498,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +596,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -609,6 +607,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1091,6 +1097,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

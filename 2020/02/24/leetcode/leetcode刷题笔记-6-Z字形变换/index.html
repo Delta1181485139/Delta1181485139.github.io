@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。比如输入字符串为 “LEETCODEISHIRING” 行数为 3 时，排列如下：  L&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;C&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;I&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbs">
 <meta property="article:published_time" content="2020-02-24T08:37:09.000Z">
-<meta property="article:modified_time" content="2020-03-22T09:57:09.633Z">
+<meta property="article:modified_time" content="2020-04-04T08:35:47.328Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -381,16 +381,13 @@
 <p>之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如：</p>
 <blockquote>
 <p>“LCIRETOESIIGEDHN”。</p>
-</blockquote>
-<p>请你实现这个将字符串进行指定行数变换的函数：</p>
-<a id="more"></a>
+<p>请你实现这个将字符串进行指定行数变换的函数：<br><a id="more"></a></p>
 <hr>
 <p>第一眼看到这道题的时候，愣是没弄懂这题在讲什么，看了半天才知道是到数学题，就是找规律。那就很简单了，直接把字符串中对应每一个字符的位置与新的位置形成映射，遍历一遍，就出来了。</p>
+</blockquote>
 <p>然而显示很残酷，在计算公式的时候，我抱怨过无数次我的脑子寄存器不够用，根本难以理清关系。后来想到新建一个二维数组，真的以Z字形将字符串存入，再按行遍历，但这方法似乎太笨了些，知道后来看到了一个大佬的想法，才一语惊醒梦中人。</p>
 <p>先将图画出来，可以直观的看出各元素的位置结构。先初始化numRows个容器来存储每一行的元素。总体上可以以numRows-1个元素作为一个周期，为什么是numRows-1个，看图看出来的。排除完特殊情况之后，遍历原字符串，计算可得出每一个元素所在的周期数和位序，但是其实周期也分两类，偶数和奇数，可以看出这两类周期的元素对于Z字形的行号的递增方向是不同的，所以用当前周期对二取模可辩别这是奇数还是偶数周期，再分别将字符压入相应的行中。遍历完成之后，将这numRows个容器拼接，就是所求字符串。</p>
-<p>了解完这种解法，我只能发出由衷的感叹：妙啊！这就是所谓的数学直觉吗。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> numRows)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">t</span><span class="params">(numRows)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> ans;</span><br><span class="line">        <span class="keyword">if</span>(s.size()&lt;<span class="number">1</span>||numRows&lt;<span class="number">1</span>)<span class="keyword">return</span> ans;</span><br><span class="line">        <span class="keyword">if</span>(numRows==<span class="number">1</span>)<span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.size();i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> cycle = i/(numRows<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">int</span> order = i%(numRows<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span>(cycle%<span class="number">2</span>==<span class="number">0</span>)t[order].push_back(s[i]);</span><br><span class="line">            <span class="keyword">else</span> t[numRows-order<span class="number">-1</span>].push_back(s[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numRows;i++)ans+=t[i];</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>了解完这种解法，我只能发出由衷的感叹：妙啊！这就是所谓的数学直觉吗。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> numRows)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">t</span><span class="params">(numRows)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> ans;</span><br><span class="line">        <span class="keyword">if</span>(s.size()&lt;<span class="number">1</span>||numRows&lt;<span class="number">1</span>)<span class="keyword">return</span> ans;</span><br><span class="line">        <span class="keyword">if</span>(numRows==<span class="number">1</span>)<span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.size();i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> cycle = i/(numRows<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">int</span> order = i%(numRows<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span>(cycle%<span class="number">2</span>==<span class="number">0</span>)t[order].push_back(s[i]);</span><br><span class="line">            <span class="keyword">else</span> t[numRows-order<span class="number">-1</span>].push_back(s[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numRows;i++)ans+=t[i];</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -505,7 +502,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +600,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -614,6 +611,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1096,6 +1101,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

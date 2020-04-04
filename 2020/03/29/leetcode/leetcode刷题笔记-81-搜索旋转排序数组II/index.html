@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,0,1,2,2,5,6] 可能变为 [2,5,6,0,0,1,2] )。编写一个函数来判断给定的目标值是否存在于数组中。若存在返回 true，否则返回 false。 进阶:  这是 搜索旋转排序数组 的延伸题目，本题中的 nums  可能包含重复元素。 这会影响到程序的时间复杂度吗？会有怎样的影响，为什么？">
 <meta property="article:published_time" content="2020-03-29T12:55:29.000Z">
-<meta property="article:modified_time" content="2020-03-29T13:12:53.130Z">
+<meta property="article:modified_time" content="2020-04-04T08:41:27.341Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -383,7 +383,7 @@
 </ul>
 <hr>
 <p>相比此前的搜索旋转数组，在这里多了重复元素，首先导致了如果首位与最后一位元素相等，则无法判断是k的前段有序还是后段有序，因为将k指向的元素与首位作比较就是为了确定一种情况，现在这种情况模棱两可，当然是会出错的，解决的办法是在开始循环之前将如果首尾相同，就让首位后移直到不相同为止。其次，在循环逻辑判断的时候，细节方面需要考虑k指向的值与开头相等的情况，但思想不变。</p>
-<p>至于题目改动对时间复杂度的影响，情况最好时，即头元素与尾元素一开始就不等，那么就是o(logn)。情况最坏时，即所有元素都一样，那么在循环体之前对头尾的处理将会耗费过多时间，所以时间复杂度为o(n)。</p>
+<p>至于题目改动对时间复杂度的影响，情况最好时，即头元素与尾元素一开始就不等，那么就是$O(logn)$。情况最坏时，即所有元素都一样，那么在循环体之前对头尾的处理将会耗费过多时间，所以时间复杂度为$O(n)$。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.size()&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        int i(0),j(nums.size()-1);</span><br><span class="line">        <span class="keyword">while</span>(nums[i] == nums[j]&amp;&amp;i&lt;j)i++;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">tag</span><span class="params">(i)</span></span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==target||nums[j]==target)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">k</span><span class="params">((i+j)&gt;&gt;<span class="number">1</span>)</span></span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[k]&gt;target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[k]&lt;nums[tag])j=k<span class="number">-1</span>;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(target&gt;nums[tag])j=k<span class="number">-1</span>;</span><br><span class="line">                    <span class="keyword">else</span> i=k+<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[k]&lt;target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[k]&gt;=nums[tag])i=k+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(target&gt;nums[tag])j=k<span class="number">-1</span>;</span><br><span class="line">                    <span class="keyword">else</span> i=k+<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -498,7 +498,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -596,7 +596,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -607,6 +607,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1089,6 +1097,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

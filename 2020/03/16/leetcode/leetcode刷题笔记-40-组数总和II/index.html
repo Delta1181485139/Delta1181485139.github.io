@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。candidates 中的每个数字在每个组合中只能使用一次。说明：  所有数字（包括目标数）都是正整数。 解集不能包含重复的组合。    输入: candidates &#x3D; [10,1,2,7,6,1,5], target &#x3D; 8,所求解集为:[   [1, 7]">
 <meta property="article:published_time" content="2020-03-16T08:05:41.000Z">
-<meta property="article:modified_time" content="2020-03-22T10:01:56.555Z">
+<meta property="article:modified_time" content="2020-04-04T08:37:56.998Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -385,9 +385,7 @@
 <a id="more"></a>
 <hr>
 <p>与上一题不同的是，这里候选序列中的元素可能有相同的元素，但每个元素只能用一次。因此在递归的时候应该带入的循环初值为当前层的循环次数。这题比较讨厌的地方在于递归的时候难以处理候选序列有相同的元素的情况，因为这些相同的元素各只能用一次。遍历的时候去重实在是一件很麻烦的事情。所以我只好先用一个集合来存结果，再把结果存成向量。</p>
-<p>一定要好好掌握STL的一些容器和算法，这样也好在一筹莫展的时候取取巧。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">combinationSum2</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        sort(candidates.begin(),candidates.end());</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">        recall(candidates,target,<span class="built_in">queue</span>,<span class="number">0</span>,res);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">ans</span><span class="params">(res.begin(),res.end())</span></span>;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recall</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates,<span class="keyword">int</span> target, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">queue</span>,<span class="keyword">int</span> begin,<span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; ans)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin);i&lt;candidates.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(target - candidates[i]&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                recall(candidates,target - candidates[i],<span class="built_in">queue</span>,i+<span class="number">1</span>,ans);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(target - candidates[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                ans.insert(<span class="built_in">queue</span>);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>一定要好好掌握STL的一些容器和算法，这样也好在一筹莫展的时候取取巧。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">combinationSum2</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        sort(candidates.begin(),candidates.end());</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">        recall(candidates,target,<span class="built_in">queue</span>,<span class="number">0</span>,res);</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">ans</span><span class="params">(res.begin(),res.end())</span></span>;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recall</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates,<span class="keyword">int</span> target, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">queue</span>,<span class="keyword">int</span> begin,<span class="built_in">set</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; ans)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(begin);i&lt;candidates.size();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(target - candidates[i]&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                recall(candidates,target - candidates[i],<span class="built_in">queue</span>,i+<span class="number">1</span>,ans);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(target - candidates[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">queue</span>.push_back(candidates[i]);</span><br><span class="line">                ans.insert(<span class="built_in">queue</span>);</span><br><span class="line">                <span class="built_in">queue</span>.pop_back();</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -502,7 +500,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -600,7 +598,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -611,6 +609,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1093,6 +1099,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

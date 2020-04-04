@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？">
 <meta property="article:published_time" content="2020-03-25T14:38:52.000Z">
-<meta property="article:modified_time" content="2020-03-25T14:47:53.252Z">
+<meta property="article:modified_time" content="2020-04-04T08:39:17.239Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -374,12 +374,10 @@
       
 
       
-        <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？<br><image src="https://github.com/Delta1181485139/images/blob/master/algorithms/leetcode_62_1.png?raw=true"></p>
-<a id="more"></a>
+        <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
+<p><image src="https://github.com/Delta1181485139/images/blob/master/algorithms/leetcode_62_1.png?raw=true"><br><a id="more"></a></p>
 <hr>
-<p>这道题比上一题稍微复杂一些，在一些格子增加了障碍，因此也不能用简单的组合数来算。还得要动态规划，但也就是在上一题的基础上，增加了对格子和将要走的下一个格子一个障碍判断。不过给的测试数据挺恶心的，要排除掉在第一个格子放障碍的情况，另外算出来的数字会越界，所以为了能存尽量大的整数我就用了一个64位的无符号整型。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">        int height(obstacleGrid.size()),width(obstacleGrid[0].size());</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;&gt; <span class="title">dp</span><span class="params">(height,<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;(width,<span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>]!=<span class="number">1</span>)</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;height;i++)</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;width;j++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&lt;width<span class="number">-1</span>&amp;&amp;obstacleGrid[i][j+<span class="number">1</span>]!=<span class="number">1</span>)dp[i][j+<span class="number">1</span>]+=dp[i][j];</span><br><span class="line">                    <span class="keyword">if</span>(i&lt;height<span class="number">-1</span>&amp;&amp;obstacleGrid[i+<span class="number">1</span>][j]!=<span class="number">1</span>)dp[i+<span class="number">1</span>][j]+=dp[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[height<span class="number">-1</span>][width<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>这道题比上一题稍微复杂一些，在一些格子增加了障碍，因此也不能用简单的组合数来算。还得要动态规划，但也就是在上一题的基础上，增加了对格子和将要走的下一个格子一个障碍判断。不过给的测试数据挺恶心的，要排除掉在第一个格子放障碍的情况，另外算出来的数字会越界，所以为了能存尽量大的整数我就用了一个64位的无符号整型。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">        int height(obstacleGrid.size()),width(obstacleGrid[0].size());</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;&gt; <span class="title">dp</span><span class="params">(height,<span class="built_in">vector</span>&lt;<span class="keyword">uint64_t</span>&gt;(width,<span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>]!=<span class="number">1</span>)</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;height;i++)</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;width;j++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&lt;width<span class="number">-1</span>&amp;&amp;obstacleGrid[i][j+<span class="number">1</span>]!=<span class="number">1</span>)dp[i][j+<span class="number">1</span>]+=dp[i][j];</span><br><span class="line">                    <span class="keyword">if</span>(i&lt;height<span class="number">-1</span>&amp;&amp;obstacleGrid[i+<span class="number">1</span>][j]!=<span class="number">1</span>)dp[i+<span class="number">1</span>][j]+=dp[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[height<span class="number">-1</span>][width<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -494,7 +492,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -592,7 +590,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.1k</span>
+    <span title="Site words total count">45.6k</span>
   
 </div>
 
@@ -603,6 +601,14 @@
 
 
 
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
         
 
@@ -1085,6 +1091,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
   <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>

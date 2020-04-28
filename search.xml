@@ -1,6 +1,341 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-142-环形链表II</title>
+    <url>/2020/04/28/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II/</url>
+    <content><![CDATA[<p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 <code>null</code>。<br>为了表示给定链表中的环，我们使用整数 <code>pos</code> 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 <code>pos</code> 是 <code>-1</code>，则在该链表中没有环。<br><strong>说明：</strong>不允许修改给定的链表。<br><strong>进阶：</strong>你是否可以不用额外空间解决此题？</p>
+<a id="more"></a>
+<hr>
+<p>这道题要得到的结果不仅仅是判断单链表是否有环，还要找到环的入口位置。不过总体思路还是先用快慢指针找到入口点，依然是快指针每次走两步，慢指针每次走一步。那么我们在成功判断有环之后，可以得到两个指针的相遇位置。</p>
+<p>那么可以往下考虑这个追及问题，从起点到环的入口距离设为a，从环的入口到两指针相遇点的距离设为b，从两指针相遇点到环的入口距离设为c。根据快慢指针相遇之前的速度可列出以下方程：</p>
+<script type="math/tex; mode=display">
+a+b=t\\
+a+k(b+c)+b=2t</script><p>其中k为整数，表示快指针比慢指针多走的圈数。t代表两者相遇的时间。将两个方程左右同时相除：</p>
+<script type="math/tex; mode=display">
+k(b+c)=a+b</script><p>将其变形为</p>
+<script type="math/tex; mode=display">
+(k-1)b+kc=a</script><p>可以发现，这个式子的物理含义就是一个指针从前文所提的相遇点出发，两一个指针从链表的起点出发，两个指针的速度都为1，当从起点出发的指针到达环的入口(长度a)时，另一指针也正好在环的入口位置。因此，找到了寻找环的入口的方法。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode *<span class="title">detectCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!head||!head-&gt;next)<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">for</span>(ListNode* i(head-&gt;next),*j(i-&gt;next);j;i = i-&gt;next)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i != j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(j-&gt;next)j = j-&gt;next-&gt;next;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                ListNode* a(head),*b(i);</span><br><span class="line">                <span class="keyword">for</span>(;a!=b;a = a-&gt;next,b = b-&gt;next);</span><br><span class="line">                <span class="keyword">return</span> a;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-141-环形链表</title>
+    <url>/2020/04/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<p>给定一个链表，判断链表中是否有环。为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</p>
+<a id="more"></a>
+<hr>
+<p>单链表判环，穷举法时间复杂度为$O(n^2)$，空间复杂度$O(1)$。</p>
+<p>用哈希表来存储访问过的节点，如果第二次走到走过的节点则判定有环。时间复杂度$O(n)$，空间复杂度$O(n)$。</p>
+<p>双指针法的时间复杂度为$O(n)$，空间复杂度$O(1)$。</p>
+<p>双指针法即用快慢指针，两个指针就好像两个运动员赛跑，如果存在环路，那么除了起点之外，快的运动员一定能够追上慢的运动员，即第二次相遇。体现在代码上就是每次慢指针走一步，快指针走两步，如果快慢指针指向同一节点那么判定为有环。要是快指针直接走到底，那么就无环。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head&amp;&amp;head-&gt;next)</span><br><span class="line">            <span class="keyword">for</span>(ListNode* p(head-&gt;next),*q(head-&gt;next-&gt;next);q&amp;&amp;q-&gt;next;p = p-&gt;next,q = q-&gt;next-&gt;next)</span><br><span class="line">                <span class="keyword">if</span>(p == q)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-139-单词拆分</title>
+    <url>/2020/04/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-139-%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86/</url>
+    <content><![CDATA[<p>给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。<br>说明：<br>拆分时可以重复使用字典中的单词。<br>你可以假设字典中没有重复的单词。<br>示例 ：<br><figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入: <span class="attr">s</span> = <span class="string">"applepenapple"</span>, <span class="attr">wordDict</span> = [<span class="string">"apple"</span>, <span class="string">"pen"</span>]</span><br><span class="line">输出: <span class="literal">true</span></span><br><span class="line">解释: 返回 <span class="literal">true</span> 因为 <span class="string">"applepenapple"</span> 可以被拆分成 <span class="string">"apple pen apple"</span>。</span><br><span class="line">注意你可以重复使用字典中的单词。</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<p>又是一道很典型的回溯的题，思路是先将字典存到一个易于查找的数据结构里，我选择的是哈希表。然后检查字符串的前缀，如果和字典中的字符串匹配，那么就递归检查字符串剩下的部分。我一开始就是想的这么简单，结果提交之后超时了。我一看检测用例：</p>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">最后执行的输入：</span><br><span class="line"><span class="string">"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"</span> [<span class="string">"a"</span>,<span class="string">"aa"</span>,<span class="string">"aaa"</span>,<span class="string">"aaaa"</span>,<span class="string">"aaaaa"</span>,<span class="string">"aaaaaa"</span>,<span class="string">"aaaaaaa"</span>,<span class="string">"aaaaaaaa"</span>,<span class="string">"aaaaaaaaa"</span>,<span class="string">"aaaaaaaaaa"</span>]</span><br><span class="line">状态：超出时间限制</span><br></pre></td></tr></table></figure>
+<p>很想对检测员说“f**k you”。于是检查了一下递归树，确实发现了许多冗余的递归分支，这个时候就需要剪枝了。由于发生冗余分支的原因是对于很多相同的后缀都分别进行了递归，事实上进行了第一次就能知道这个后缀是否能够成功拆分，因此在原来的回溯法上，额外添加了一个状态数组来记录从某个位置开始的后缀无法拆分，就可以直接返回false了，就省了一个递归树的时间。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; dict;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; memo;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordDict)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;dict = <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt;(wordDict.begin(),wordDict.end());</span><br><span class="line">        <span class="keyword">this</span>-&gt;memo = <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(s.size(),<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">this</span>-&gt;str = s;</span><br><span class="line">        <span class="keyword">return</span> candivied(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">candivied</span><span class="params">(<span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start == str.size())<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(!memo[start])<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(start);i&lt;str.size();i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> tmp = str.substr(start,i-start+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(dict.find(tmp)!=dict.end())&#123;</span><br><span class="line">                <span class="keyword">if</span>(candivied(i+<span class="number">1</span>))</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                memo[i] = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-138-复制带随机指针的链表</title>
+    <url>/2020/04/25/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-138-%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<p>给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。要求返回这个链表的 深拷贝。 我们用一个由 n 个节点组成的链表来表示输入/输出中的链表。</p>
+<p>每个节点用一个 [val, random_index] 表示：</p>
+<ul>
+<li>val：一个表示 Node.val 的整数。</li>
+<li>random_index：随机指针指向的节点索引（范围从 0 到 n-1）；如果不指向任何节点，则为  null 。</li>
+<li>-10000 &lt;= Node.val &lt;= 10000</li>
+<li>Node.random为空（null）或指向链表中的节点。</li>
+<li>节点数目不超过 1000 。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>这道题的核心是找到new出来的节点所对应的random节点。使用键值对的方法可以很方便地找到原节点与新节点之间的关系，从而也很容易找到新节点的random节点。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="comment">class Node &#123;</span></span><br><span class="line"><span class="comment">public:</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    Node* next;</span></span><br><span class="line"><span class="comment">    Node* random;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    Node(int _val) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        next = NULL;</span></span><br><span class="line"><span class="comment">        random = NULL;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">copyRandomList</span><span class="params">(Node* head)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;Node*,Node*&gt; dict;</span><br><span class="line">        Node* i = head,*newhead = <span class="keyword">new</span> Node(<span class="number">99999</span>);</span><br><span class="line">        <span class="keyword">for</span>(Node* j = newhead;i;i = i-&gt;next)&#123;</span><br><span class="line">            j-&gt;next = <span class="keyword">new</span> Node(i-&gt;val);</span><br><span class="line">            j = j-&gt;next;</span><br><span class="line">            dict.insert(make_pair(i,j));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i = head;i;i = i-&gt;next)</span><br><span class="line">            <span class="keyword">if</span>(i-&gt;random)</span><br><span class="line">                dict[i]-&gt;random = dict[i-&gt;random];</span><br><span class="line">        <span class="keyword">return</span> newhead-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-137-只出现一次的数字II</title>
+    <url>/2020/04/24/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-137-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97II/</url>
+    <content><![CDATA[<p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。<br>说明：<br>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？<br><a id="more"></a></p>
+<hr>
+<p>空间复杂度为$O(n)$的方法是用集合来存储数组中所有的数，集合中所有数的和set_sum与数组中所有数的和vector_sum应该满足如下关系：$vector_sum=3<em>set_sum-2</em>answer$，因此遍历数组一次即可求出只出现过一次的数字。</p>
+<p>还有空间复杂度为$O(1)$的方法。回想上一题的条件，在一堆出现了两次的数字中寻找只出现一次的数字，只需要用一个未知数，每一位用来表示该位在数组中出现的次数，因为一共就两种状态，出现一次，然后出现第二次清零，所以用一个未知数就能够记录。那么对于现在这题，一个未知数显然是不够的，它的状态转移图应该是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">a</th>
+<th style="text-align:center">b</th>
+<th style="text-align:center">x</th>
+<th style="text-align:center">a</th>
+<th style="text-align:center">b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>经过运算可以得出代码形式的状态转移方程为：</p>
+<script type="math/tex; mode=display">
+            b = (b⊕x)\overline{a}\\
+            a = (a⊕x)\overline{b}</script><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> x : nums) &#123;</span><br><span class="line">            b = (b ^ x) &amp; ~a;</span><br><span class="line">            a = (a ^ x) &amp; ~b;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-134-加油站</title>
+    <url>/2020/04/23/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-134-%E5%8A%A0%E6%B2%B9%E7%AB%99/</url>
+    <content><![CDATA[<p>在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。<br>说明: </p>
+<ul>
+<li>如果题目有解，该答案即为唯一答案。</li>
+<li>输入数组均为非空数组，且长度相同。</li>
+<li>输入数组中的元素均为非负数。<br>示例 :<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: </span><br><span class="line">gas  = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">cost = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">3</span></span><br><span class="line">解释:</span><br><span class="line">从 <span class="number">3</span> 号加油站(索引为 <span class="number">3</span> 处)出发，可获得 <span class="number">4</span> 升汽油。此时油箱有 = <span class="number">0</span> + <span class="number">4</span> = <span class="number">4</span> 升汽油</span><br><span class="line">开往 <span class="number">4</span> 号加油站，此时油箱有 <span class="number">4</span> - <span class="number">1</span> + <span class="number">5</span> = <span class="number">8</span> 升汽油</span><br><span class="line">开往 <span class="number">0</span> 号加油站，此时油箱有 <span class="number">8</span> - <span class="number">2</span> + <span class="number">1</span> = <span class="number">7</span> 升汽油</span><br><span class="line">开往 <span class="number">1</span> 号加油站，此时油箱有 <span class="number">7</span> - <span class="number">3</span> + <span class="number">2</span> = <span class="number">6</span> 升汽油</span><br><span class="line">开往 <span class="number">2</span> 号加油站，此时油箱有 <span class="number">6</span> - <span class="number">4</span> + <span class="number">3</span> = <span class="number">5</span> 升汽油</span><br><span class="line">开往 <span class="number">3</span> 号加油站，你需要消耗 <span class="number">5</span> 升汽油，正好足够你返回到 <span class="number">3</span> 号加油站。</span><br><span class="line">因此，<span class="number">3</span> 可为起始索引。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>这道题很容易想到时间复杂度为$O(n^2)$的暴力搜索方法，但其实可以用将其降至$O(n)$。</p>
+<ul>
+<li>由于所有的耗油量与油量都已经在数组中给出，可以确定的是，如果总油量大于总消耗量，是肯定存在一个起始点能够满足让车跑满一圈的。</li>
+<li>再考虑遍历的过程，用sum来记录总油量和总消耗量之间的关系，用cur来记录从定好的起始点开始车内油量与耗油量的关系，需要满足的条件是车内的油量要时刻大于等于0。</li>
+<li>当发现车内油量小于0时，可以得出目前定的起始点是不符合条件的，另外也可发现途中的点均不能作为起始点。因为在此前的计算中，途中的cur值始终大于0，而现在刚好小于0，那么从途中任何点出发都是无法到达当前点的。所以可以直接将起始点定为下一点。</li>
+<li>遍历结束之后便可以算得总油量与总耗油量之间的差值，如果这个差值小于0就可以返回-1，不存在满足要求的起始点，否则，start就是需要寻找的起始点。</li>
+<li>只需从头到尾遍历一遍的原因是，从任何一点希望跑一圈回到自身都可以抽象为跑到另一个点，再跑回来，所以要比较的只是到达另一个点的总油量是否能支持再跑回来而已。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">canCompleteCircuit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; gas, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; cost)</span> </span>&#123;</span><br><span class="line">        int sum(0),start(0);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>),cur(<span class="number">0</span>);i&lt;gas.size();i++)&#123;</span><br><span class="line">            cur+=gas[i]-cost[i];</span><br><span class="line">            sum+=gas[i]-cost[i];</span><br><span class="line">            <span class="keyword">if</span>(cur&lt;<span class="number">0</span>)&#123;</span><br><span class="line">                cur = <span class="number">0</span>;</span><br><span class="line">                start = i+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum&lt;<span class="number">0</span>?<span class="number">-1</span>:start;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-133-克隆图</title>
+    <url>/2020/04/22/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-133-%E5%85%8B%E9%9A%86%E5%9B%BE/</url>
+    <content><![CDATA[<p>给你无向 连通 图中一个节点的引用，请你返回该图的 深拷贝（克隆）。</p>
+<p>图中的每个节点都包含它的值 val（int） 和其邻居的列表（list[Node]）。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Node</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> val;</span><br><span class="line">    <span class="keyword">public</span> List&lt;Node&gt; neighbors;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试用例格式：</p>
+<p>简单起见，每个节点的值都和它的索引相同。例如，第一个节点值为 1（val = 1），第二个节点值为 2（val = 2），以此类推。该图在测试用例中使用邻接列表表示。邻接列表 是用于表示有限图的无序列表的集合。每个列表都描述了图中节点的邻居集。给定节点将始终是图中的第一个节点（值为 1）。你必须将 给定节点的拷贝 作为对克隆图的引用返回。</p>
+<p>示例：</p>
+<image src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/02/01/133_clone_graph_question.png">
+
+<p>提示：</p>
+<ol>
+<li>节点数不超过 100 。</li>
+<li>每个节点值 Node.val 都是唯一的，1 &lt;= Node.val &lt;= 100。</li>
+<li>无向图是一个简单图，这意味着图中没有重复的边，也没有自环。</li>
+<li>由于图是无向的，如果节点 p 是节点 q 的邻居，那么节点 q 也必须是节点 p 的邻居。</li>
+<li>图是连通图，你可以从给定节点访问到所有节点。</li>
+</ol>
+<a id="more"></a>
+<hr>
+<p>为了更好的将原节点与new出来的节点一一对应，用键值对的方式来存储这种一一映射的关系。之后便是基本的广度优先遍历了。map的好处还有容易判断是否存在某个键。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="comment">class Node &#123;</span></span><br><span class="line"><span class="comment">public:</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    vector&lt;Node*&gt; neighbors;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    Node() &#123;</span></span><br><span class="line"><span class="comment">        val = 0;</span></span><br><span class="line"><span class="comment">        neighbors = vector&lt;Node*&gt;();</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    Node(int _val) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        neighbors = vector&lt;Node*&gt;();</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    Node(int _val, vector&lt;Node*&gt; _neighbors) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        neighbors = _neighbors;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">Node* <span class="title">cloneGraph</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!node)<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">		<span class="built_in">map</span>&lt;Node*, Node*&gt; m;</span><br><span class="line">		<span class="built_in">queue</span>&lt;Node*&gt; que;</span><br><span class="line">		que.push(node);</span><br><span class="line">		<span class="keyword">auto</span> res = <span class="keyword">new</span> Node(node-&gt;val,<span class="built_in">vector</span>&lt;Node*&gt;&#123;&#125;);</span><br><span class="line">		m[node] = res;</span><br><span class="line">		<span class="keyword">while</span> (!que.empty())&#123;</span><br><span class="line">			<span class="keyword">auto</span> tmp = que.front();</span><br><span class="line">			que.pop();</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> i : tmp-&gt;neighbors)&#123;</span><br><span class="line">				<span class="keyword">if</span> (m.find(i)==m.end())&#123;</span><br><span class="line">					m[i] = <span class="keyword">new</span> Node(i-&gt;val,<span class="built_in">vector</span>&lt;Node*&gt;&#123;&#125;);</span><br><span class="line">					que.push(i);</span><br><span class="line">				&#125;</span><br><span class="line">				m[tmp]-&gt;neighbors.push_back(m[i]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-131-分割回文串</title>
+    <url>/2020/04/21/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/</url>
+    <content><![CDATA[<p>给定一个字符串 <em>s</em>，将 <em>s</em> 分割成一些子串，使每个子串都是回文串。返回 <em>s</em> 所有可能的分割方案。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">输入: <span class="string">"aab"</span></span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [<span class="string">"aa"</span>,<span class="string">"b"</span>],</span><br><span class="line">  [<span class="string">"a"</span>,<span class="string">"a"</span>,<span class="string">"b"</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>这道题原本想用动态规划，即首先可以确认将s拆成单个字符会是一个回文串序列，在此基础上，如果一个回文串的两边互为回文串，那么三个回文串可以组成一个新回文串，如果两个回文串相等，那么这两个回文串可以组成一个新的回文串。但感觉这个方法实操起来很麻烦。因此我还是选择了万能的回溯法。</p>
+<p>递归树的第一层始终是s的前缀回文串，在此基础上在剩下的部分继续找。还是和普通的回溯方法大同小异的。另外还需要一个函数来判断子串是否为回文串。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; res;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; <span class="title">partition</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.size()&lt;<span class="number">2</span>)<span class="keyword">return</span> &#123;&#123;s&#125;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; tmp;</span><br><span class="line">        dfs(s,tmp,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">string</span> s,<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; tmp,<span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start&gt;=s.size())&#123;</span><br><span class="line">            res.push_back(tmp);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(start);i&lt;s.size();i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> str = s.substr(start,i-start+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(isPlalindrome(str))&#123;</span><br><span class="line">                tmp.push_back(str);</span><br><span class="line">                dfs(s,tmp,i+<span class="number">1</span>);</span><br><span class="line">                tmp.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPlalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>),j(s.size()<span class="number">-1</span>);i&lt;=j;)</span><br><span class="line">            <span class="keyword">if</span>(s[i++] != s[j--])<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-136-只出现一次的数字</title>
+    <url>/2020/04/20/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。<br>说明：<br>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
+<a id="more"></a>
+<hr>
+<p>奇技淫巧(异或运算)：</p>
+<script type="math/tex; mode=display">
+0⊕N=N;\\
+N⊕N=0;\\
+A⊕B⊕C=C⊕A⊕B</script><p>基于上述的异或的特性，可将数组中所有元素进行异或运算，由于异或运算满足交换律，所以所有成对的元素会消失，最后结果只剩下落单的元素。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">res</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:nums)res^=i;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-130-被围绕的区域</title>
+    <url>/2020/04/19/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-130-%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F/</url>
+    <content><![CDATA[<p>给定一个二维的矩阵，包含 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code>（<strong>字母 O</strong>）。找到所有被 <code>&#39;X&#39;</code> 围绕的区域，并将这些区域里所有的 <code>&#39;O&#39;</code> 用 <code>&#39;X&#39;</code> 填充。<br>示例:<br><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line"><span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> O O <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> <span class="meta">X</span> O <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> O <span class="meta">X</span> <span class="meta">X</span></span><br><span class="line">运行你的函数后，矩阵变为：</span><br><span class="line"><span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span> <span class="meta">X</span></span><br><span class="line"><span class="meta">X</span> O <span class="meta">X</span> <span class="meta">X</span></span><br></pre></td></tr></table></figure><br>解释:<br>被围绕的区间不会存在于边界上，换句话说，任何边界上的 ‘O’ 都不会被填充为 ‘X’。 任何不在边界上，或不与边界上的 ‘O’ 相连的 ‘O’ 最终都会被填充为 ‘X’。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。<br><a id="more"></a></p>
+<hr>
+<p>根据题意提炼出的条件是，所有与矩阵边界上的’O’连通的’O’都维持原样不变，而其它的所有’O’变为’X’。</p>
+<ul>
+<li>首先是排除特殊条件，若矩阵的行数或列数小于3，则不存在包围的情况，直接返回。</li>
+<li>对矩阵的边界进行遍历，若边界值为’O’，对其进行深度优先搜索，找出所有与其连通的’O’，并将其置为’V’，以便和其它要变’X’的’O’区分。</li>
+<li>遍历完边界之后首先将所有的’O’变为’X’，再将所有的’V’变为’O’。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dir&#123;&#123;<span class="number">-1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">-1</span>&#125;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(board.size()&lt;<span class="number">3</span>||board[<span class="number">0</span>].size()&lt;<span class="number">3</span>)<span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>),j(<span class="number">0</span>);;)&#123;</span><br><span class="line">            <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>)dfs(i,j,board);</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span>&amp;&amp;j&lt;board[<span class="number">0</span>].size()<span class="number">-1</span>)j++;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(i == board.size()<span class="number">-1</span>&amp;&amp;j&gt;<span class="number">0</span>)j--;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>&amp;&amp;i&gt;<span class="number">0</span>)i--;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j == board[<span class="number">0</span>].size()<span class="number">-1</span>&amp;&amp;i&lt;board.size()<span class="number">-1</span>)i++;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span>&amp;&amp;j == <span class="number">0</span>)<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;board.size();i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;board[<span class="number">0</span>].size();j++)</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] == <span class="string">'O'</span>)</span><br><span class="line">                    board[i][j] = <span class="string">'X'</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;board.size();i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;board[<span class="number">0</span>].size();j++)</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] == <span class="string">'V'</span>)</span><br><span class="line">                    board[i][j] = <span class="string">'O'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; mat)</span></span>&#123;</span><br><span class="line">        mat[i][j] = <span class="string">'V'</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k(<span class="number">0</span>);k&lt;<span class="number">4</span>;k++)&#123;</span><br><span class="line">            int x(i + dir[k][0]),y(j + dir[k][1]);</span><br><span class="line">            <span class="keyword">if</span>(x&gt;=<span class="number">0</span>&amp;&amp;x&lt;mat.size()&amp;&amp;y&gt;=<span class="number">0</span>&amp;&amp;y&lt;mat[<span class="number">0</span>].size()&amp;&amp;mat[x][y] == <span class="string">'O'</span>)</span><br><span class="line">                dfs(x,y,mat);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-129-求根到叶子节点数字之和</title>
+    <url>/2020/04/18/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-129-%E6%B1%82%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个二叉树，它的每个结点都存放一个 0-9 的数字，每条从根到叶子节点的路径都代表一个数字。例如，从根到叶子节点路径 1-&gt;2-&gt;3 代表数字 123。计算从根到叶子节点生成的所有数字之和。</p>
+<p>说明: 叶子节点是指没有子节点的节点。</p>
+<p>示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: [<span class="number">4</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">1</span>]</span><br><span class="line">    <span class="number">4</span></span><br><span class="line">   / \</span><br><span class="line">  <span class="number">9</span>   <span class="number">0</span></span><br><span class="line"> / \</span><br><span class="line"><span class="number">5</span>   <span class="number">1</span></span><br><span class="line">输出: <span class="number">1026</span></span><br><span class="line">解释:</span><br><span class="line">从根到叶子节点路径 <span class="number">4</span>-&gt;<span class="number">9</span>-&gt;<span class="number">5</span> 代表数字 <span class="number">495.</span></span><br><span class="line">从根到叶子节点路径 <span class="number">4</span>-&gt;<span class="number">9</span>-&gt;<span class="number">1</span> 代表数字 <span class="number">491.</span></span><br><span class="line">从根到叶子节点路径 <span class="number">4</span>-&gt;<span class="number">0</span> 代表数字 <span class="number">40.</span></span><br><span class="line">因此，数字总和 = <span class="number">495</span> + <span class="number">491</span> + <span class="number">40</span> = <span class="number">1026.</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>递归的思想：</p>
+<ul>
+<li>如果根节点为空，则返回0。</li>
+<li>如果根节点非空，左右节点均为空，则返回以往祖先节点组成的数字乘以10再加上自身节点的值。</li>
+<li>如果至少有一个子节点非空，则返回以往祖先组成的数字乘以10加上左子树的值，右子树同理。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumNumbers</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dfs(root,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(TreeNode* root,<span class="keyword">int</span> sum)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!root-&gt;left&amp;&amp;!root-&gt;right)<span class="keyword">return</span> <span class="number">10</span>*sum + root-&gt;val;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> dfs(root-&gt;left,<span class="number">10</span>*sum + root-&gt;val) + dfs(root-&gt;right,<span class="number">10</span>*sum + root-&gt;val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-127-单词接龙</title>
+    <url>/2020/04/17/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-127-%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/</url>
+    <content><![CDATA[<p>给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：</p>
+<ol>
+<li>每次转换只能改变一个字母。</li>
+<li>转换过程中的中间单词必须是字典中的单词。</li>
+</ol>
+<p>说明:</p>
+<ul>
+<li>如果不存在这样的转换序列，返回 0。</li>
+<li>所有单词具有相同的长度。</li>
+<li>所有单词只由小写字母组成。</li>
+<li>字典中不存在重复的单词。</li>
+<li>你可以假设 beginWord 和 endWord 是非空的，且二者不相同。</li>
+</ul>
+<p>示例 :</p>
+<blockquote>
+<p>输入:<br>beginWord = “hit”,<br>endWord = “cog”,<br>wordList = [“hot”,”dot”,”dog”,”lot”,”log”,”cog”]<br>输出: 5<br>解释: 一个最短转换序列是 “hit” -&gt; “hot” -&gt; “dot” -&gt; “dog” -&gt; “cog”,返回它的长度 5。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>这是一道比较经典的适用于广度优先搜索的题。首先根据题意，首尾两个单词以及字典中的每个单词可根据它们之间相差一个字母做一个预处理，为了建立起一段路径两端的单词之间的关系。例如，可以用d<em>t来代表dot和dog，意思是如果改变中间的那个字母，有dot和dog这两个单词可以作为下一个单词。因此这种关系可以用一个哈希表来存储，将类似d\</em>t这种通式作为键，值为所有满足这个通式的一个字符串数组。</p>
+<p>经过预处理之后将会更便于处理两个节点之间的关系。为了进行广度优先遍历，还需要一个由元组组成的队列，元组来存储单词以及其对应的遍历层数，因为广度优先搜索来寻找最短路径的结果就是匹配成功时的遍历层数。另外还要一个集合来存储字典中每个单词的访问情况，以免多次访问同一个单词。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>,<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; dict;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>,<span class="keyword">bool</span>&gt; visit;</span><br><span class="line">        <span class="built_in">queue</span>&lt;pair&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;&gt; que;</span><br><span class="line">        <span class="keyword">int</span> len = beginWord.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:wordList)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;len;j++)&#123;</span><br><span class="line">                <span class="built_in">string</span> tmp = i;</span><br><span class="line">                tmp[j] = <span class="string">'*'</span>;</span><br><span class="line">                dict[tmp].push_back(i);</span><br><span class="line">            &#125;</span><br><span class="line">            visit.insert(make_pair(i,<span class="literal">false</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        que.push(make_pair(beginWord,<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">while</span>(!que.empty())&#123;</span><br><span class="line">            pair&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; cur = que.front();</span><br><span class="line">            <span class="keyword">if</span>(cur.first == endWord)<span class="keyword">return</span> cur.second;</span><br><span class="line">            que.pop();</span><br><span class="line">            visit[cur.first] = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i(<span class="number">0</span>);i&lt;len;i++)&#123;</span><br><span class="line">                <span class="built_in">string</span> tmp = cur.first;</span><br><span class="line">                tmp[i] = <span class="string">'*'</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">auto</span> j:dict[tmp])</span><br><span class="line">                    <span class="keyword">if</span>(!visit[j])</span><br><span class="line">                        que.push(make_pair(j,cur.second+<span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-120-三角形最小路径和</title>
+    <url>/2020/04/16/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-120-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</url>
+    <content><![CDATA[<p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p>例如，给定三角形：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">     [<span class="number">2</span>],</span><br><span class="line">    [<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line">   [<span class="number">6</span>,<span class="number">5</span>,<span class="number">7</span>],</span><br><span class="line">  [<span class="number">4</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">3</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>自顶向下的最小路径和为 <code>11</code>（即，<strong>2</strong> + <strong>3</strong> + <strong>5</strong> + <strong>1</strong> = 11）。</p>
+<p><strong>说明：</strong></p>
+<p>如果你可以只使用 <em>O</em>(<em>n</em>) 的额外空间（<em>n</em> 为三角形的总行数）来解决这个问题，那么你的算法会很加分。</p>
+<a id="more"></a>
+<hr>
+<p>这道题用很显然是动态规划的一类题，如果用自上而下的方法，除了要用一个数组来记录当前行的所有元素作为终点的路径长度，还要有一个数组来保存上一行的结果，因为当前行所有元素的路径长度依赖于上一行。但其实用自下而上的递归方法会更简单，甚至可以在原数组上进行运算，时间复杂度为$O(n^2)$，没有用额外的辅助空间，空间复杂度为$O(1)$。可以直接从倒数第二行开始考虑：</p>
+<ul>
+<li>对每一行每一个元素，它的下一个元素的选择只有两个，那么将小的那个加到当前元素上，对整行元素做这个操作。之后对所有行做此操作，最后整个数组第一个元素就是路径和最小的元素。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i(triangle.size()<span class="number">-2</span>);i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j(<span class="number">0</span>);j&lt;triangle[i].size();j++)</span><br><span class="line">                triangle[i][j]+=min(triangle[i+<span class="number">1</span>][j],triangle[i+<span class="number">1</span>][j+<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">return</span> triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实自上而下的动态规划想起来确实有些复杂，所以以后遇到这种情况，不妨换一个方向，也许会豁然开朗。</p>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-117-填充每个节点的下一个右侧节点指针II</title>
     <url>/2020/04/15/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-117-%E5%A1%AB%E5%85%85%E6%AF%8F%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%8F%B3%E4%BE%A7%E8%8A%82%E7%82%B9%E6%8C%87%E9%92%88II/</url>
     <content><![CDATA[<p>给定一个二叉树:</p>

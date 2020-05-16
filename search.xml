@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-150-逆波兰表达式求值</title>
+    <url>/2020/05/16/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-150-%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</url>
+    <content><![CDATA[<p>根据逆波兰表示法，求表达式的值。有效的运算符包括 +, -, *, / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。<br>说明：</p>
+<ul>
+<li>整数除法只保留整数部分。</li>
+<li>给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>其实就是后缀表达式的求解。需要遍历一次原字符串，用一个辅助栈来实现。步骤如下：</p>
+<ul>
+<li>若读到的符号是数字，则将其转化为整型入栈。</li>
+<li>若读到的符号是操作符，则将栈顶出栈两个元素，进行运算后再压入栈。</li>
+<li>遍历结束之后的栈顶元素即为运算结果，当然此时栈中只有一个元素。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; tokens)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; sta;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:tokens)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="string">"+"</span>||i == <span class="string">"-"</span>||i == <span class="string">"*"</span>||i == <span class="string">"/"</span>)&#123;</span><br><span class="line">                <span class="keyword">int</span> a = sta.top();</span><br><span class="line">                sta.pop();</span><br><span class="line">                <span class="keyword">int</span> b = sta.top();</span><br><span class="line">                sta.pop();</span><br><span class="line">                sta.push(oper(a,b,i));</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">int</span> tmp;</span><br><span class="line">                <span class="built_in">stringstream</span> ss;</span><br><span class="line">                ss&lt;&lt;i;</span><br><span class="line">                ss&gt;&gt;tmp;</span><br><span class="line">                sta.push(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sta.top();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">oper</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="built_in">string</span> op)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(op == <span class="string">"+"</span>)<span class="keyword">return</span> b+a;</span><br><span class="line">        <span class="keyword">if</span>(op == <span class="string">"-"</span>)<span class="keyword">return</span> b-a;</span><br><span class="line">        <span class="keyword">if</span>(op == <span class="string">"*"</span>)<span class="keyword">return</span> b*a;</span><br><span class="line">        <span class="keyword">return</span> b/a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-146-LRU缓存机制</title>
     <url>/2020/05/14/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-146-LRU%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<p>运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。</p>

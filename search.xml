@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-153-寻找旋转排序数组中的最小值</title>
+    <url>/2020/05/18/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-153-%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/</url>
+    <content><![CDATA[<p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。请找出其中最小的元素。<br>你可以假设数组中不存在重复元素。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">1</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<p>看到评论区一堆用标准库排序输出首元素，还有遍历一遍找旋转点的，我也是服了。有序条件下的查找操作显然是二分法最快啊。但这种题套模板肯定是不行的，但也就是细节上的一些改动而已。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>,j = nums.size()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j<span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> k = (i+j)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[k]&gt;nums[<span class="number">0</span>])&#123;</span><br><span class="line">                i = k;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[k]&lt;nums[<span class="number">0</span>])&#123;</span><br><span class="line">                j = k;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span> min(nums[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min(nums[<span class="number">0</span>],min(nums[i],nums[j]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-133-克隆图</title>
     <url>/2020/05/18/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-133-%E5%85%8B%E9%9A%86%E5%9B%BE/</url>
     <content><![CDATA[<p>给你无向 连通 图中一个节点的引用，请你返回该图的 深拷贝（克隆）。</p>

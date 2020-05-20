@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-155-最小栈</title>
+    <url>/2020/05/20/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-155-%E6%9C%80%E5%B0%8F%E6%A0%88/</url>
+    <content><![CDATA[<p>设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。</p>
+<ul>
+<li>push(x) —— 将元素 x 推入栈中。</li>
+<li>pop() —— 删除栈顶的元素。</li>
+<li>top() —— 获取栈顶元素。</li>
+<li>getMin() —— 检索栈中的最小元素。</li>
+</ul>
+<p>提示：pop、top 和 getMin 操作总是在 非空栈 上调用。</p>
+<a id="more"></a>
+<hr>
+<p>为了图方便我就直接用了STL中的栈来写了，毕竟这题的考察点是在于以$O(1)$的时间复杂度找出栈中的最小元素。虽然这已经和栈的朴素定义起了冲突，因为对于一个栈我们确实只应该关心栈顶已经对栈顶元素的操作。</p>
+<p>话说回来，实际上想最快的找到最小元素，那么可以使用额外一个栈，每次更新数据是时候都想此时的最小元素压入最小元素栈的栈顶。每次弹出元素的时候如果其值和最小元素栈栈顶元素值相等，那么最小元素栈也需要将栈顶元素弹出。这样的话最小元素栈的栈顶元素就能够保持始终是栈中最小元素。需要取的时候直接访问栈顶就好。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; minmum;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    MinStack() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        s.push(x);</span><br><span class="line">        <span class="keyword">if</span>(minmum.empty()||minmum.top()&gt;=x)</span><br><span class="line">            minmum.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.top() == minmum.top())minmum.pop();</span><br><span class="line">        s.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.top();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> minmum.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MinStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MinStack* obj = new MinStack();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;top();</span></span><br><span class="line"><span class="comment"> * int param_4 = obj-&gt;getMin();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-152-乘积最大子数组</title>
+    <url>/2020/05/20/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-152-%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<p>给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">2</span>,<span class="number">3</span>,<span class="number">-2</span>,<span class="number">4</span>]</span><br><span class="line">输出: <span class="number">6</span></span><br><span class="line">解释: 子数组 [<span class="number">2</span>,<span class="number">3</span>] 有最大乘积 <span class="number">6</span>。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">-2</span>,<span class="number">0</span>,<span class="number">-1</span>]</span><br><span class="line">输出: <span class="number">0</span></span><br><span class="line">解释: 结果不能为 <span class="number">2</span>, 因为 [<span class="number">-2</span>,<span class="number">-1</span>] 不是子数组。</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<h1 id="分治法："><a href="#分治法：" class="headerlink" title="分治法："></a>分治法：</h1><p>一开始将数组的结构研究了好一会儿，发现可以这样分析：要想子数组的乘积最大，那么里面就最好不含0，除非情况极坏。所以可以将数组按照0作为分隔符将其分为若干个子数组进行分治。</p>
+<ul>
+<li>对于每一个子数组来说，如果其乘积小于0，说明其中负数有奇数个，那么分别从左边和右边找到第一个负数，将其截断。取最大值作为这个子数组的乘积最大值。</li>
+<li>最后取所有子数组的最大值。当然还要考虑一些特殊情况。</li>
+</ul>
+<h1 id="贪心算法："><a href="#贪心算法：" class="headerlink" title="贪心算法："></a>贪心算法：</h1><p>其实这道题做着有些似曾相识，这和之前做过的最大子序和不是如出一辙吗。因为要求的是连续数组，所以每次都将当前最优解与最终解比较并更新。</p>
+<ul>
+<li>与最大子序和不同的是，乘积最大子数组需要存两个临时值，一个是当前数组的最大值，一个是最小值。理由是因为乘法的性质，当乘以一个负数的时候，最大值有可能变最小值，最小值有可能变最大值，这个是难以确定的。</li>
+<li>我们需要将数组遍历一遍，如果当前元素是负数，那么就需要将当前最大值与当前最小值互换了。之后分别将当前元素乘上此前记录的最大或最小值。如果乘下来的最大值还不如现在遍历到的元素大，那就直接将当前元素作为最大值，类似的，如果乘下来的最小值还不如当前元素小，那就以当前元素作为最小值。</li>
+<li>每一次遍历也都需要将整次遍历所得出的最大值提取出来作为结果输出。</li>
+</ul>
+<p>之所以能这么做，一切要归功于题目所要求的子数组要连续。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = INT_MIN, max_value = <span class="number">1</span>, min_value = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;<span class="number">0</span>)swap(max_value,min_value);</span><br><span class="line">            max_value = max(max_value*i,i);</span><br><span class="line">            min_value = min(min_value*i,i);</span><br><span class="line">            res = max(res,max_value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-153-寻找旋转排序数组中的最小值</title>
     <url>/2020/05/18/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-153-%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/</url>
     <content><![CDATA[<p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。请找出其中最小的元素。<br>你可以假设数组中不存在重复元素。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">1</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">0</span></span><br></pre></td></tr></table></figure></p>

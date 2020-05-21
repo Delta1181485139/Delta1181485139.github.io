@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n&#x2F;2 ⌋ 的元素。 你可以假设数组是非空的，并且给定的数组总是存在多数元素。">
 <meta property="article:published_time" content="2020-05-07T03:02:18.000Z">
-<meta property="article:modified_time" content="2020-05-07T03:07:11.133Z">
+<meta property="article:modified_time" content="2020-05-20T03:07:29.053Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -338,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  270
+                  316
                 </span>
               
 
@@ -379,7 +379,7 @@
 <p>你可以假设数组是非空的，并且给定的数组总是存在多数元素。</p>
 <a id="more"></a>
 <hr>
-<p>一种容易想到的方法是利用哈希表来记录每个元素出现的次数，选出那个大于二分之n的元素即可。但为了减小空间复杂度，可以采用摩尔投票法来求解。由于多数元素的个数是大于二分之n的。那么如果用每一个非多数元素与一个多数元素进行抵消，那么最后肯定会剩下的是多数元素。在遍历的过程中，如果计数器为0，说明之前的元素可以看作无多数元素，因为全部两两抵消掉了。</p>
+<p>一种容易想到的方法是利用哈希表来记录每个元素出现的次数，选出那个大于二分之n的元素即可。但为了减小空间复杂度，可以采用摩尔投票法来求解。由于多数元素的个数是大于二分之n的。那么如果用每一个非多数元素与一个多数元素进行抵消，那么最后肯定会剩下的是多数元素。在遍历的过程中，如果计数器为0，说明之前的元素可以看作无多数元素，因为全部两两抵消掉了。简单来说，即使前面遇到的元素出现了很多次，但如果它不是多数元素，那么属于它的计数器的值一定会减为0。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        int count(0),candidate;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(count == <span class="number">0</span>)&#123;</span><br><span class="line">                candidate = i;</span><br><span class="line">                count = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i == candidate)count++;</span><br><span class="line">            <span class="keyword">else</span> count--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> candidate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
@@ -495,7 +495,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">134</span>
+                  <span class="site-state-item-count">135</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -599,7 +599,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">64k</span>
+    <span title="Site words total count">64.4k</span>
   
 </div>
 

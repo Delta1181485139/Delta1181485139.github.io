@@ -275,6 +275,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Delta">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Delta">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/22/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/" itemprop="url">leetcode刷题笔记-165-比较版本号</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T15:21:32+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  608
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>比较两个版本号 version1 和 version2。如果 version1 &gt; version2 返回 1，如果 version1 &lt; version2 返回 -1， 除此之外返回 0。你可以假设版本字符串非空，并且只包含数字和 . 字符。 . 字符不代表小数点，而是用于分隔数字序列。例如，2.5 不是“两个半”，也不是“差一半到三”，而是第二版中的第五个小版本。可以假设版本号的每一级的默认修订版号为 0。例如，版本号 3.4 的第一级（大版本）和第二级（小版本）修订号分别为 3 和 4。其第三级和第四级修订号均为 0。<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: versio<span class="symbol">n1</span> = <span class="string">"0.1"</span>, versio<span class="symbol">n2</span> = <span class="string">"1.1"</span></span><br><span class="line">输出: <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: versio<span class="symbol">n1</span> = <span class="string">"1.0.1"</span>, versio<span class="symbol">n2</span> = <span class="string">"1"</span></span><br><span class="line">输出: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">示例 <span class="number">3</span>:</span><br><span class="line">输入: versio<span class="symbol">n1</span> = <span class="string">"7.5.2.4"</span>, versio<span class="symbol">n2</span> = <span class="string">"7.5.3"</span></span><br><span class="line">输出: <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">示例 <span class="number">4</span>：</span><br><span class="line">输入：versio<span class="symbol">n1</span> = <span class="string">"1.01"</span>, versio<span class="symbol">n2</span> = <span class="string">"1.001"</span></span><br><span class="line">输出：<span class="number">0</span></span><br><span class="line">解释：忽略前导零，“<span class="number">01</span>” 和 “<span class="number">001</span>” 表示相同的数字 “<span class="number">1</span>”。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">5</span>：</span><br><span class="line">输入：versio<span class="symbol">n1</span> = <span class="string">"1.0"</span>, versio<span class="symbol">n2</span> = <span class="string">"1.0.0"</span></span><br><span class="line">输出：<span class="number">0</span></span><br><span class="line">解释：versio<span class="symbol">n1</span> 没有第三级修订号，这意味着它的第三级修订号默认为 “<span class="number">0</span>”。</span><br></pre></td></tr></table></figure><br>提示：</p>
+<ul>
+<li>版本字符串由以点 （.） 分隔的数字字符串组成。这个数字字符串可能有前导零。</li>
+<li>版本字符串不以点开始或结束，并且其中不会有两个连续的点。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/05/22/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/21/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-162-%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1693,171 +1852,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-169-Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Delta">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Delta">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-169-Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/" itemprop="url">leetcode刷题笔记-169-Excel表列序号</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T16:59:19+08:00">
-                2020-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  106
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>给定一个Excel表格中的列名称，返回其相应的列序号。</p>
-<p>例如，</p>
-<pre><code>A -&gt; 1
-B -&gt; 2
-C -&gt; 3
-...
-Z -&gt; 26
-AA -&gt; 27
-AB -&gt; 28 
-...
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/05/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-169-Excel%E8%A1%A8%E5%88%97%E5%BA%8F%E5%8F%B7/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1910,7 +1904,7 @@ AB -&gt; 28
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-count">136</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2014,7 +2008,7 @@ AB -&gt; 28
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">64.4k</span>
+    <span title="Site words total count">65k</span>
   
 </div>
 

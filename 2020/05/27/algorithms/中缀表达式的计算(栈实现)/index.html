@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="leetcode," />
+  <meta name="keywords" content="algorithms," />
 
 
 
@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="给定一个二叉树，判断其是否是一个有效的二叉搜索树。 假设一个二叉搜索树具有如下特征：  节点的左子树只包含小于当前节点的数。 节点的右子树只包含大于当前节点的数。 所有左子树和右子树自身必须也是二叉搜索树。">
+<meta name="description" content="最近在学编译原理，其中有个实验要求是建立算术表达式的语法分析树。其实我感觉难点就在于如何将中缀表达式转化为前缀或后缀表达式。而建立语法分析树的目的和求值的目的实质上是一样的。特此记录一下在数据结构中算术表达式在栈的应用中的表现。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode刷题笔记-98-验证二叉搜索树">
-<meta property="og:url" content="http://yoursite.com/2020/04/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-98-%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/index.html">
+<meta property="og:title" content="中缀表达式的计算(栈实现)">
+<meta property="og:url" content="http://yoursite.com/2020/05/27/algorithms/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%AE%A1%E7%AE%97(%E6%A0%88%E5%AE%9E%E7%8E%B0)/index.html">
 <meta property="og:site_name" content="Delta">
-<meta property="og:description" content="给定一个二叉树，判断其是否是一个有效的二叉搜索树。 假设一个二叉搜索树具有如下特征：  节点的左子树只包含小于当前节点的数。 节点的右子树只包含大于当前节点的数。 所有左子树和右子树自身必须也是二叉搜索树。">
-<meta property="article:published_time" content="2020-04-05T10:17:51.000Z">
-<meta property="article:modified_time" content="2020-04-05T11:44:27.360Z">
+<meta property="og:description" content="最近在学编译原理，其中有个实验要求是建立算术表达式的语法分析树。其实我感觉难点就在于如何将中缀表达式转化为前缀或后缀表达式。而建立语法分析树的目的和求值的目的实质上是一样的。特此记录一下在数据结构中算术表达式在栈的应用中的表现。">
+<meta property="article:published_time" content="2020-05-27T11:47:53.000Z">
+<meta property="article:modified_time" content="2020-05-27T12:19:02.987Z">
 <meta property="article:author" content="Delta">
-<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="algorithms">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,12 +119,12 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/05/leetcode/leetcode刷题笔记-98-验证二叉搜索树/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/27/algorithms/中缀表达式的计算(栈实现)/"/>
 
 
 
 
-  <title>leetcode刷题笔记-98-验证二叉搜索树 | Delta</title>
+  <title>中缀表达式的计算(栈实现) | Delta</title>
   
 
 
@@ -277,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-98-%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/27/algorithms/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%AE%A1%E7%AE%97(%E6%A0%88%E5%AE%9E%E7%8E%B0)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Delta">
@@ -294,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-98-验证二叉搜索树</h1>
+          <h1 class="post-title" itemprop="name headline">中缀表达式的计算(栈实现)</h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T18:17:51+08:00">
-                2020-04-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-27T19:47:53+08:00">
+                2020-05-27
               </time>
             
 
@@ -338,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  359
+                  505
                 </span>
               
 
@@ -375,17 +375,23 @@
       
 
       
-        <p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
-<p>假设一个二叉搜索树具有如下特征：</p>
-<ul>
-<li>节点的左子树只包含小于当前节点的数。</li>
-<li>节点的右子树只包含大于当前节点的数。</li>
-<li>所有左子树和右子树自身必须也是二叉搜索树。</li>
-</ul>
+        <p>最近在学编译原理，其中有个实验要求是建立算术表达式的语法分析树。其实我感觉难点就在于如何将中缀表达式转化为前缀或后缀表达式。而建立语法分析树的目的和求值的目的实质上是一样的。特此记录一下在数据结构中算术表达式在栈的应用中的表现。</p>
 <a id="more"></a>
 <hr>
-<p>这里用递归来解，整个框架其实就是中序遍历，然后一边遍历一遍比较前后两位数的大小关系，一旦发现不符合二叉搜索树的规定就终止递归，并返回。最开始我其实用的是一个整型变量来保存中序遍历顺序的上一个值，在递归开始的时候这个值应该是空的，但是当根节点为0的时候，对于上一个值为空的情况会发生异常，因为0的真值和NULL是一样的，所以始终没有去做根节点的比较。所以解决办法是用指针来存上一个数，这样的话就避免了NULL值的歧义性。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span>* pre = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(!isValidBST(root-&gt;left))<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre&amp;&amp;*pre&gt;=root-&gt;val)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        pre=&amp;root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span>(!isValidBST(root-&gt;right))<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>事实上对于机器来说，前缀表达式和后缀表达式相对于中缀表达式是更容易看懂的，因为不涉及到优先级的比较。而中缀表达式中的优先级则体现在括号的应用上。</p>
+<h1 id="中缀表达式转后缀表达式"><a href="#中缀表达式转后缀表达式" class="headerlink" title="中缀表达式转后缀表达式"></a>中缀表达式转后缀表达式</h1><p>首先初始化一个栈，用于保存<strong>暂时还不能确定运算顺序的运算符</strong>。</p>
+<p>从左往右依次处理各个元素，直到末尾。可能会遇到以下三种情况：</p>
+<ol>
+<li>遇到<strong>操作数</strong>。直接加入后缀表达式。</li>
+<li>遇到<strong>界限符</strong>。遇到”(“直接入栈；遇到”)”则依次弹出栈内运算符并加入后缀表达式，直到弹出”(“为止。</li>
+<li>遇到<strong>运算符</strong>。依次弹出栈中优先级高于或等于当前运算符的所有运算符，并加入后缀表达式，若遇到”(“或栈空则停止。之后再把当前运算符入栈。</li>
+</ol>
+<p>按上述方法处理完所有字符之后，将栈中剩余运算符依次弹出，并加入后缀表达式。</p>
+<h1 id="中缀表达式的计算"><a href="#中缀表达式的计算" class="headerlink" title="中缀表达式的计算"></a>中缀表达式的计算</h1><p>初始化两个栈，操作数栈和运算符栈。</p>
+<ul>
+<li>若扫描到操作数，压入操作数栈。</li>
+<li>若扫描到运算符或界限符，则按照“中缀转后缀”相同的逻辑压入运算符栈(期间也会弹出运算符，每当弹出一个运算符时，就需要再弹出两个操作数栈的栈顶元素并执行相应运算，运算结果再压回操作数栈)</li>
+</ul>
 
       
     </div>
@@ -403,7 +409,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
           
         </div>
       
@@ -416,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-95-%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91II/" rel="next" title="leetcode刷题笔记-95-不同的二叉搜索树II">
-                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-95-不同的二叉搜索树II
+              <a href="/2020/05/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-173-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="next" title="leetcode刷题笔记-173-二叉搜索树迭代器">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记-173-二叉搜索树迭代器
               </a>
             
           </div>
@@ -425,10 +431,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/06/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-100-%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A0%91/" rel="prev" title="leetcode刷题笔记-100-相同的树">
-                leetcode刷题笔记-100-相同的树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -480,8 +482,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -576,6 +587,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式转后缀表达式"><span class="nav-number">1.</span> <span class="nav-text">中缀表达式转后缀表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式的计算"><span class="nav-number">2.</span> <span class="nav-text">中缀表达式的计算</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

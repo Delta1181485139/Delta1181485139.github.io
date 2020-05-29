@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="最近在学编译原理，其中有个实验要求是建立算术表达式的语法分析树。其实我感觉难点就在于如何将中缀表达式转化为前缀或后缀表达式。而建立语法分析树的目的和求值的目的实质上是一样的。特此记录一下在数据结构中算术表达式在栈的应用中的表现。">
 <meta property="article:published_time" content="2020-05-27T11:47:53.000Z">
-<meta property="article:modified_time" content="2020-05-27T12:19:02.987Z">
+<meta property="article:modified_time" content="2020-05-28T13:40:22.722Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="algorithms">
 <meta name="twitter:card" content="summary">
@@ -338,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  505
+                  805
                 </span>
               
 
@@ -354,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -392,6 +392,19 @@
 <li>若扫描到操作数，压入操作数栈。</li>
 <li>若扫描到运算符或界限符，则按照“中缀转后缀”相同的逻辑压入运算符栈(期间也会弹出运算符，每当弹出一个运算符时，就需要再弹出两个操作数栈的栈顶元素并执行相应运算，运算结果再压回操作数栈)</li>
 </ul>
+<h1 id="中缀表达式生成语法分析树"><a href="#中缀表达式生成语法分析树" class="headerlink" title="中缀表达式生成语法分析树"></a>中缀表达式生成语法分析树</h1><p>和中缀表达式的计算区别在于操作数栈改为二叉树节点栈，数值运算改为基本二叉树的建立。</p>
+<ul>
+<li>二叉树的定义如下：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	TreeNode(<span class="keyword">char</span> val);</span><br><span class="line">	TreeNode();</span><br><span class="line">	~TreeNode();</span><br><span class="line">	<span class="keyword">char</span> val;</span><br><span class="line">	TreeNode* left;</span><br><span class="line">	TreeNode* right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TreeNode::TreeNode(<span class="keyword">char</span> val)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;val = val;</span><br><span class="line">	<span class="keyword">this</span>-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TreeNode::TreeNode()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;val = <span class="string">'\0'</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> TreeNode::~TreeNode()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优先级的判断(只考虑加减乘除)，如果a的优先级高于b，返回真，否则返回假。：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">priority</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="string">'*'</span> || b == <span class="string">'/'</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (a == <span class="string">'*'</span> || a == <span class="string">'/'</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成语法树：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">genericTree</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; op;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;TreeNode*&gt; <span class="built_in">exp</span>;</span><br><span class="line">	<span class="keyword">auto</span> genericMiniTree = [&amp;op, &amp;<span class="built_in">exp</span>]() &#123;</span><br><span class="line">		TreeNode* tmp = <span class="keyword">new</span> TreeNode(op.top());</span><br><span class="line">		op.pop();</span><br><span class="line">		tmp-&gt;right = <span class="built_in">exp</span>.top();</span><br><span class="line">		<span class="built_in">exp</span>.pop();</span><br><span class="line">		tmp-&gt;left = <span class="built_in">exp</span>.top();</span><br><span class="line">		<span class="built_in">exp</span>.pop();</span><br><span class="line">		<span class="built_in">exp</span>.push(tmp);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> i : str) &#123;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="string">'+'</span> || i == <span class="string">'-'</span> || i == <span class="string">'*'</span> || i == <span class="string">'/'</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!op.empty() &amp;&amp; op.top() != <span class="string">'('</span>)</span><br><span class="line">				<span class="keyword">if</span> (!priority(i, op.top()))genericMiniTree();</span><br><span class="line">			op.push(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="string">'('</span>) &#123;</span><br><span class="line">			op.push(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="string">')'</span>) &#123;</span><br><span class="line">			<span class="keyword">while</span> (op.top() != <span class="string">'('</span>)genericMiniTree();</span><br><span class="line">			op.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isalpha</span>(i) || <span class="built_in">isdigit</span>(i)) &#123;</span><br><span class="line">			<span class="built_in">exp</span>.push(<span class="keyword">new</span> TreeNode(i));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"wrong expression!"</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (!op.empty())genericMiniTree();</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">exp</span>.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -431,6 +444,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/28/c++/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="Lambda表达式">
+                Lambda表达式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -511,7 +528,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">139</span>
+                  <span class="site-state-item-count">141</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -597,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式转后缀表达式"><span class="nav-number">1.</span> <span class="nav-text">中缀表达式转后缀表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式的计算"><span class="nav-number">2.</span> <span class="nav-text">中缀表达式的计算</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式转后缀表达式"><span class="nav-number">1.</span> <span class="nav-text">中缀表达式转后缀表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式的计算"><span class="nav-number">2.</span> <span class="nav-text">中缀表达式的计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中缀表达式生成语法分析树"><span class="nav-number">3.</span> <span class="nav-text">中缀表达式生成语法分析树</span></a></li></ol></div>
             
 
           </div>
@@ -631,7 +648,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">66.4k</span>
+    <span title="Site words total count">70k</span>
   
 </div>
 
@@ -1169,7 +1186,7 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":400,"height":600},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":400,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
 
 <!-- 页面点击小红心 -->

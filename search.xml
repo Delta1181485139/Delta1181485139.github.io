@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-179-最大数</title>
+    <url>/2020/05/29/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-179-%E6%9C%80%E5%A4%A7%E6%95%B0/</url>
+    <content><![CDATA[<p>给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">10</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">210</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">30</span>,<span class="number">34</span>,<span class="number">5</span>,<span class="number">9</span>]</span><br><span class="line">输出: <span class="number">9534330</span></span><br></pre></td></tr></table></figure>
+<p>说明: 输出结果可能非常大，所以你需要返回一个字符串而不是整数。</p>
+<a id="more"></a>
+<hr>
+<p>我自己原来的想法是遍历整个数组将它们两两比较，并组合。但显然超时了。后面看到官方提供的一个脑洞，代码非常简单。首先我们先定义一种大小关系：</p>
+<ul>
+<li>如果 a连接b之后的数大于b连接a，那么我们称 a大于b。</li>
+</ul>
+<p>按照这个比较关系，将原数组进行排序。排序之后的数组直接前后拼接出来的字符串就是它们组合所得到的最大的数。如果最后得到的字符串首位为0，说明该字符串后面都是0，那么只需要返回一个0即可。</p>
+<p>算法实现起来是很简单的，但算法的正确性实在令人费解。官方是这样解释的：</p>
+<blockquote>
+<p>假设（不是一般性），某一对整数 a 和 b，我们的比较结果是 a 应该在 b 前面，这意味着$ a\frown b &gt; b\frown a$，其中 $\frown$表示连接。如果排序结果是错的，说明存在一个 c ， b 在 c 前面且 c 在 a 的前面。这产生了矛盾，因为 $a\frown b &gt; b\frown a$和$b\frown c &gt; c\frown b$意味着 $a\frown c &gt; c\frown a$ 。换言之，我们的自定义比较方法保证了传递性，所以这样子排序是对的。</p>
+<p>一旦数组排好了序，最“重要”的数字会在最前面。有一个需要注意的情况是如果数组只包含 0 ，我们直接返回结果 00 即可。否则，我们用排好序的数组形成一个字符串并返回。</p>
+</blockquote>
+<p>总所周知力扣官方题解不讲人话。但我认为大概也可以用贪心的思想，实际上就是要将数组中的每一位移动到最合适的位置，那么就需要将数组的每一位进行比较。按照这种思考，有点冒泡排序的味道，每一轮都会确定一个数的最终位置。那么微观上是贪心，宏观上就是排序了，既然是排序，那就可以用更高效的排序方法了。</p>
+<p>当然我的理解仅仅是从直觉上理解，事实上算法正确性的证明还是需要严谨的数学推导的。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">largestNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> res;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:nums)s.push_back(to_string(i));</span><br><span class="line">        sort(s.begin(),s.end(),[](<span class="built_in">string</span> a,<span class="built_in">string</span> b)&#123;</span><br><span class="line">            <span class="keyword">return</span> a+b&gt;b+a;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">string</span> i:s)res+=i;</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>] == <span class="string">'0'</span>?<span class="string">"0"</span>:res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lambda表达式</title>
+    <url>/2020/05/28/c++/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <content><![CDATA[<p>我们可以向一个算法传递任何类别的<strong>可调用对象(callable object)</strong>。lambda表达式是其中是一种形式。一个lambda表达式表示一个可调用的代码单元。我们可以将其理解为一个未命名的内敛函数。与任何函数类似，一个lambda具有一个返回类型，一个参数列表和一个函数体，但与函数不同，lambda可能定义在函数内部。</p>
+<a id="more"></a>
+<h1 id="lambda表达式的形式"><a href="#lambda表达式的形式" class="headerlink" title="lambda表达式的形式"></a>lambda表达式的形式</h1><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="string">capture list</span>](<span class="link">parameter list</span>) -&gt; return type &#123; function body &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><em>capture list</em> 是一个lambda所在函数中定义的局部变量的列表。</li>
+<li><em>parameter list</em> 是参数列表。</li>
+<li><em>return type</em> 是返回类型。 </li>
+<li><em>function body</em> 是函数体。</li>
+</ul>
+<p>和普通函数不同的是，lambda必须使用尾置返回来指定返回类型。 参数列表和返回类型是可以忽略的，但必须包含捕获列表和函数体。</p>
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [] &#123; <span class="keyword">return</span> <span class="number">42</span>; &#125;;</span><br></pre></td></tr></table></figure>
+<p>此例中，我们定义了一个可调用对象f，它不接受参数，返回42。lambda的调用方式与普通函数的调用方式相同，都是使用调用运算符：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; f() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//打印42</span></span><br></pre></td></tr></table></figure>
+<p>在lambda中忽略括号和参数列表等价于指定一个空参数列表。在此例中，当调用f时，参数列表为空。如果忽略返回类型，lambda根据函数体中的代码推断出返回类型。如果函数体只是一个return语句，则返回类型从返回的表达式的类型推断而来，否则返回类型为void。</p>
+<h2 id="向lambda传递参数"><a href="#向lambda传递参数" class="headerlink" title="向lambda传递参数"></a>向lambda传递参数</h2><p>与普通函数类似，调用一个lambda时给定的实参被用来初始化lambda的形参。通常实参和形参的类型必须匹配。但与普通函数不同，lambda不能有默认参数。因此，一个lambda调用的实参数目永远与形参数目相等。一旦形参初始化完毕，就可以执行函数体了。</p>
+<h2 id="使用捕获列表"><a href="#使用捕获列表" class="headerlink" title="使用捕获列表"></a>使用捕获列表</h2><p>虽然一个lambda可以出现在一个函数中，使用其局部变量，但它只能使用那些明确指明的变量。一个lambda通过将局部变量包含在其捕获列表中来指出将会使用这些变量。捕获列表指引lambda在其内部包含访问局部变量所需的信息。</p>
+<h1 id="lambda捕获与返回"><a href="#lambda捕获与返回" class="headerlink" title="lambda捕获与返回"></a>lambda捕获与返回</h1><p>当定义一个lambda的时候，编译器生成一个与lambda对应的新的(未命名)类类型。</p>
+<h2 id="lambda本质是函数对象"><a href="#lambda本质是函数对象" class="headerlink" title="lambda本质是函数对象"></a>lambda本质是函数对象</h2><p>当我们编写了一个lambda后，编译器将该表达式翻译成一个未命名类的未命名对象。在lambda表达式产生的类中含有一个重载的函数调用运算符，例如，对于这个传递给stable_sort作为其最后一个实参的lambda表达式来说：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//根据单词长度对其进行排序，对于长度相同的单词按照字母表顺序排序</span></span><br><span class="line">stable_sort(words.begin(), words.end(), [](<span class="keyword">const</span> <span class="built_in">string</span> &amp;a, <span class="keyword">const</span> <span class="built_in">string</span> &amp;b)&#123;</span><br><span class="line">    <span class="keyword">return</span> a.size() &lt; b.size();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其行为类似于下面这个类的一个未命名对象：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShorterString</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>产生的类只有一个函数调用运算符成员，它负责接收两个string并比较它们的长度，它的形参列表和函数体与lambda表达式完全一样。默认情况下lambda不能改变它捕获的常量，因此在默认情况下，由lambda产生的类当中的函数调用运算符是一个const成员函数。如果lambda被声明为可变的，则调用运算符就不是const的了。</p>
+<p>用这个类替代lambda表达式后，我们可以重写并重新调用stable_sort:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">stable_sort(words.begin(), words.end(), ShorterString());</span><br></pre></td></tr></table></figure>
+<p>第三个实参是新构建的ShorterString对象，当stable_sort内部的代码每次比较两个string时就会“调用”这一对象，此时该对象将调用运算符的函数体，判断第一个string的大小小于第二个时返回true。</p>
+<h2 id="lambda的捕获及相应捕获行为的类"><a href="#lambda的捕获及相应捕获行为的类" class="headerlink" title="lambda的捕获及相应捕获行为的类"></a>lambda的捕获及相应捕获行为的类</h2><h3 id="引用捕获"><a href="#引用捕获" class="headerlink" title="引用捕获"></a>引用捕获</h3><p>一个以引用方式捕获的变量与其他任何类型的引用行为相似。当我们在lambda函数体内使用此变量时，实际上使用的是引用所绑定的对象。</p>
+<p>当一个lambda表达式通过引用捕获变量时，将由程序负责确保lambda执行时引用所引的对象确实存在。因此，编译器可以直接使用该引用而无需在lambda产生的类中将其存储为数据成员。</p>
+<h3 id="值捕获"><a href="#值捕获" class="headerlink" title="值捕获"></a>值捕获</h3><p>与传值参数类似，采用值捕获的前提是变量可以拷贝。但与参数不同，被捕获的变量是在lambda创建时的拷贝，而不是调用时的拷贝。由于被捕获变量的值是在lambda创建时拷贝，因此随后对其修改不会影响到lambda内对应的值。</p>
+<p>通过值捕获的变量被拷贝到lambda中，这种lambda产生的类必须为每个值捕获的变量建立对应的数据成员，同时创建构造函数，令其使用捕获的变量的值来初始化数据成员，比如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获得第一个指向满足条件元素的迭代器，该元素满足size() is &gt;= sz</span></span><br><span class="line"><span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), [sz](<span class="keyword">const</span> <span class="built_in">string</span> &amp;a)&#123;</span><br><span class="line">   <span class="keyword">return</span> a.size() &gt;= sz; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>该lambda表达式产生的类将形如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SizeComp</span> &#123;</span></span><br><span class="line">    SizeComp(<span class="keyword">size_t</span> n): sz(n) &#123;&#125; <span class="comment">//该形参对应捕获的变量</span></span><br><span class="line">    <span class="comment">//该调用运算符的返回类型、形参和函数体都与lambda一致</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.size() &gt;= sz;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">size_t</span> sz; <span class="comment">//该数据成员对应通过值捕获的变量</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>和ShorterString类不同，上面这个类含有一个数据成员以及一个用于初始化该成员的构造函数。这个合成的类不含有默认构造函数，因此想要使用这个类必须提供一个实参：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获得第一个指向满足条件元素的迭代器，该元素满足size() is &gt;= sz</span></span><br><span class="line"><span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), SizeComp(sz));</span><br></pre></td></tr></table></figure>
+<p>lambda表达式产生的类不含默认构造函数、赋值运算符及默认析构函数；它是否含有默认拷贝/移动构造函数则通常要视捕获的数据成员类型而定。</p>
+<h3 id="隐式捕获"><a href="#隐式捕获" class="headerlink" title="隐式捕获"></a>隐式捕获</h3><p>除了显式列出我们希望使用的来自所在函数的变量之外，还可以让编译器根据lambda体中的代码来推断我们需要使用哪些变量。为了指示编译器推断捕获列表，应在捕获列表中写一个&amp;或=。&amp;告诉编译器采用捕获引用方式，=表示采用值捕获方式。</p>
+<p>当我们混合使用隐式捕获和显式捕获时，捕获列表中的第一个元素必须是一个&amp;或=。此符号指定了默认捕获方式为引用或值。显式捕获的变量必须使用与隐式捕获不同的方式。即：</p>
+<ul>
+<li>如果隐式捕获是引用方式(使用了&amp;)，则显式捕获命名变量必须采用值方式，因此不能在其名字前使用&amp;。</li>
+<li>如果隐式捕获采用的是值方式(使用了=)，则显式捕获命名变量必须采用引用方式，即在名字前使用&amp;。</li>
+</ul>
+<blockquote>
+<p><strong>lambda捕获列表</strong></p>
+<ol>
+<li><p>[]，空捕获列表。lambda不能使用所在函数中的变量。一个lambda只有捕获变量后才能使用它&gt;们。</p>
+</li>
+<li><p>[<em>names</em>]，<em>names</em>是一个逗号分隔的名字列表，这些名字都是lambda所在函数的局部变量。&gt;默认情况下，捕获列表中的变量都被拷贝。名字前如果使用了&amp;，则采用引用捕获方式。</p>
+</li>
+<li><p>[&amp;]，隐式捕获列表，采用引用捕获方式。lambda体中所使用的来自所在函数的实体都采用引用方式使用。</p>
+</li>
+<li><p>[=]，隐式捕获列表，采用值捕获方式。lambda体将拷贝所使用的来自所在函数实体的值。</p>
+</li>
+<li><p>[&amp;，<em>identifier_list</em>]，<em>identifier_list</em>是一个逗号分隔的列表，包含0个或多个来自所在函数的变量。这些变量采用值捕获方式，而任何隐式捕获的变量都采用引用方式的捕获。<em>identifier_list</em></p>
+</li>
+<li>[=，<em>identifier_list</em>]，<em>identifier_list</em>中的变量都采用引用方式捕获，而任何隐式捕获的变量都采用值方式捕获。<em>identifier_list</em>中的名字不能包括this，且这些名字之前必须使用&amp;。</li>
+</ol>
+</blockquote>
+<h3 id="可变lambda"><a href="#可变lambda" class="headerlink" title="可变lambda"></a>可变lambda</h3><p>默认情况下，对于<strong>一个值被拷贝的变量</strong>，lambda不会改变其值。如果我们希望能改变一个被捕获变量的值，就必须在参数列表首加上关键字<strong>mutable</strong>。因此，可变lambda能忽略参数列表：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> v1 = <span class="number">42</span>; <span class="comment">//局部变量</span></span><br><span class="line">    <span class="comment">// f可以改变它所捕获的变量的值</span></span><br><span class="line">    <span class="keyword">auto</span> f = [v1] () <span class="keyword">mutable</span> &#123; <span class="keyword">return</span> ++v1; &#125;;</span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> j = f(); <span class="comment">//j为43</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>一个引用捕获的变量</strong>是否可以修改依赖于此引用指向的是一个const类型还是一个非const类型。</p>
+<h2 id="指定lambda返回类型"><a href="#指定lambda返回类型" class="headerlink" title="指定lambda返回类型"></a>指定lambda返回类型</h2><p>默认情况下，如果一个lambda体包含return之外的任何语句，则编译器假定此lambda返回void。与其他返回void的函数类似，被推断返回void的lambda不能返回值。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">transform(vi.begin(), vi.end(), vi.begin(), [](<span class="keyword">int</span> i) &#123; </span><br><span class="line">    <span class="keyword">return</span> i &lt; <span class="number">0</span> ? -i : i; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在这里，由于函数体内仅包含返回语句，因此可以省略返回类型，因为返回类型可以由返回语句推断得出。而如果改为以下写法：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">transform(vi.begin(), vi.end(), vi.begin(), [](<span class="keyword">int</span> i) &#123; </span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">0</span>) <span class="keyword">return</span> -i;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> i;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这个函数体内所包含的除了返回语句之外，还有条件判断语句。如果不声明返回类型，将会默认返回为空，那么在此例中将会引发编译错误。在这种情况下必须显式声明尾置返回类型。</p>
+]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中缀表达式的计算(栈实现)</title>
     <url>/2020/05/27/algorithms/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%AE%A1%E7%AE%97(%E6%A0%88%E5%AE%9E%E7%8E%B0)/</url>
     <content><![CDATA[<p>最近在学编译原理，其中有个实验要求是建立算术表达式的语法分析树。其实我感觉难点就在于如何将中缀表达式转化为前缀或后缀表达式。而建立语法分析树的目的和求值的目的实质上是一样的。特此记录一下在数据结构中算术表达式在栈的应用中的表现。</p>
@@ -20,6 +120,19 @@
 <li>若扫描到操作数，压入操作数栈。</li>
 <li>若扫描到运算符或界限符，则按照“中缀转后缀”相同的逻辑压入运算符栈(期间也会弹出运算符，每当弹出一个运算符时，就需要再弹出两个操作数栈的栈顶元素并执行相应运算，运算结果再压回操作数栈)</li>
 </ul>
+<h1 id="中缀表达式生成语法分析树"><a href="#中缀表达式生成语法分析树" class="headerlink" title="中缀表达式生成语法分析树"></a>中缀表达式生成语法分析树</h1><p>和中缀表达式的计算区别在于操作数栈改为二叉树节点栈，数值运算改为基本二叉树的建立。</p>
+<ul>
+<li>二叉树的定义如下：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	TreeNode(<span class="keyword">char</span> val);</span><br><span class="line">	TreeNode();</span><br><span class="line">	~TreeNode();</span><br><span class="line">	<span class="keyword">char</span> val;</span><br><span class="line">	TreeNode* left;</span><br><span class="line">	TreeNode* right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TreeNode::TreeNode(<span class="keyword">char</span> val)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;val = val;</span><br><span class="line">	<span class="keyword">this</span>-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TreeNode::TreeNode()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;val = <span class="string">'\0'</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> TreeNode::~TreeNode()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优先级的判断(只考虑加减乘除)，如果a的优先级高于b，返回真，否则返回假。：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">priority</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="string">'*'</span> || b == <span class="string">'/'</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (a == <span class="string">'*'</span> || a == <span class="string">'/'</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成语法树：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">genericTree</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; op;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;TreeNode*&gt; <span class="built_in">exp</span>;</span><br><span class="line">	<span class="keyword">auto</span> genericMiniTree = [&amp;op, &amp;<span class="built_in">exp</span>]() &#123;</span><br><span class="line">		TreeNode* tmp = <span class="keyword">new</span> TreeNode(op.top());</span><br><span class="line">		op.pop();</span><br><span class="line">		tmp-&gt;right = <span class="built_in">exp</span>.top();</span><br><span class="line">		<span class="built_in">exp</span>.pop();</span><br><span class="line">		tmp-&gt;left = <span class="built_in">exp</span>.top();</span><br><span class="line">		<span class="built_in">exp</span>.pop();</span><br><span class="line">		<span class="built_in">exp</span>.push(tmp);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> i : str) &#123;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="string">'+'</span> || i == <span class="string">'-'</span> || i == <span class="string">'*'</span> || i == <span class="string">'/'</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!op.empty() &amp;&amp; op.top() != <span class="string">'('</span>)</span><br><span class="line">				<span class="keyword">if</span> (!priority(i, op.top()))genericMiniTree();</span><br><span class="line">			op.push(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="string">'('</span>) &#123;</span><br><span class="line">			op.push(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="string">')'</span>) &#123;</span><br><span class="line">			<span class="keyword">while</span> (op.top() != <span class="string">'('</span>)genericMiniTree();</span><br><span class="line">			op.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isalpha</span>(i) || <span class="built_in">isdigit</span>(i)) &#123;</span><br><span class="line">			<span class="built_in">exp</span>.push(<span class="keyword">new</span> TreeNode(i));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"wrong expression!"</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (!op.empty())genericMiniTree();</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">exp</span>.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>algorithms</tag>

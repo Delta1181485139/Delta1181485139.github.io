@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/delta.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/delta.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/delta.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="c++," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="词法分析过后得到的是一串二元组序列，并且这些序列都是合法的关键字，分隔符，运算符，标识符，常数。语法分析的目的是将这个线性的序列根据语法逻辑关系建立一颗树，以便于后序的代码分析。总体是采用自上而下的LL(1)分析法。(其实没怎么好好学习编译原理理论课，编译器写到目前还是主要靠自己对数据结构的理解，不过自己设计的文法毕竟简单，也挺容易做的)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语法分析器">
+<meta property="og:url" content="http://yoursite.com/2020/06/03/c++/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/index.html">
+<meta property="og:site_name" content="Delta">
+<meta property="og:description" content="词法分析过后得到的是一串二元组序列，并且这些序列都是合法的关键字，分隔符，运算符，标识符，常数。语法分析的目的是将这个线性的序列根据语法逻辑关系建立一颗树，以便于后序的代码分析。总体是采用自上而下的LL(1)分析法。(其实没怎么好好学习编译原理理论课，编译器写到目前还是主要靠自己对数据结构的理解，不过自己设计的文法毕竟简单，也挺容易做的)">
+<meta property="article:published_time" content="2020-06-03T12:43:27.000Z">
+<meta property="article:modified_time" content="2020-06-04T08:51:06.103Z">
+<meta property="article:author" content="Delta">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/03/c++/语法分析器/"/>
+
+
+
+
+  <title>语法分析器 | Delta</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/Delta1181485139" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Delta</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YO-I~YO-I~咚哒YO</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/03/c++/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Delta">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Delta">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">语法分析器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-03T20:43:27+08:00">
+                2020-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>词法分析过后得到的是一串二元组序列，并且这些序列都是合法的关键字，分隔符，运算符，标识符，常数。语法分析的目的是将这个线性的序列根据语法逻辑关系建立一颗树，以便于后序的代码分析。总体是采用自上而下的LL(1)分析法。(其实没怎么好好学习编译原理理论课，编译器写到目前还是主要靠自己对数据结构的理解，不过自己设计的文法毕竟简单，也挺容易做的)</p>
+<a id="more"></a>
+<hr>
+<h1 id="生成表达式树"><a href="#生成表达式树" class="headerlink" title="生成表达式树"></a>生成表达式树</h1><ul>
+<li><p>表达式是程序语句中重要的组成部分。而表达式是由各种标识符，常数，以及运算符组成的。在我设计的文法中，一元运算符只有逻辑非(!)运算，其它所有的运算符都是二元的，换句话说这些二元运算符一个要配对两个标识符或常数。</p>
+</li>
+<li><p>在脑子中形成了基本的表达式组成后，下一步需要考虑的是各种运算符的优先级，和括号的处理。因为在中缀表达式中优先级的差异会导致运算顺序的不同。</p>
+</li>
+</ul>
+<h2 id="树的结构"><a href="#树的结构" class="headerlink" title="树的结构"></a>树的结构</h2><p>这里表达式中的操作符最多是二元的，因此<strong>二叉树</strong>可以完全满足要求。</p>
+<p>但写完算法之后才发现后面的对执行语句的建树，二叉树是肯定满足不了要求的。因此写了一个一般树的基类，还有一个二叉树继承域这个一般树。因此就算得到了一个二叉树节点，也可以将其强制转化为一般树节点。一般树就是采用普通的兄弟表示法，两个指针分别指向其节点的第一个孩子和它的下一个兄弟。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一般树</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">generalTreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	generalTreeNode(<span class="built_in">std</span>::<span class="built_in">string</span> val);</span><br><span class="line">	generalTreeNode();</span><br><span class="line">	~generalTreeNode() &#123;&#125;;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span> val;</span><br><span class="line">	generalTreeNode* first_son;</span><br><span class="line">	generalTreeNode* next_bro;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//二叉树</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span><span class="keyword">public</span> generalTreeNode</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	TreeNode(<span class="built_in">std</span>::<span class="built_in">string</span> val);</span><br><span class="line">	TreeNode(<span class="keyword">char</span> val);</span><br><span class="line">	TreeNode();</span><br><span class="line">	~TreeNode() &#123;&#125;;</span><br><span class="line">	TreeNode* left;</span><br><span class="line">	TreeNode* right;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="规定运算符优先级"><a href="#规定运算符优先级" class="headerlink" title="规定运算符优先级"></a>规定运算符优先级</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">种别码</th>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">35</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">24</td>
+<td style="text-align:center">*</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">25</td>
+<td style="text-align:center">/</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">38</td>
+<td style="text-align:center">%</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">22</td>
+<td style="text-align:center">+</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">23</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">26</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">27</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">29</td>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">28</td>
+<td style="text-align:center">==</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">31</td>
+<td style="text-align:center">!=</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">33</td>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">34</td>
+<td style="text-align:center">&#124;</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">36</td>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:center">37</td>
+<td style="text-align:center">&#124;&#124;</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:center">32</td>
+<td style="text-align:center">=</td>
+<td style="text-align:center">9</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>将所有运算符的优先级信息存储在哈希表中：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;<span class="keyword">size_t</span>,<span class="keyword">size_t</span>&gt; priority_table&#123;</span><br><span class="line">		&#123;<span class="number">35</span>,<span class="number">0</span>&#125;,&#123;<span class="number">24</span>,<span class="number">1</span>&#125;,&#123;<span class="number">25</span>,<span class="number">1</span>&#125;,&#123;<span class="number">38</span>,<span class="number">1</span>&#125;,&#123;<span class="number">22</span>,<span class="number">2</span>&#125;,&#123;<span class="number">23</span>,<span class="number">2</span>&#125;,&#123;<span class="number">26</span>,<span class="number">3</span>&#125;,&#123;<span class="number">27</span>,<span class="number">3</span>&#125;,&#123;<span class="number">29</span>,<span class="number">3</span>&#125;,&#123;<span class="number">30</span>,<span class="number">3</span>&#125;,&#123;<span class="number">28</span>,<span class="number">4</span>&#125;,&#123;<span class="number">31</span>,<span class="number">4</span>&#125;,</span><br><span class="line">		&#123;<span class="number">33</span>,<span class="number">5</span>&#125;,&#123;<span class="number">34</span>,<span class="number">6</span>&#125;,&#123;<span class="number">36</span>,<span class="number">7</span>&#125;,&#123;<span class="number">37</span>,<span class="number">8</span>&#125;,&#123;<span class="number">32</span>,<span class="number">9</span>&#125;</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优先级判断函数：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">generic::priority</span><span class="params">(<span class="keyword">size_t</span> a, <span class="keyword">size_t</span> b)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//a的优先级比b高 返回真</span></span><br><span class="line">	<span class="keyword">return</span> priority_table.at(a) &lt; priority_table.at(b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成算法"><a href="#生成算法" class="headerlink" title="生成算法"></a>生成算法</h2><p>函数输入：需要生成表达式树的范围，以之前使用的双向链表的迭代器对象来指定，原则是左闭右开。</p>
+<p>函数输出：一颗二叉树。</p>
+<p>数据结构解释：主要采用两个<strong>栈</strong>，一个是表达式根节点栈，一个是运算符栈。由于中缀表达式不同于前缀和后缀表达式可以顺序读取顺序生成表达式树。因为运算符必须作为非叶节点，二元运算符的两个操作数又分别在其前后，所以同时记录前后的状态是不可避免的。</p>
+<p>算法思路：</p>
+<ul>
+<li>遍历函数参数给出的迭代器所表示的二元组表示的符号范围。<ol>
+<li>如果当前遇到一个<strong>操作符</strong>。<ol>
+<li>如果操<strong>作符栈非空</strong>且<strong>栈顶元素不为左括号</strong>。<ol>
+<li>如果栈顶元素为<strong>逻辑非</strong>运算符，那么从表达式栈中弹出一个表达式节点，新建一个以逻辑非操作符为根节点，以栈顶表达式树为左子树的树。再将这个新生成的树根节点压入表达式栈。</li>
+<li>如果当前遇到的操作符的<strong>优先级小于或等于</strong>操作符栈栈顶的运算符，那么将操作符栈栈顶的运算符弹出，并将其作为根节点，从表达式栈中弹出两颗表达式树作为其左右子树。最后将这颗新建的树压入表达式栈。</li>
+</ol>
+</li>
+<li>最后无论如何将当前遇到的运算符压入运算符栈中。</li>
+</ol>
+</li>
+<li>如果当前遇到了一个<strong>左括号</strong>，直接将其压入运算符栈中。</li>
+<li>如果当前遇到了一个<strong>右括号</strong>。依次从运算符栈中弹出运算符，直到将一个左括号弹出为止。<ul>
+<li>每弹出一个运算符，将执行与之前相似的操作。如果是逻辑非则从表达式栈中取一个表达式重新组成树，再压入栈中，如果不是逻辑非则弹出两个表达式组成新树后压入一个表达式。</li>
+</ul>
+</li>
+<li>如果当前遇到一个<strong>标识符或常数</strong>。直接将其<strong>作为一个树节点</strong>压入表达式栈中。</li>
+</ol>
+</li>
+<li>扫描完一遍二元组序列后，如果操作符栈<strong>非空</strong>。那么进行之前遇到右括号的操作，但是要一直进行下去，直到操作符栈栈空为止。</li>
+<li>正常情况下函数执行结束之后表达式栈中只剩下一个元素，而这个元素就是我们想得到的表达式树的根节点。</li>
+</ul>
+<p>注：表达式树节点中存的值为单词对应的种别码。如果是标识符，常数，常字符串则保存它们本身。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">generic::genericExp</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="keyword">size_t</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt;&gt;::iterator start, <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="keyword">size_t</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt;&gt;::iterator end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">auto</span> i = start;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;<span class="keyword">size_t</span>&gt; op;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;TreeNode*&gt; <span class="built_in">exp</span>;</span><br><span class="line">	<span class="keyword">auto</span> genericMiniTree = [&amp;]() &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (op.empty() || <span class="built_in">exp</span>.size() &lt; <span class="number">2</span>)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"表达式错误!"</span>);</span><br><span class="line">			TreeNode* tmp = <span class="keyword">new</span> TreeNode(<span class="built_in">std</span>::to_string(op.top()));</span><br><span class="line">			op.pop();</span><br><span class="line">			tmp-&gt;right = <span class="built_in">exp</span>.top();</span><br><span class="line">			<span class="built_in">exp</span>.pop();</span><br><span class="line">			tmp-&gt;left = <span class="built_in">exp</span>.top();</span><br><span class="line">			<span class="built_in">exp</span>.pop();</span><br><span class="line">			tmp-&gt;left-&gt;next_bro = tmp-&gt;right;</span><br><span class="line">			tmp-&gt;first_son = tmp-&gt;left;</span><br><span class="line">			<span class="built_in">exp</span>.push(tmp);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">auto</span> genericNotMiniTree = [&amp;]() &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (op.empty() || <span class="built_in">exp</span>.size() &lt; <span class="number">1</span>)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"表达式错误!"</span>);</span><br><span class="line">			TreeNode* tmp = <span class="keyword">new</span> TreeNode(<span class="string">"35"</span>);</span><br><span class="line">			op.pop();</span><br><span class="line">			tmp-&gt;left = <span class="built_in">exp</span>.top();</span><br><span class="line">			<span class="built_in">exp</span>.pop();</span><br><span class="line">			tmp-&gt;first_son = tmp-&gt;left;</span><br><span class="line">			<span class="built_in">exp</span>.push(tmp);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">while</span> (start != end) &#123;</span><br><span class="line">		<span class="keyword">size_t</span> id = start-&gt;first;</span><br><span class="line">		<span class="keyword">if</span> (id &gt;<span class="number">21</span> &amp;&amp; id&lt;<span class="number">100</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!op.empty() &amp;&amp; op.top() != <span class="number">20</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (op.top() == <span class="number">35</span>) genericNotMiniTree();</span><br><span class="line">				<span class="keyword">if</span> (!priority(id, op.top()))genericMiniTree();</span><br><span class="line">			&#125;</span><br><span class="line">			op.push(id);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">20</span>) &#123;</span><br><span class="line">			op.push(id);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">21</span>) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">while</span> (op.top() != <span class="number">20</span>) &#123;</span><br><span class="line">					<span class="keyword">if</span> (op.top() != <span class="number">35</span>)genericMiniTree();</span><br><span class="line">					<span class="keyword">else</span> genericNotMiniTree();</span><br><span class="line">					<span class="keyword">if</span> (op.empty())<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"表达式错误!"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				op.pop();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">				<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">100</span> || id == <span class="number">101</span> || id == <span class="number">102</span>) &#123;</span><br><span class="line">			<span class="built_in">exp</span>.push(<span class="keyword">new</span> TreeNode(start-&gt;second));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:表达式错误！"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		++start;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">while</span> (!op.empty()) &#123;</span><br><span class="line">			<span class="keyword">if</span> (op.top() == <span class="number">20</span>)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"表达式错误!"</span>);</span><br><span class="line">			<span class="keyword">if</span> (op.top() != <span class="number">35</span>)genericMiniTree();</span><br><span class="line">			<span class="keyword">else</span> genericNotMiniTree();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e)&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//std::cout &lt;&lt; exp.top()-&gt;val &lt;&lt; std::endl;</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">exp</span>.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>在这个算法中，一般来说如果输入的表达式不符合规则，体现在程序运行中将会常常出现栈空的时候访问栈顶。具体处理如下：</p>
+<ul>
+<li>在运算符栈中弹出运算符和表达式栈中弹出一个或两个表达式栈的lambda表达式操作之前判断栈是否为空。为空则抛出异常，终止编译程序。一般在这里出现栈空的原因是<strong>缺少左括号或运算符和表达式个数不匹配以及顺序错误</strong>。</li>
+<li>在遇到右括号后的循环建树操作中也可能出现栈空却访问栈顶的情况，这里也要抛出异常终止程序。原因一般也是<strong>缺少左括号或运算符和表达式个数不匹配以及顺序错误</strong>。</li>
+<li>在遇到<strong>非法字符</strong>的时候自然也要抛出异常。</li>
+<li>在最后对非空的运算符栈的出栈建树的过程中，如果遇到了左括号，那么也需要抛出异常，因为这是一个<strong>没有右括号与之匹配的左括号</strong>。算法中一旦遇到了一个右括号是要立即与一个最近的左括号(栈弹出的第一个左括号)进行处理的，这也是栈的妙用了。</li>
+</ul>
+<h1 id="语法分析树"><a href="#语法分析树" class="headerlink" title="语法分析树"></a>语法分析树</h1><h2 id="生成算法-1"><a href="#生成算法-1" class="headerlink" title="生成算法"></a>生成算法</h2><p>函数输入：一个存储若干个二元组链表的首尾迭代器。</p>
+<p>函数输出：一颗多叉树。</p>
+<p>数据结构解释：算法总体用的是迭代的方法。用到了两个<strong>栈</strong>：</p>
+<ul>
+<li>多叉树节点栈。函数中所有的树节点插入操作均为这个栈的栈顶元素。</li>
+<li>括号匹配栈。由于括号的配对与语法一一相关，用一个栈来存储括号的配对信息，既能发现语法错误，又可以防止编译程序往错误的方向进行下去。</li>
+</ul>
+<p>算法思路：</p>
+<ul>
+<li>遍历整个序列：<ol>
+<li>如果遇到一个<strong>关键字</strong>。<ol>
+<li>将其作为一个树的节点，<strong>接入多叉树</strong>节点栈的栈顶节点，作为其的孩子。</li>
+<li>如果该关键字为<strong>if，while，print</strong>，这三个关键字后一定要接一对圆括号，括号内是表达式。<strong>确定表达式的起始范围</strong>后，调用生成表达式树的那个函数，将其多叉树节点栈的栈顶节点，作为其的孩子。</li>
+</ol>
+</li>
+<li>如果遇到一个<strong>左括号</strong>，包括’[‘，’(‘，’{‘。将其入括号匹配栈。</li>
+<li>如果遇到一个<strong>右括号</strong>，和括号栈栈顶元素进行配对并出栈。如果遇到的是’}’，那么多叉树节点栈的栈顶元素出栈。</li>
+<li>如果遇到一个<strong>标识符</strong>，说明接下来是一个<strong>表达式</strong>。为了保证出栈入栈匹配而不出现错误，如果这个表达式是一个独立的语句，需要为此增加一个节点为这个表达式充当“关键字”的作用，将这个<strong>辅助节点</strong>入多叉树栈。将这个表达式生成树连接在这个“关键字”节点上。</li>
+<li>如果遇到<strong>分号</strong>，意味着语句结束，也将多叉树节点栈的栈顶元素出栈。</li>
+<li>如果遇到除逗号以外的单词或符号，则可认为是非法字符，直接报错。</li>
+</ol>
+</li>
+<li>遍历结束之后再检查一下括号匹配栈是否为空，如果非空则说明缺少右括号。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">generalTreeNode* <span class="title">generic::genericStatement</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="keyword">size_t</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt;&gt;::iterator start,<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="keyword">size_t</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt;&gt;::iterator end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	generalTreeNode* root = <span class="keyword">new</span> generalTreeNode(<span class="string">"main"</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;generalTreeNode*&gt; statement;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">stack</span>&lt;<span class="keyword">size_t</span>&gt; edge;</span><br><span class="line">	statement.push(root);</span><br><span class="line">	<span class="keyword">auto</span> iter = start;</span><br><span class="line">	<span class="keyword">while</span> (iter != end) &#123;</span><br><span class="line">		<span class="comment">//std::cout &lt;&lt;"**********************"&lt;&lt; iter-&gt;first &lt;&lt; " " &lt;&lt; iter-&gt;second &lt;&lt; std::endl;</span></span><br><span class="line">		<span class="keyword">size_t</span> id = iter-&gt;first;</span><br><span class="line">		<span class="keyword">if</span> (id &amp;&amp; id &lt; <span class="number">12</span>) &#123; <span class="comment">//处理关键字</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (statement.empty())<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"存在非法分隔符！"</span>);</span><br><span class="line">				generalTreeNode* p = statement.top()-&gt;first_son;</span><br><span class="line">				<span class="keyword">if</span> (p) &#123;</span><br><span class="line">					<span class="keyword">while</span> (p-&gt;next_bro)p = p-&gt;next_bro;</span><br><span class="line">					p-&gt;next_bro = <span class="keyword">new</span> generalTreeNode(<span class="built_in">std</span>::to_string(id));</span><br><span class="line">					p = p-&gt;next_bro;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					statement.top()-&gt;first_son = <span class="keyword">new</span> generalTreeNode(<span class="built_in">std</span>::to_string(id));</span><br><span class="line">					p = statement.top()-&gt;first_son;</span><br><span class="line">				&#125;</span><br><span class="line">				statement.push(p);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">				<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (id == <span class="number">6</span>||id == <span class="number">8</span>||id == <span class="number">11</span>) &#123; <span class="comment">//if和while和print后紧跟表达式</span></span><br><span class="line">				<span class="keyword">auto</span> ed = ++iter;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (ed-&gt;first != <span class="number">20</span>) <span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少'('"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">					<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">					<span class="keyword">if</span> (ed!=end &amp;&amp; ed-&gt;first == <span class="number">21</span>) &#123;</span><br><span class="line">						<span class="keyword">auto</span> next = ++ed;</span><br><span class="line">						<span class="keyword">try</span> &#123;</span><br><span class="line">							<span class="keyword">if</span> (next == end) &#123;</span><br><span class="line">								<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少';'"</span>);</span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">if</span> (next-&gt;first == <span class="number">12</span> || next-&gt;first == <span class="number">16</span> || next-&gt;first == <span class="number">100</span>) &#123;</span><br><span class="line">								--ed;</span><br><span class="line">								<span class="keyword">break</span>;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">							<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">							<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">try</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">if</span>(ed == end)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少';'"</span>);</span><br><span class="line">						++ed;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e)</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">						<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">					&#125;</span><br><span class="line">					</span><br><span class="line">				&#125;</span><br><span class="line">				statement.top()-&gt;first_son = genericExp(++iter, ed);</span><br><span class="line">				iter = ed;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">16</span> || id == <span class="number">18</span> || id == <span class="number">20</span>) &#123; <span class="comment">//处理左括号</span></span><br><span class="line">			edge.push(id);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">17</span> || id == <span class="number">19</span> || id == <span class="number">21</span>) &#123; <span class="comment">//处理右括号</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (edge.empty() || edge.top() != id - <span class="number">1</span>) <span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少'&#123;'"</span>);</span><br><span class="line">				edge.pop();</span><br><span class="line">				<span class="keyword">if</span> (id == <span class="number">17</span>)statement.pop();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">				<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">100</span>) &#123;<span class="comment">//处理标识符</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (iter == start)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"未声明标识符!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">				<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">auto</span> last = --iter;</span><br><span class="line">			<span class="keyword">auto</span> ed = ++iter;</span><br><span class="line">			<span class="keyword">if</span> (last-&gt;first &gt; <span class="number">4</span> &amp;&amp; last-&gt;first != <span class="number">13</span>) &#123; <span class="comment">//新建哨兵节点</span></span><br><span class="line">				generalTreeNode* p = statement.top()-&gt;first_son;</span><br><span class="line">				<span class="keyword">if</span> (p) &#123;</span><br><span class="line">					<span class="keyword">while</span> (p-&gt;next_bro)p = p-&gt;next_bro;</span><br><span class="line">					p-&gt;next_bro = <span class="keyword">new</span> generalTreeNode(<span class="string">"103"</span>);</span><br><span class="line">					p = p-&gt;next_bro;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					p = <span class="keyword">new</span> generalTreeNode(<span class="string">"103"</span>);</span><br><span class="line">					statement.top()-&gt;first_son = p;</span><br><span class="line">				&#125;</span><br><span class="line">				statement.push(p);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span> (ed-&gt;first != <span class="number">12</span> &amp;&amp; ed-&gt;first != <span class="number">13</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					++ed;</span><br><span class="line">					<span class="keyword">if</span> (ed == end)<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少';'"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">					<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">					<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">			generalTreeNode* p = statement.top()-&gt;first_son;</span><br><span class="line">			<span class="keyword">if</span> (p) &#123;</span><br><span class="line">				<span class="keyword">while</span> (p-&gt;next_bro)p = p-&gt;next_bro;</span><br><span class="line">				p-&gt;next_bro = genericExp(iter, ed);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> statement.top()-&gt;first_son = genericExp(iter, ed);</span><br><span class="line">			iter = --ed;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (id == <span class="number">12</span>) &#123;<span class="comment">//分号表示语句结束 可以出栈</span></span><br><span class="line">			statement.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(id == <span class="number">13</span>)&#123;</span><br><span class="line">			<span class="comment">//std::cout &lt;&lt; "逗号" &lt;&lt; std::endl;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"ERROR:非法语句！"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		++iter;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (!edge.empty())<span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"缺少'&#125;'"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception&amp; e)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ERROR:"</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h2><ul>
+<li>处理关键字的时候，如果多叉树栈空了，这是非法的，意味着有过多的右括号或者分号导致的出栈操作。因此抛出<strong>分隔符错误的异常</strong>。</li>
+<li>处理if，while，print关键字的时候<ul>
+<li>如果后面没检测到圆括号，则是<strong>语法错误</strong>。</li>
+<li>如果确定表达式范围所引起的迭代器访问最后一个末尾迭代器，则是因为<strong>缺少分隔符</strong>。</li>
+</ul>
+</li>
+<li>处理右括号的时候如果与括号栈栈顶不匹配会抛出<strong>缺少左括号的异常</strong>。</li>
+<li>处理标识符时如果检测到表达式没有一个正确的分号结尾，体现在程序运行上就是出现表达式中的非法字符或者迭代器访问末尾迭代器。这时抛出<strong>缺少分号的异常</strong>。</li>
+<li>最后是遍历完成之后检查括号栈的情况，非空则抛出<strong>缺少右括号的异常</strong>。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag"># c++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/01/c++/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" rel="next" title="词法分析器">
+                <i class="fa fa-chevron-left"></i> 词法分析器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-187-%E9%87%8D%E5%A4%8D%E7%9A%84DNA%E5%BA%8F%E5%88%97/" rel="prev" title="leetcode刷题笔记-187-重复的DNA序列">
+                leetcode刷题笔记-187-重复的DNA序列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Delta" />
+            
+              <p class="site-author-name" itemprop="name">Delta</p>
+              <p class="site-description motion-element" itemprop="description">欧卡哇伊阔多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">147</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Delta1181485139" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:delta37@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://myaccount.google.com/" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/Delta95968721" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/users/13116118/delta" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/de1taaaaaa" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成表达式树"><span class="nav-number">1.</span> <span class="nav-text">生成表达式树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#树的结构"><span class="nav-number">1.1.</span> <span class="nav-text">树的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规定运算符优先级"><span class="nav-number">1.2.</span> <span class="nav-text">规定运算符优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成算法"><span class="nav-number">1.3.</span> <span class="nav-text">生成算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">1.4.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语法分析树"><span class="nav-number">2.</span> <span class="nav-text">语法分析树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成算法-1"><span class="nav-number">2.1.</span> <span class="nav-text">生成算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理-1"><span class="nav-number">2.2.</span> <span class="nav-text">异常处理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Delta</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">77.7k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":400,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

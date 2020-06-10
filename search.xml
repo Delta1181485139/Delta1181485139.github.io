@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-199-二叉树的右视图</title>
+    <url>/2020/06/10/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-199-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE/</url>
+    <content><![CDATA[<p>给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。</p>
+<p>示例:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">null</span>,<span class="number">5</span>,<span class="literal">null</span>,<span class="number">4</span>]</span><br><span class="line">输出: [<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">解释:</span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>            &lt;---</span><br><span class="line"> /   \</span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>         &lt;---</span><br><span class="line"> \     \</span><br><span class="line">  <span class="number">5</span>     <span class="number">4</span>       &lt;---</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>方法是利用队列对二叉树进行层序遍历，保留每一层最后一个节点。取得其值。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">rightSideView</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(!root)<span class="keyword">return</span> res;</span><br><span class="line">        <span class="built_in">queue</span>&lt;pair&lt;TreeNode*,<span class="keyword">int</span>&gt;&gt; que;</span><br><span class="line">        <span class="keyword">int</span> last_val = root-&gt;val, last_floor = <span class="number">0</span>;</span><br><span class="line">        que.push(make_pair(root,last_floor));</span><br><span class="line">        <span class="keyword">while</span>(!que.empty())&#123;</span><br><span class="line">            pair&lt;TreeNode*,<span class="keyword">int</span>&gt; p = que.front();</span><br><span class="line">            que.pop();</span><br><span class="line">            <span class="keyword">if</span>(p.first)&#123;</span><br><span class="line">                <span class="keyword">if</span>(p.first-&gt;left)que.push(make_pair(p.first-&gt;left,p.second+<span class="number">1</span>));</span><br><span class="line">                <span class="keyword">if</span>(p.first-&gt;right)que.push(make_pair(p.first-&gt;right,p.second+<span class="number">1</span>));</span><br><span class="line">                <span class="keyword">if</span>(p.second!=last_floor)res.push_back(last_val);</span><br><span class="line">                last_val = p.first-&gt;val;</span><br><span class="line">                last_floor = p.second;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        res.push_back(last_val);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-198-打家劫舍</title>
+    <url>/2020/06/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-198-%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/</url>
+    <content><![CDATA[<p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</p>
+<p>示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出：<span class="number">4</span></span><br><span class="line">解释：偷窃 <span class="number">1</span> 号房屋 (金额 = <span class="number">1</span>) ，然后偷窃 <span class="number">3</span> 号房屋 (金额 = <span class="number">3</span>)。</span><br><span class="line">     偷窃到的最高金额 = <span class="number">1</span> + <span class="number">3</span> = <span class="number">4</span> 。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>这题不妨将自己代入到这个环境中。假设此前已经经过了n间房屋，现在决定要不要偷第n+1间房屋。</p>
+<ul>
+<li>这个时候当然要权衡，到第n-1间房截止所偷的钱与第n+1间房的钱的总和是否能大于偷到第n间房所偷到的钱。如果要多于，那么经过第n+1间房所获得的最大总价值就是经过第n-1间房的总价值加上这间房的价值，否则依然还是经过第n间房所获得的总价值，即第n+1间房不能偷。</li>
+</ul>
+<p>本质上还是动态规划，但状态方程中的每一步结果都只取决于当前项和前两项的结果。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>,last = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> value:nums)&#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = res;</span><br><span class="line">            res = max(last + value,res);</span><br><span class="line">            last = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-191-位1的个数</title>
+    <url>/2020/06/07/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-191-%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/</url>
+    <content><![CDATA[<p>编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为<a href="https://baike.baidu.com/item/汉明重量" target="_blank" rel="noopener">汉明重量</a>）。</p>
+<p>示例 :</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">输入：<span class="number">00000000000000000000000000001011</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：输入的二进制串 <span class="number">00000000000000000000000000001011</span> 中，共有三位为 '<span class="number">1</span>'。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>循环右移，每次判断最后一位是不是1，是则计数器加1。判断方法自然是和1相与了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">uint32_t</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(n)&#123;</span><br><span class="line">            res+=(<span class="number">1</span>&amp;n);</span><br><span class="line">            n&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-190-颠倒二进制位</title>
+    <url>/2020/06/07/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-190-%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/</url>
+    <content><![CDATA[<p>颠倒给定的 32 位无符号整数的二进制位。</p>
+<p>示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：<span class="number">11111111111111111111111111111101</span></span><br><span class="line">输出：<span class="number">10111111111111111111111111111111</span></span><br><span class="line">解释：输入的二进制串 <span class="number">11111111111111111111111111111101</span> 表示无符号整数 <span class="number">4294967293</span>，</span><br><span class="line">     因此返回 <span class="number">3221225471</span> 其二进制表示形式为 <span class="number">10111111111111111111111111111111</span> 。</span><br></pre></td></tr></table></figure>
+<p>提示：</p>
+<p>请注意，在某些语言（如 Java）中，没有无符号整数类型。在这种情况下，输入和输出都将被指定为有符号整数类型，并且不应影响您的实现，因为无论整数是有符号的还是无符号的，其内部的二进制表示形式都是相同的。在 Java 中，编译器使用二进制补码记法来表示有符号整数。因此，在上面的 示例 2 中，输入表示有符号整数 -3，输出表示有符号整数 -1073741825。</p>
+<a id="more"></a>
+<hr>
+<p>考虑要反转该数的二进制，那么就从这个无符号整数的高位开始往低位遍历，依次记录得到的位。具体方式为：</p>
+<ul>
+<li>将原数右移若干位，将其与1相与取得该位是0还是1。如果是1的话那么应该将1右移若干位的结果加到答案中。</li>
+</ul>
+<p>其实在草纸上比划一下过程就很容易想到了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">uint32_t</span> <span class="title">reverseBits</span><span class="params">(<span class="keyword">uint32_t</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">31</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">            res += (<span class="number">1</span>&amp;(n&gt;&gt;i))&lt;&lt;(<span class="number">31</span>-i);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-189-旋转数组</title>
+    <url>/2020/06/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>] 和 k = <span class="number">3</span></span><br><span class="line">输出: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 <span class="number">1</span> 步: [<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">向右旋转 <span class="number">2</span> 步: [<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">向右旋转 <span class="number">3</span> 步: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>通过观察可以发现，旋转之后的结果与原数组相比，就是以数组首部加步长为分割线，对数组的两部分分别进行翻转。最后再对整个数组进行翻转。为省时间用了c++标准库中的函数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*auto mid = nums.rbegin() + k%nums.size();</span></span><br><span class="line"><span class="comment">        reverse(nums.rbegin(),mid);</span></span><br><span class="line"><span class="comment">        reverse(mid,nums.rend());</span></span><br><span class="line"><span class="comment">        reverse(nums.begin(),nums.end());*/</span></span><br><span class="line">        </span><br><span class="line">        <span class="built_in">std</span>::rotate(nums.rbegin(),nums.rbegin()+k%nums.size(),nums.rend());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-187-重复的DNA序列</title>
     <url>/2020/06/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-187-%E9%87%8D%E5%A4%8D%E7%9A%84DNA%E5%BA%8F%E5%88%97/</url>
     <content><![CDATA[<p>所有 DNA 都由一系列缩写为 A，C，G 和 T 的核苷酸组成，例如：“ACGAATTCCG”。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。编写一个函数来查找目标子串，目标子串的长度为 10，且在 DNA 字符串 s 中出现次数超过一次。</p>

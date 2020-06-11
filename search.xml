@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-202-快乐数</title>
+    <url>/2020/06/11/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-202-%E5%BF%AB%E4%B9%90%E6%95%B0/</url>
+    <content><![CDATA[<p>编写一个算法来判断一个数 n 是不是快乐数。「快乐数」定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。如果 可以变为  1，那么这个数就是快乐数。如果 n 是快乐数就返回 True ；不是，则返回 False 。</p>
+<p>示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入：<span class="number">19</span></span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">解释：</span><br><span class="line"><span class="number">12</span> + <span class="number">92</span> = <span class="number">82</span></span><br><span class="line"><span class="number">82</span> + <span class="number">22</span> = <span class="number">68</span></span><br><span class="line"><span class="number">62</span> + <span class="number">82</span> = <span class="number">100</span></span><br><span class="line"><span class="number">12</span> + <span class="number">02</span> + <span class="number">02</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>对于这题一开始是很容易把人看懵的。因为我们似乎不知道根据题目所说的将数字的每一位取平方和会是个什么样的结果。不过根据题意我们可以对其作以下猜测，对于一个任意的数，做无限次按位平方和之后：</p>
+<ul>
+<li><p>会收敛为1。因为1的按位平方和永远是1。</p>
+</li>
+<li><p>会回到最原来的数。开始无限循环。</p>
+</li>
+<li><p>不会回到原来的数，可能变的无穷大。</p>
+</li>
+</ul>
+<p>之后可以对这三种情况进行分析。结果发现第三种情况是经不起推敲的。试想，假如给出的数字是一个两位数，为了测试其极端情况，令其为99，那么$9^2+9^2=162$，这将得到一个三位数，而三位数每位取最大$9^2+9^2+9^2=243$，也才得到一个243。对于位数较多的数字也有相同的结论。</p>
+<p>归根结底就是这里的平方和始终是一些一位数进行运算，这一定会有一个很低的上限。所以结果无穷大是不可能的。</p>
+<p>另外，有没有可能有点类似于无理数的样子，无限出现不同的数字。那当然也是不可能的，因为上面已经认证过了，加入给出一个两位数，如果进行无穷次按位平方和运算，它的数值一定不会大于243。那么这属于有限个整数，极端情况下，把这所有的数字都经过一遍，最终还是会回到原来的数字。</p>
+<p>所以结论是，经过无限次运算之后，结果有可能收敛于1，也有可能回到原来的数并无限循环。另外，假如真的会结果趋向无穷大的话，以我的理解这个问题似乎是不可解的。所以接下来问题就转化成了一个判环问题。自然是用快慢指针来解了。</p>
+<ul>
+<li>如果会收敛为1。那么快指针会比慢指针先到达1。</li>
+<li>如果会回到原来的数，那么快慢指针迟早会相遇。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> slow = n, fast = n;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            slow = getNext(slow);</span><br><span class="line">            fast = getNext(getNext(fast));</span><br><span class="line">            <span class="keyword">if</span>(fast == <span class="number">1</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">while</span>(slow!=fast);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getNext</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">string</span> num = to_string(n);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> ch:num)</span><br><span class="line">            res+=(ch-<span class="string">'0'</span>)*(ch-<span class="string">'0'</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-201-数字范围按位与</title>
     <url>/2020/06/10/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-201-%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4%E6%8C%89%E4%BD%8D%E4%B8%8E/</url>
     <content><![CDATA[<p>给定范围 [m, n]，其中 0 &lt;= m &lt;= n &lt;= 2147483647，返回此范围内所有数字的按位与（包含 m, n 两端点）。</p>

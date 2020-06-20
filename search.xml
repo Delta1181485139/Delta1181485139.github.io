@@ -1,6 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-166-分数到小数</title>
+    <url>/2020/06/20/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-166-%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/</url>
+    <content><![CDATA[<p>给定两个整数，分别表示分数的分子 numerator 和分母 denominator，以字符串形式返回小数。如果小数部分为循环小数，则将循环的部分括在括号内。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">输入: numerator = <span class="number">1</span>, denominator = <span class="number">2</span></span><br><span class="line">输出: <span class="string">"0.5"</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入: numerator = <span class="number">2</span>, denominator = <span class="number">1</span></span><br><span class="line">输出: <span class="string">"2"</span></span><br><span class="line">示例 <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">输入: numerator = <span class="number">2</span>, denominator = <span class="number">3</span></span><br><span class="line">输出: <span class="string">"0.(6)"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>做这道题首先要了解除法的竖式运算的本质。即用分子除分母：</p>
+<p>首先可以算出结果的符号是正还是负，然后将分子和分母全取绝对值，则为正整数进行运算。</p>
+<ul>
+<li><p>得出商和余数</p>
+<ul>
+<li><p>余数为0，则得到结果</p>
+</li>
+<li><p>余数不为0，则令余数自乘10</p>
+<ol>
+<li><p>第一次得到商的时候且余数不为0时除了在结果中追加商之外还要追加一个小数点。</p>
+</li>
+<li><p>如果余数比分母小，则循环乘10直到大于等于分母为止，乘一次10在结果上追加一个0。</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>在哈希表中查看是否当前余数已经出现过，</p>
+<ul>
+<li>出现过则记录循环开始位置并退出竖式运算，表明此结果为循环小数。</li>
+<li>没出现过则将其记录进哈希表。</li>
+</ul>
+</li>
+<li><p>将调整过后的余数作为分子进行下一轮运算。</p>
+</li>
+</ul>
+<p>最后如果判断是循环小数，那么在循环开始位置插入左括号，在结果末尾插入右括号。</p>
+<p>但这题坑还是很多的，比如</p>
+<ul>
+<li>分子为0的时候不太好用一条表达式来判断结果正负，需要将分子为0的情况单独提出。</li>
+<li>小数除大数的时候，余数的循环乘10容易发生上溢出。因此我直接把竖式中的数值全都调整为无符号64位整型。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">fractionToDecimal</span><span class="params">(<span class="keyword">int</span> numerator, <span class="keyword">int</span> denominator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(numerator == <span class="number">0</span>)<span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">        <span class="keyword">bool</span> symbol = numerator&gt;<span class="number">0</span>^denominator&gt;<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">uint64_t</span> up = <span class="built_in">abs</span>(numerator),down = <span class="built_in">abs</span>(denominator);</span><br><span class="line">        <span class="built_in">string</span> res;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; hash;</span><br><span class="line">        <span class="keyword">bool</span> dot = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> loopbegin = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">uint64_t</span> quotient = up/down,remainder = up%down;</span><br><span class="line">            res+=to_string(quotient);</span><br><span class="line">            <span class="keyword">if</span>(!remainder)<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span>(!dot)&#123;</span><br><span class="line">                res.push_back(<span class="string">'.'</span>);</span><br><span class="line">                dot = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(hash.find(remainder)!=hash.end())&#123;</span><br><span class="line">                loopbegin = hash[remainder];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                hash[remainder] = res.size();</span><br><span class="line">            &#125;</span><br><span class="line">            remainder*=<span class="number">10</span>;</span><br><span class="line">            <span class="keyword">while</span>(remainder&lt;down)&#123;</span><br><span class="line">                remainder*=<span class="number">10</span>;</span><br><span class="line">                res.push_back(<span class="string">'0'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            up = remainder;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(loopbegin)&#123;</span><br><span class="line">            res.insert(loopbegin,<span class="string">"("</span>);</span><br><span class="line">            res.push_back(<span class="string">')'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> symbol?<span class="string">"-"</span>+res:res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>B树和B+树</title>
+    <url>/2020/06/19/datastructure/B%E6%A0%91%E5%92%8CB+%E6%A0%91/</url>
+    <content><![CDATA[<a id="more"></a>
+<h1 id="B树及其基本操作"><a href="#B树及其基本操作" class="headerlink" title="B树及其基本操作"></a>B树及其基本操作</h1><p>B树，又称<strong>多路平衡查找树</strong>，B树中所有孩子节点个数的最大值成为B树的阶，通常用m表示。一棵m阶B树或为空树，或为满足如下特性的m叉树:</p>
+<ol>
+<li><p>树中每个节点至多有$m$颗子树，即最多含有$m-1$个关键字。</p>
+</li>
+<li><p>若根节点不是终端节点，则至少有两棵子树。</p>
+</li>
+<li><p>若根节点外所有非叶节点至少有$\lceil m/2\rceil$棵子树，即至少含有$\lceil m/2\rceil-1$个关键字。</p>
+</li>
+<li><p>所有非叶节点的结构如下：</p>
+<blockquote>
+<p>$n\rightarrow P_0\rightarrow K_1\rightarrow P_1\rightarrow K_2\rightarrow P_2\rightarrow…\rightarrow K_n\rightarrow P_n$</p>
+</blockquote>
+<ul>
+<li>其中，$K_i(i=1,2,…,n)$为节点的关键字，且满足$K_1&lt;K_2&lt;…&lt;K_n$；$P_i(i=0,1,…,n)$为指向子树根节点的指针，且指针$P_{i-1}$所指子树中所有节点的关键字均小于$K_i$，$P_i$所指子树中所有节点的关键字均大于$K_i$。$n(\lceil m/2\rceil-1\leq n\leq m-1)$为节点中关键字的个数。</li>
+</ul>
+</li>
+<li><p>所有的叶节点都出现在同一层次上，并且不带信息(可以视为外部节点或类似于折半查找判定树的查找失败节点，实际上这些节点不存在，指向这些节点的指针为空)。</p>
+</li>
+</ol>
+<p>B树是所有节点的平衡因子均等于0的多路平衡查找树。</p>
+<h2 id="B树的高度-磁盘存取次数"><a href="#B树的高度-磁盘存取次数" class="headerlink" title="B树的高度(磁盘存取次数)"></a>B树的高度(磁盘存取次数)</h2><p>B树中的大部分操作所需的磁盘存取次数与B树的高度成正比。</p>
+<p>下面来分析B树在不同情况下的高度。当然，首先规定B树的高度不包括最后的不带任何信息的叶节点所处的那一层。</p>
+<p>若$n\geq1$，则对任意一棵包含$n$个关键字，高度为$h$，阶数为$m$的B树：</p>
+<ol>
+<li><p>因为B树中每个节点最多有$m$棵子树，$m-1$个关键字，所以在一棵高度为$h$的$m$阶B树中关键字的个数应满足</p>
+<script type="math/tex; mode=display">
+n\leq(m-1)(1+m+m^2+...+m^{h-1})=m^h-1</script><p>因此有</p>
+<script type="math/tex; mode=display">
+h\geq log_m(n+1)</script></li>
+<li><p>若让每个节点中的关键字个数达到最少，则容纳同样多关键字的B树的高度达到最大。</p>
+<p>由B树的定义：第一层至少有1个节点；第二层至少有2个节点；除根节点外的每个非终端节点至少有$\lceil m/2\rceil$棵子树，则第三层至少有$2\lceil m/2\rceil$个节点…第$h+1$层至少有$2(\lceil m/2\rceil)^{h-1}$个节点，注意到第$h+1$层是不包含任何信息的叶节点。</p>
+<p>对于关键字个数为$n$的B树，叶节点即查找不成功的节点为$n+1$，由此有$n+1\geq2(\lceil m/2\rceil)^{h-1}$，即$h\leq log_{\lceil m/2\rceil}((n+1)/2)+1$。</p>
+<p>例如，假设一棵3阶B树共有8个关键字，则其高度范围为$2\leq h\le3.17$。</p>
+</li>
+</ol>
+<h2 id="B树的查找"><a href="#B树的查找" class="headerlink" title="B树的查找"></a>B树的查找</h2><ul>
+<li><p>在B树上进行查找与二叉查找树很相似，只是每个节点都是多个关键字的有序表 ，在每个节点上所作的不是两路分支决定，而是根据该节点的子树所做的多路分支决定。</p>
+</li>
+<li><p>B树的查找包含两个基本操作：</p>
+<ol>
+<li>在B树中找节点</li>
+<li>在节点内找关键字。</li>
+</ol>
+<p>由于B树常存储在磁盘上，因此前一个查找操作是在磁盘上进行的，而后一个查找操作是在内存中进行的，即在找到目标节点后，先将节点信息读入内存，然后在节点内采用顺序查找法或折半查找法。</p>
+</li>
+<li><p>在B树上查找到某个节点后，先在有序表中进行查找，若找到则查找成功，否则按照对应的指针信息到所指的子树中去查找。查找到叶节点时(对应指针为空指针)，则说明树中没有对应关键字，查找失败。</p>
+</li>
+</ul>
+<h2 id="B树的插入"><a href="#B树的插入" class="headerlink" title="B树的插入"></a>B树的插入</h2><p>与二叉查找树的插入操作相比，B树的插入操作要复杂的多。在二叉查找树中，仅需查找到需插入的终端节点的位置。但是在B树中找到插入的位置后，并不能简单地将其添加到终端节点中，因为此时可能会导致整棵树不再满足B树定义的要求。将关键字key插入B树的过程如下：</p>
+<ol>
+<li><strong>定位</strong>。利用前述的B树查找算法，找出插入该关键字的最底层中的某个非叶子节点(在B树中查找key时，会找到表示查找失败的叶节点，这样就确定了最底层非叶节点的插入位置。注意：插入位置一定是最低层中的某个非叶节点)。</li>
+<li><strong>插入</strong>。在B树中，每个非失败节点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内。插入后的节点关键字个数小于$m$，可以直接插入；插入后检查被插入节点内关键字的个数，当插入后的节点个数大于$m-1$时，必须对节点进行分裂。</li>
+</ol>
+<h3 id="分裂的方法"><a href="#分裂的方法" class="headerlink" title="分裂的方法"></a>分裂的方法</h3><ul>
+<li>取一个新节点，在插入key后的原节点，从中间位置$(\lceil m/2\rceil)$将其中的关键字分为两部分，左部分包含的关键字放在原节点中，右部分包含的关键字放到新节点中，中间位置$(\lceil m/2\rceil)$的节点插入原节点的父节点。</li>
+<li>若此时导致其父节点的关键字个数也超过了上限，则继续进行这种分裂操作。直至这个过程传到根节点为止，进而使B树的高度增1。</li>
+</ul>
+<h2 id="B树的删除"><a href="#B树的删除" class="headerlink" title="B树的删除"></a>B树的删除</h2><p>B树中的删除操作与插入操作类似，但要稍微复杂一点，即要使得删除后的节点中的关键字个数$\geq\lceil m/2\rceil-1$，因此将涉及节点的合并问题。</p>
+<p>当被删关键字$k$不在终端节点(最低层非叶节点)中时，可以用$k$的前驱(或后继)$k’$来替代$k$，然后在相应的节点中删除$k’$，关键字$k’$必定落在某个终端节点中，则<strong>转换成了被删关键字在终端节点</strong>的情形。</p>
+<p>当被删关键字在终端节点(最低层非叶节点)中时，有下列三种情况：</p>
+<ol>
+<li><strong>直接删除关键字</strong>。若被删除关键字所在节点的关键字个数$\geq\lceil m/2\rceil$，表明删除该关键字后仍满足B树的定义，则直接删去该关键字。</li>
+<li><strong>兄弟够借</strong>。若被删除关键字所在节点删除前的关键字个数$=\lceil m/2\rceil-1$，且与此节点相邻的右(或左)兄弟节点的关键字个数$\geq\lceil m/2\rceil$，则需要调整该节点、右(或左)兄弟节点及其双亲节点(父子换位法)，以达到新的平衡。</li>
+<li><strong>兄弟不够借</strong>。若被删除关键字所在节点删除前的关键字个数$=\lceil m/2\rceil-1$，且此时与该节点的相邻左右兄弟节点的关键字个数均$=\lceil m/2\rceil-1$，则将关键字删除后与左(或右)兄弟节点及双亲节点中的关键字进行合并。</li>
+</ol>
+<p>在合并过程中，双亲节点中的关键字个数会减1。若双亲节点是根节点且关键字个数减少至0(根节点关键字个数为1时，有两棵子树)，则直接将根节点删除，合并后的新节点成为根；若双亲节点不是根节点，且关键字个数减少到$\lceil m/2\rceil-2$，则又要与它自己的兄弟节点进行调整或合并操作，并重复以上操作，直至符合B树的要求为止。</p>
+<h1 id="B-树的基本概念"><a href="#B-树的基本概念" class="headerlink" title="B+树的基本概念"></a>B+树的基本概念</h1><p>B+树是应数据库所需而出现的一种B树的变形树。相比较而言更适合进行遍历操作。</p>
+<p>一颗m阶的B+树需满足下列条件：</p>
+<ol>
+<li>每个分支节点最多有m棵子树(孩子节点)。</li>
+<li>非叶根节点至少有两颗子树，其他每个分支节点至少有$\lceil m/2\rceil$棵子树。</li>
+<li>节点的子树个数和关键字个数相等。</li>
+<li>所有叶节点包含全部关键字及指向相应记录的指针，叶节点中将关键字按大小顺序排列，并且相邻叶节点按大小顺序相互链接起来。</li>
+<li>所有分支节点(可视为索引的索引)中仅包含它</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>datastructure</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-207-课程表</title>
     <url>/2020/06/18/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-207-%E8%AF%BE%E7%A8%8B%E8%A1%A8/</url>
     <content><![CDATA[<p>你这个学期必须选修 numCourse 门课程，记为 0 到 numCourse-1 。在选修某些课程之前需要一些先修课程。 例如，想要学习课程0，你需要先完成课程1，我们用一个匹配来表示他们：[0,1]。给定课程总量以及它们的先决条件，请你判断是否可能完成所有课程的学习？</p>

@@ -48,7 +48,8 @@
   <entry>
     <title>B树和B+树</title>
     <url>/2020/06/19/datastructure/B%E6%A0%91%E5%92%8CB+%E6%A0%91/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>B树和B+树因为其身短体宽的特点多用于组织外存信息，以避免过多的IO开销。</p>
+<a id="more"></a>
 <h1 id="B树及其基本操作"><a href="#B树及其基本操作" class="headerlink" title="B树及其基本操作"></a>B树及其基本操作</h1><p>B树，又称<strong>多路平衡查找树</strong>，B树中所有孩子节点个数的最大值成为B树的阶，通常用m表示。一棵m阶B树或为空树，或为满足如下特性的m叉树:</p>
 <ol>
 <li><p>树中每个节点至多有$m$颗子树，即最多含有$m-1$个关键字。</p>

@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-232-用栈实现队列</title>
+    <url>/2020/06/24/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-232-%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<p>使用栈实现队列的下列操作：</p>
+<ul>
+<li>push(x) — 将一个元素放入队列的尾部。</li>
+<li>pop() — 从队列首部移除元素。</li>
+<li>peek() — 返回队列首部的元素。</li>
+<li>empty() — 返回队列是否为空。</li>
+</ul>
+<p>示例:</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">MyQueue <span class="built_in">queue</span> = <span class="keyword">new</span> MyQueue();</span><br><span class="line"></span><br><span class="line"><span class="built_in">queue</span>.push(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">queue</span>.push(<span class="number">2</span>);  </span><br><span class="line"><span class="built_in">queue</span>.<span class="built_in">peek</span>();  <span class="comment">// 返回 1</span></span><br><span class="line"><span class="built_in">queue</span>.pop();   <span class="comment">// 返回 1</span></span><br><span class="line"><span class="built_in">queue</span>.empty(); <span class="comment">// 返回 false</span></span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>你只能使用标准的栈操作 — 也就是只有 <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, 和 <code>is empty</code> 操作是合法的。</li>
+<li>你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。<br>假设所有操作都是有效的 （例如，一个空的队列不会调用 pop 或者 peek 操作）。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>与用队列实现栈不同的是，栈比队列要畸形一些，因为它只有一个口是开放的。所以如果用单栈无法实现队列的功能，需要用一个辅助栈来帮助调转栈中的元素。让每次入栈的元素都沉入栈底。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; mystack;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    MyQueue() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Push element x to the back of queue. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; tmp;</span><br><span class="line">        <span class="keyword">while</span>(!mystack.empty())&#123;</span><br><span class="line">            tmp.push(mystack.top());</span><br><span class="line">            mystack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        mystack.push(x);</span><br><span class="line">        <span class="keyword">while</span>(!tmp.empty())&#123;</span><br><span class="line">            mystack.push(tmp.top());</span><br><span class="line">            tmp.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Removes the element from in front of queue and returns that element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = mystack.top();</span><br><span class="line">        mystack.pop();</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Get the front element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mystack.top();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns whether the queue is empty. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mystack.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyQueue object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyQueue* obj = new MyQueue();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;peek();</span></span><br><span class="line"><span class="comment"> * bool param_4 = obj-&gt;empty();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-225-用队列实现栈</title>
+    <url>/2020/06/24/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-225-%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88/</url>
+    <content><![CDATA[<p>使用队列实现栈的下列操作：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">push</span><span class="params">(x)</span></span> -- 元素 x 入栈</span><br><span class="line"><span class="function"><span class="title">pop</span><span class="params">()</span></span> -- 移除栈顶元素</span><br><span class="line"><span class="function"><span class="title">top</span><span class="params">()</span></span> -- 获取栈顶元素</span><br><span class="line"><span class="function"><span class="title">empty</span><span class="params">()</span></span> -- 返回栈是否为空</span><br></pre></td></tr></table></figure>
+<p>注意:</p>
+<p>你只能使用队列的基本操作— 也就是 </p>
+<ul>
+<li>push to back</li>
+<li>peek/pop from front</li>
+<li>size</li>
+<li>is empty </li>
+</ul>
+<p>这些操作是合法的。你所使用的语言也许不支持队列。 你可以使用 list 或者 deque（双端队列）来模拟一个队列 , 只要是标准的队列操作即可。你可以假设所有操作都是有效的（例如, 对一个空的栈不会调用 pop 或者 top 操作）。</p>
+<a id="more"></a>
+<hr>
+<p>队列与栈的差别在于一个先进先出，一个先进后出。而用队列实现栈，只要每次将入队之后的元素挪到队头即可实现先进先出。因此入队的时间复杂度为$O(n)$，而出队的时间复杂度为$O(1)$。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyStack</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; myqueue;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    MyStack() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Push element x onto stack. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        myqueue.push(x);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;myqueue.size()<span class="number">-1</span>;++i)&#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = myqueue.front();</span><br><span class="line">            myqueue.pop();</span><br><span class="line">            myqueue.push(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Removes the element on top of the stack and returns that element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = myqueue.front();</span><br><span class="line">        myqueue.pop();</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Get the top element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> myqueue.front();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns whether the stack is empty. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> myqueue.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyStack* obj = new MyStack();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;top();</span></span><br><span class="line"><span class="comment"> * bool param_4 = obj-&gt;empty();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>进程与线程</title>
     <url>/2020/06/23/os/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<p>在多道程序环境下，允许多个程序并发执行，此时它们失去封闭性，并具有间断性和不可再现性。为此引入进程的概念，以便更好地描述和控制程序的并发执行，实现操作系统的<strong>并发性</strong>和<strong>共享性</strong>。</p>

@@ -1,6 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>考研核心词汇Unit-1</title>
+    <url>/2020/06/25/english/%E8%80%83%E7%A0%94%E6%A0%B8%E5%BF%83%E8%AF%8D%E6%B1%87Unit-1/</url>
+    <content><![CDATA[<ul>
+<li>ascend<ul>
+<li>v. 升高，攀登</li>
+<li><strong>[ce]</strong>当词根的时候有 <strong>走</strong> 的意思。</li>
+</ul>
+</li>
+<li>descend<ul>
+<li>vi. 下来；下降</li>
+<li><strong>[de]</strong>当词根有 <strong>下降，分开</strong>的意思</li>
+</ul>
+</li>
+<li>descent<ul>
+<li>n. 下降；下落</li>
+</ul>
+</li>
+<li><p>descendant</p>
+<ul>
+<li>n. 子孙；后裔；后代</li>
+</ul>
+</li>
+<li><p>absent</p>
+<ul>
+<li>adj. 缺席的；不存在的</li>
+<li>除了带<strong>[ab]</strong>词根的词带否定，其它所有<strong>[a*]</strong>词根没有意思，表示强调，一再。</li>
+<li>absent from school/meeting</li>
+<li>absent-minded</li>
+</ul>
+</li>
+<li>absence<ul>
+<li>n. 缺席</li>
+</ul>
+</li>
+<li>astonish<ul>
+<li>vt. 使惊讶</li>
+<li>记法：a stone 你死 = 惊讶</li>
+</ul>
+</li>
+<li>access<ul>
+<li>n. 通道；人口接近(或见面、使用)的机会(或权力)</li>
+</ul>
+</li>
+<li>accessible<ul>
+<li>adj. 后缀：可…的；（一个人）可接近的</li>
+</ul>
+</li>
+<li>assess<ul>
+<li>vt. 评价；估价，确定金额</li>
+</ul>
+</li>
+<li>assessment n. 估价；估定</li>
+<li>agent<ul>
+<li>n. 代理商；动因</li>
+<li>记法：发音有点像engine，即动机。代理商自己背</li>
+<li>drying agent 干燥剂</li>
+</ul>
+</li>
+<li><p>agency</p>
+<ul>
+<li>n. 代理处；专业行政部门</li>
+<li>travel agency 旅行社</li>
+</ul>
+</li>
+<li><p>assign</p>
+<ul>
+<li>vt. 委派；指派；分配</li>
+</ul>
+</li>
+<li>assignment<ul>
+<li>n. 分配；委派；任务</li>
+</ul>
+</li>
+<li>appeal<ul>
+<li>n/v. 请求；呼吁；有吸引力；上诉</li>
+</ul>
+</li>
+<li>appreciate<ul>
+<li>vt. 重视；欣赏；感激</li>
+<li>记法：<ul>
+<li>price n.价格</li>
+<li>precious adj. 珍贵的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>annual<ul>
+<li>n. 年刊；一年生植物</li>
+<li>adj. 一年一次的</li>
+<li><strong>[ann-]</strong>前缀表示 一年</li>
+<li>anniversary 周年纪念<ul>
+<li>记法：<ul>
+<li><strong>[verse]</strong> 转</li>
+<li>universe 联合起来转表示宇宙</li>
+<li>一年转一次表示 周年纪念</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>accuse<ul>
+<li>v. 谴责；指责；控告</li>
+<li>记法：cuse——curse 诅咒 一再的诅咒你</li>
+<li>用法：accuse sb of doing sth.</li>
+</ul>
+</li>
+<li>accusation<ul>
+<li>n. 指责；谴责</li>
+</ul>
+</li>
+<li>approve<ul>
+<li>vt. 赞成；同意；批准</li>
+<li>记法：<ul>
+<li>prove 证明</li>
+<li>validate 证明 <ul>
+<li>valid 有效的+<strong>[-ate]</strong>动词后缀</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>以后表示政府 除了grovement 还能用 authority</li>
+<li>abuse<ul>
+<li>vt. 滥用；虐待</li>
+<li><strong>[ab-]</strong>前缀表否定</li>
+<li>引申：<ul>
+<li>abandon 抛弃；放弃</li>
+<li>abortion 流产；堕胎——不让出生</li>
+<li>aboard 登机；上船——离开板子</li>
+</ul>
+</li>
+<li>drug abuse 滥用药物</li>
+<li>child abuse 虐带儿童</li>
+</ul>
+</li>
+<li>appropriate<ul>
+<li>adj. 适当的</li>
+<li>proper 合适的 property 财产 最合适的即财产最多的 asset 财产 破产的时候会一再的放置 </li>
+<li>ap-propri-ate 一再合适的=合适的</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>english</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-210-课程表II</title>
+    <url>/2020/06/25/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-210-%E8%AF%BE%E7%A8%8B%E8%A1%A8II/</url>
+    <content><![CDATA[<p>现在你总共有 n 门课需要选，记为 0 到 n-1。在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]。给定课程总量以及它们的先决条件，返回你为了学完所有课程所安排的学习顺序。可能会有多个正确的顺序，你只要返回一种就可以了。如果不可能完成所有课程，返回一个空数组。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">输入: <span class="number">2</span>, [[<span class="number">1</span>,<span class="number">0</span>]] </span><br><span class="line">输出: [<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">解释: 总共有 <span class="number">2</span> 门课程。要学习课程 <span class="number">1</span>，你需要先完成课程 <span class="number">0</span>。因此，正确的课程顺序为 [<span class="number">0</span>,<span class="number">1</span>] 。</span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入: <span class="number">4</span>, [[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">2</span>,<span class="number">0</span>],[<span class="number">3</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">2</span>]]</span><br><span class="line">输出: [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] <span class="keyword">or</span> [<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">解释: 总共有 <span class="number">4</span> 门课程。要学习课程 <span class="number">3</span>，你应该先完成课程 <span class="number">1</span> 和课程 <span class="number">2</span>。并且课程 <span class="number">1</span> 和课程 <span class="number">2</span> 都应该排在课程 <span class="number">0</span> 之后。</span><br><span class="line">     因此，一个正确的课程顺序是 [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] 。另一个正确的排序是 [<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>] 。</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>输入的先决条件是由边缘列表表示的图形，而不是邻接矩阵。详情请参见图的表示法。<br>你可以假定输入的先决条件中没有重复的边。</li>
+</ul>
+<p>提示:</p>
+<ul>
+<li>这个问题相当于查找一个循环是否存在于有向图中。如果存在循环，则不存在拓扑排序，因此不可能选取所有课程进行学习。</li>
+<li>通过 DFS 进行拓扑排序 - 一个关于Coursera的精彩视频教程（21分钟），介绍拓扑排序的基本概念。</li>
+<li>拓扑排序也可以通过 BFS 完成。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>这道题就是要拓扑排序。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">findOrder</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; prerequisites)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">num</span><span class="params">(numCourses,<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;&gt; hash;</span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> pair:prerequisites)&#123;</span><br><span class="line">            hash[pair[<span class="number">1</span>]].insert(pair[<span class="number">0</span>]);</span><br><span class="line">            ++num[pair[<span class="number">0</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;num.size();++i)</span><br><span class="line">            <span class="keyword">if</span>(num[i] == <span class="number">0</span>)q.push(i);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> i:hash[q.front()])</span><br><span class="line">                <span class="keyword">if</span>(--num[i] == <span class="number">0</span>)q.push(i);</span><br><span class="line">            res.push_back(q.front());</span><br><span class="line">            q.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:num)<span class="keyword">if</span>(i)<span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-234-回文链表</title>
     <url>/2020/06/24/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-234-%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[<p>请判断一个链表是否为回文链表。</p>
@@ -210,7 +384,53 @@ BLOCK--事件结束-->READY</pre>
 <li>恢复处理机上下文。</li>
 </ol>
 <p>进程切换和处理机切换是不同的，模式切换时，处理机逻辑上可能还在同一进程中运行。若进程因中断或异常进入核心态运行，执行完后又回到用户态刚被中断的程序运行，则操作系统只需恢复进程进入内核时所保存的$CPU$现场，而无需改变当前进程的环境信息。但若要切换进程，当前运行进程改变了，则当前进程的环境信息也需要改变。</p>
-<h1 id="进程的通信"><a href="#进程的通信" class="headerlink" title="进程的通信"></a>进程的通信</h1>]]></content>
+<h1 id="进程的通信"><a href="#进程的通信" class="headerlink" title="进程的通信"></a>进程的通信</h1><p>进程通信是指进程之间的信息交换。$PV$操作就是一种低级的通信方式，高级通信方式是指以较高的效率传输大量数据的通信方式。高级通信方式主要有以下三种：</p>
+<h2 id="共享存储"><a href="#共享存储" class="headerlink" title="共享存储"></a>共享存储</h2><p>在通信的进程之间存在一块可直接访问的共享空间，通过对这片共享空间进行读写操作实现进程之间的信息交换。在对共享空间进行读写时，需要使用同步互斥工具，对共享空间的读写进行控制。共享存储也有两种</p>
+<ul>
+<li>低级方式的共享是基于数据结构的共享。</li>
+<li>高级方式的共享则是基于存储区的共享。</li>
+</ul>
+<p>操作系统只负责为通信进程提供可共享使用的存储空间和同步互斥工具，而数据交换则由用户自己安排读写指令完成。</p>
+<pre class="mermaid">graph LR
+process1(进程)-->room(共享空间)
+room-->process2(进程)
+process2-->room
+room-->process1</pre>
+
+<p>用户进程空间一般是独立的，进程运行期间一般不能访问其它进程的空间，如果希望两个用户进程共享存储空间，必须通过特殊的系统调用来实现，当然同一进程内的线程是自然共享进程空间的。</p>
+<h2 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h2><p>在消息传递系统中，进程间的数据交换是以格式化的消息为单位的。若通信的进程之间不存在可直接访问的共享空间，则必须利用操作系统提供的消息传递方法实现进程通信。进程通过系统提供的发送信息和接收消息两个原语进行数据交换。</p>
+<ul>
+<li>直接通信方式。发送进程直接把消息发送给接受进程，并将它挂在接收进程的消息缓冲队列上，接收进程从消息缓冲队列中取得信息。</li>
+</ul>
+<pre class="mermaid">graph LR
+process1(进程)-->process2(进程)
+process2-->process1</pre>
+
+<ul>
+<li>间接通信方式。发送进程把信息发送到某个中间实体，接收进程从中间实体取得消息。这种中间实体一般被称为信箱。这种通信方式又被称为信箱通信方式，被广泛应用于计算机网络中。</li>
+</ul>
+<h2 id="管道通信"><a href="#管道通信" class="headerlink" title="管道通信"></a>管道通信</h2><p>管道通信是消息传递的一种特殊方式。所谓管道是指用于连接一个读进程和一个写进程以实现它们之间的通信的一个共享文件，又名$pipe$文件。向管道提供输入的发送进程，以字符流形式将大量的数据送入(写)管道；而接收管道输出的接收进程，则从管道中接收(读)数据。为了协调双方的通信，管道机制必须提供以下三方面协调能力：<strong>互斥，同步，确定对方的存在</strong>。</p>
+<pre class="mermaid">graph LR
+process1(进程)-->buffer1(缓冲区1)
+buffer1-->process2(进程)
+process2-->buffer2(缓冲区2)
+buffer2-->process1</pre>
+
+<p>管道可以理解为共享存储的优化和发展，因为在共享存储中，若某进程要访问共享存储空间，则必须没有其他进程在该共享存储空间中进行写操作，否则访问行为就会收到阻塞。而管道通信中存储空间进化成了缓冲区，缓冲区只允许一边写入，另一边读出，因此只要缓冲区中有数据进程就能从缓冲区中读出，而不必担心会因为其它进程在其中进行写操作而遭到阻塞，因为写进程会先把缓冲区写满，然后才让读进程读，当缓冲区中还有数据时，写进程不会往缓冲区写数据。这也决定了管道通信是半双工通信。</p>
+<h1 id="线程与多线程模型"><a href="#线程与多线程模型" class="headerlink" title="线程与多线程模型"></a>线程与多线程模型</h1><h2 id="线程的基本概念"><a href="#线程的基本概念" class="headerlink" title="线程的基本概念"></a>线程的基本概念</h2><p>引入进程的目的是为了更好地使多道程序并发执行，提高资源利用率和系统吞吐量；而引入线程的目的则是为了减小程序在并发执行时所付出的时空开销，提高操作系统的并发性能。</p>
+<p>线程最直接的理解就是“轻量级进程”，它是一个基本的$CPU$执行单元，也是程序执行流的最小单元。由线程$ID$、程序计数器、寄存器集合和堆栈组成。线程是进程中的一个实体，是被系统独立调度和分配的基本单位，线程自己不会拥有系统资源，只拥有运行所必须的那部分资源。进程内的所有资源是由它的所有线程共享的。一个线程可以创建和撤销另一个线程，同一进程中的多个线程之间可以并发执行。由于线程之间的相互制约，致使线程在运行中呈现出间断性。线程也有就绪，阻塞和运行三种基本状态。</p>
+<p>引入线程后，进程的内涵发生了改变，进程只作为$CPU$外的系统资源的分配单元，而线程作为处理机的分配单元。由于一个进程内有多个线程，若线程的切换发生在同一个进程中只需要很小的时空开销。</p>
+<h2 id="进程VS线程"><a href="#进程VS线程" class="headerlink" title="进程VS线程"></a>进程VS线程</h2><h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>在传统操作系统中，拥有资源和独立调度的基本单位都是进程。在引入线程的操作系统中，线程是独立调度的基本单位，进程是拥有资源的基本单位。在同一进程中，线程的切换不会引起进程切换。在不同进程中切换线程，则会引起进程切换。</p>
+<h3 id="拥有资源"><a href="#拥有资源" class="headerlink" title="拥有资源"></a>拥有资源</h3><p>不论是传统操作系统还是设有线程的操作系统，进程都是拥有资源的基本单位，而线程除了运行时必须的资源外不拥有系统资源。但线程可以访问其隶属进程的系统资源。若线程也是拥有资源的单位，则切换线程就需要较大的时空开销，线程这个概念就没有提出的必要了。</p>
+<h3 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h3><p>在引入线程的操作系统中，不仅进程之间可以并发执行，而且多个线程之间也可以并发执行，从而使操作系统具有更好的并发性，提高系统的吞吐量。</p>
+<h3 id="系统开销"><a href="#系统开销" class="headerlink" title="系统开销"></a>系统开销</h3><p>由于创建和撤销进程时，系统都要为之分配或回收资源，如内存空间、$I/O$设备等，因此操作系统所付出的开销远大于创建或撤销线程时的开销。此外，由于同一进程内多个线程共享进程的地址空间，因此线程之间的同步与通信很容易实现，甚至不需要操作系统的干预。</p>
+<h3 id="地址空间与其它资源"><a href="#地址空间与其它资源" class="headerlink" title="地址空间与其它资源"></a>地址空间与其它资源</h3><p>进程的地址空间之间相互独立，同进程内的线程共享地址空间和其它资源，进程内的线程对其它线程不可见。</p>
+<h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><p>进程间通信需要进程同步和互斥手段来辅助，而线程间可以直接读写进程数据段来进行通信，如全局变量。</p>
+<h2 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h2><h3 id="用户级线程"><a href="#用户级线程" class="headerlink" title="用户级线程"></a>用户级线程</h3><p>在用户级线程中，有关线程管理的所有工作都由应用程序完成，内核意识不到线程的存在。应用程序可以通过使用线程库设计成多线程程序。通常，应用程序从单线程开始，在该线程中开始运行，在其运行的任何时刻，可以通过调用线程库中的派生例程创建一个在相同进程中的线程。</p>
+<h3 id="内核级线程"><a href="#内核级线程" class="headerlink" title="内核级线程"></a>内核级线程</h3><p>在内核级线程中，线程管理所有工作由内核来完成，应用程序没有进行线程管理的代码，只有一个内核级线程的编程接口。内核为进程及其内部的每个线程维护上下文信息，调度也在内核基于线程架构的基础上完成。</p>
+<hr>
+<p>有些系统使用组合方式的多线程实现。线程创建完全在用户空间中完成，线程的调度和同步也在应用程序中进行。一个应用程序中的多个用户级线程被映射到一些内核级线程上，这些内核级线程的数目是小于等于用户级线程的。</p>
+]]></content>
       <tags>
         <tag>os</tag>
       </tags>

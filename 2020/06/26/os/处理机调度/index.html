@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="调度的概念在多道程序系统中，进程的数量往往多于处理机的个数，因此进程争用处理机的情况在所难免，处理机调度是对处理机进行分配。即从就绪队列中按照一定的公平高效的算法选择一个进程，并将处理机分配给它运行，以实现进程并发地执行。 处理机调度是多道程序操作系统的基础，是操作系统设计的核心问题。">
 <meta property="article:published_time" content="2020-06-26T02:56:00.000Z">
-<meta property="article:modified_time" content="2020-06-26T04:05:36.284Z">
+<meta property="article:modified_time" content="2020-06-26T11:31:03.159Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="os">
 <meta name="twitter:card" content="summary">
@@ -338,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.9k
+                  2.2k
                 </span>
               
 
@@ -354,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  7
                 </span>
               
             </div>
@@ -417,6 +417,9 @@
 平均带权周转时间=\frac{\sum_{i=1}^n作业i的带权周转时间}{n}</script><h2 id="等待时间"><a href="#等待时间" class="headerlink" title="等待时间"></a>等待时间</h2><p>等待时间是指进程处于等处理机状态的时间之和，等待时间越长，用户满意度越低。处理机调度算法实际上并不能影响作业执行或输入输出操作的时间，只影响作业在就绪队列中等待所花的时间。因此，衡量一个算法的优劣，通常只需要简单地考察等待时间。</p>
 <h2 id="响应时间"><a href="#响应时间" class="headerlink" title="响应时间"></a>响应时间</h2><p>响应时间是指用户从提交请求到系统首次产生响应所用的时间。在交互式系统中周转时间不可能是最好的评价准则，一般采用响应时间作为衡量调度算法的重要准则之一。从用户角度看，调度策略应尽量降低响应时间，使响应时间处在用户能接受的范围之内。</p>
 <h1 id="典型的调度算法"><a href="#典型的调度算法" class="headerlink" title="典型的调度算法"></a>典型的调度算法</h1><p>操作系统中存在着多种调度算法，有的调度算法适用于作业调度，有点调度算法适用于进程调度，有的调度算法两者都适用。</p>
+<h2 id="FCFS算法"><a href="#FCFS算法" class="headerlink" title="FCFS算法"></a>FCFS算法</h2><p>先来先服务算法是一种最简单的调度算法，它既可用于作业调度，又可用于进程调度。</p>
+<p>$FCFS$调度算法属于不可剥夺算法。从表面上看，它对所有作业是公平的，但若一个长作业先到达系统，就会使后面很多短作业等待很多时间，因此它不能作为分时操作系统和实时操作系统的调度策略。但它常被结合在其它许多调度策略中使用。例如，在使用优先级作为调度策略的系统中，往往对多个具有相同优先级的进程按$FCFS$原则处理。</p>
+<p>$FCFS$调度算法的特点是算法简单，但效率低。对长作业比较有利，但对短作业不利(相对$SJF$和高响应比)；有利于$CPU$繁忙型作业，而不利于$I/O$繁忙型作业。</p>
 
       
     </div>
@@ -540,7 +543,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">181</span>
+                  <span class="site-state-item-count">182</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -626,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的概念"><span class="nav-number">1.</span> <span class="nav-text">调度的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调度的层次"><span class="nav-number">1.1.</span> <span class="nav-text">调度的层次</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作业调度"><span class="nav-number">1.1.1.</span> <span class="nav-text">作业调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中级调度"><span class="nav-number">1.1.2.</span> <span class="nav-text">中级调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程调度"><span class="nav-number">1.1.3.</span> <span class="nav-text">进程调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三层调度的联系"><span class="nav-number">1.2.</span> <span class="nav-text">三层调度的联系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的时机、切换与过程"><span class="nav-number">2.</span> <span class="nav-text">调度的时机、切换与过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的基本准则"><span class="nav-number">3.</span> <span class="nav-text">调度的基本准则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU利用率"><span class="nav-number">3.1.</span> <span class="nav-text">CPU利用率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统吞吐量"><span class="nav-number">3.2.</span> <span class="nav-text">系统吞吐量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#周转时间"><span class="nav-number">3.3.</span> <span class="nav-text">周转时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等待时间"><span class="nav-number">3.4.</span> <span class="nav-text">等待时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应时间"><span class="nav-number">3.5.</span> <span class="nav-text">响应时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#典型的调度算法"><span class="nav-number">4.</span> <span class="nav-text">典型的调度算法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的概念"><span class="nav-number">1.</span> <span class="nav-text">调度的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调度的层次"><span class="nav-number">1.1.</span> <span class="nav-text">调度的层次</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作业调度"><span class="nav-number">1.1.1.</span> <span class="nav-text">作业调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中级调度"><span class="nav-number">1.1.2.</span> <span class="nav-text">中级调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程调度"><span class="nav-number">1.1.3.</span> <span class="nav-text">进程调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三层调度的联系"><span class="nav-number">1.2.</span> <span class="nav-text">三层调度的联系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的时机、切换与过程"><span class="nav-number">2.</span> <span class="nav-text">调度的时机、切换与过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调度的基本准则"><span class="nav-number">3.</span> <span class="nav-text">调度的基本准则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU利用率"><span class="nav-number">3.1.</span> <span class="nav-text">CPU利用率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统吞吐量"><span class="nav-number">3.2.</span> <span class="nav-text">系统吞吐量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#周转时间"><span class="nav-number">3.3.</span> <span class="nav-text">周转时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等待时间"><span class="nav-number">3.4.</span> <span class="nav-text">等待时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应时间"><span class="nav-number">3.5.</span> <span class="nav-text">响应时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#典型的调度算法"><span class="nav-number">4.</span> <span class="nav-text">典型的调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FCFS算法"><span class="nav-number">4.1.</span> <span class="nav-text">FCFS算法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -660,7 +663,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">100.4k</span>
+    <span title="Site words total count">101.1k</span>
   
 </div>
 

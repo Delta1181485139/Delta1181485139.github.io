@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>考研核心词汇Unit-2</title>
+    <url>/2020/06/26/english/%E8%80%83%E7%A0%94%E6%A0%B8%E5%BF%83%E8%AF%8D%E6%B1%87Unit-2/</url>
+    <content><![CDATA[<ul>
+<li>adapt<ul>
+<li>v. 适应；改编</li>
+</ul>
+</li>
+<li>adopt<ul>
+<li>v. 收养；采取</li>
+</ul>
+</li>
+<li>adept<ul>
+<li>adj. 熟练的</li>
+<li>n. 专家</li>
+</ul>
+</li>
+<li>award<ul>
+<li>n. 奖金；奖品</li>
+</ul>
+</li>
+<li>reward<ul>
+<li>n. 报答；奖赏</li>
+</ul>
+</li>
+<li>amuse<ul>
+<li>vt. 逗乐；逗笑</li>
+<li>amusing <ul>
+<li>adj. 娱乐的；搞笑的</li>
+</ul>
+</li>
+<li>amusement</li>
+<li>amaze</li>
+<li>amazing</li>
+</ul>
+</li>
+<li>aggressive<ul>
+<li>adj. 好斗的；侵略性的；有闯劲的；有进取心的</li>
+<li>progress——<strong>[gress]</strong>词根表示 进步,走</li>
+<li>ag-gress 一再地走 sive——形容词</li>
+<li>congress 一起往里走—— n. 国会；议会</li>
+<li>digress 两个走—— n. 离题；跑题</li>
+<li>aggression</li>
+<li>aggressor</li>
+</ul>
+</li>
+<li>apply<ul>
+<li>vi. 申请；适用于</li>
+<li>vt. 使用；应用；实施</li>
+<li>applicant n. 申请人</li>
+<li>application n. 申请；应用程序</li>
+<li>applicable adj. 可适用的；明智的</li>
+</ul>
+</li>
+<li>accurate<ul>
+<li>adj. 正确的；精确的</li>
+<li>accuracy n. 精确性；正确度</li>
+<li>inaccurate adj. 不准确的；模糊的</li>
+</ul>
+</li>
+<li>approximate<ul>
+<li>adj. 近似的；大约的</li>
+<li>intimate 知己；密友</li>
+<li>inmate 狱友</li>
+</ul>
+</li>
+<li>adhere<ul>
+<li>v. 沾着；粘着</li>
+<li>一再的在这</li>
+<li>attach v. 沾着；附加</li>
+</ul>
+</li>
+<li>assure<ul>
+<li>v. 保证；使确信</li>
+<li>一再确定</li>
+<li>ensure</li>
+</ul>
+</li>
+<li>accelerate<ul>
+<li>v. 加速</li>
+<li>一再地走——加速</li>
+<li>decelerate v. 减速</li>
+</ul>
+</li>
+<li>approve<ul>
+<li>v. 批准；赞同(后跟of)</li>
+</ul>
+</li>
+<li>awkward<ul>
+<li>adj. 令人尴尬的</li>
+<li>old flame 旧情人 没有new flame 不要乱编</li>
+<li>awkwardly adv. 笨拙地；无技巧地</li>
+</ul>
+</li>
+<li>annoy<ul>
+<li>vt. 使苦恼；骚扰</li>
+<li>annoyed adj. 恼怒的；烦的</li>
+<li>distrub v. 打扰；妨碍</li>
+</ul>
+</li>
+<li>bare<ul>
+<li>adj. 赤裸的；光秃秃的</li>
+<li>vt. 使裸露；露出</li>
+<li>bar 圆木棍—-光秃的—-酒吧里很裸露<ul>
+<li>barren 不孕不育的；贫瘠的  bar—-ren 酒吧里的人 喝多了酒容易不孕不育</li>
+<li>bargain v. 讨价还价的；便宜货；协议 bar—-gain 用棍子得到 便宜货 讨价还价</li>
+<li>barbarian n. 野蛮人；原始人 bar—-bar—-ian 拿着棍子的人</li>
+<li>barbarous adj. 野蛮的；暴力的</li>
+<li>barrier n. 障碍 bar—-rier 棍子做成的—-障碍物</li>
+<li>embarrassing adj. 使人尴尬的 em—-bar—-ass 棍子打屁股 很尴尬</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>blunt<ul>
+<li>adj. 不锋利的；钝的；率直的；直言不讳的</li>
+<li>sharp adj. 锋利的；清晰的</li>
+</ul>
+</li>
+<li>benefit<ul>
+<li>n. 利益；津贴；救济金</li>
+<li>beneficial adj. 有益的</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>english</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-235-二叉搜索树的最近公共祖先</title>
     <url>/2020/06/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/</url>
     <content><![CDATA[<p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”</p>
@@ -82,6 +212,9 @@
 平均带权周转时间=\frac{\sum_{i=1}^n作业i的带权周转时间}{n}</script><h2 id="等待时间"><a href="#等待时间" class="headerlink" title="等待时间"></a>等待时间</h2><p>等待时间是指进程处于等处理机状态的时间之和，等待时间越长，用户满意度越低。处理机调度算法实际上并不能影响作业执行或输入输出操作的时间，只影响作业在就绪队列中等待所花的时间。因此，衡量一个算法的优劣，通常只需要简单地考察等待时间。</p>
 <h2 id="响应时间"><a href="#响应时间" class="headerlink" title="响应时间"></a>响应时间</h2><p>响应时间是指用户从提交请求到系统首次产生响应所用的时间。在交互式系统中周转时间不可能是最好的评价准则，一般采用响应时间作为衡量调度算法的重要准则之一。从用户角度看，调度策略应尽量降低响应时间，使响应时间处在用户能接受的范围之内。</p>
 <h1 id="典型的调度算法"><a href="#典型的调度算法" class="headerlink" title="典型的调度算法"></a>典型的调度算法</h1><p>操作系统中存在着多种调度算法，有的调度算法适用于作业调度，有点调度算法适用于进程调度，有的调度算法两者都适用。</p>
+<h2 id="FCFS算法"><a href="#FCFS算法" class="headerlink" title="FCFS算法"></a>FCFS算法</h2><p>先来先服务算法是一种最简单的调度算法，它既可用于作业调度，又可用于进程调度。</p>
+<p>$FCFS$调度算法属于不可剥夺算法。从表面上看，它对所有作业是公平的，但若一个长作业先到达系统，就会使后面很多短作业等待很多时间，因此它不能作为分时操作系统和实时操作系统的调度策略。但它常被结合在其它许多调度策略中使用。例如，在使用优先级作为调度策略的系统中，往往对多个具有相同优先级的进程按$FCFS$原则处理。</p>
+<p>$FCFS$调度算法的特点是算法简单，但效率低。对长作业比较有利，但对短作业不利(相对$SJF$和高响应比)；有利于$CPU$繁忙型作业，而不利于$I/O$繁忙型作业。</p>
 ]]></content>
       <tags>
         <tag>os</tag>
@@ -213,6 +346,7 @@
 <li>abuse<ul>
 <li>vt. 滥用；虐待</li>
 <li><strong>[ab-]</strong>前缀表否定</li>
+<li>ab-use 非-正常使用</li>
 <li>引申：<ul>
 <li>abandon 抛弃；放弃</li>
 <li>abortion 流产；堕胎——不让出生</li>

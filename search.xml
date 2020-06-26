@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-211-添加与搜索单词-数据结构设计</title>
+    <url>/2020/06/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-211-%E6%B7%BB%E5%8A%A0%E4%B8%8E%E6%90%9C%E7%B4%A2%E5%8D%95%E8%AF%8D-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<p>设计一个支持以下两种操作的数据结构：</p>
+<ul>
+<li>void addWord(word)</li>
+<li>bool search(word)</li>
+<li>search(word) </li>
+</ul>
+<p>可以搜索文字或正则表达式字符串，字符串只包含字母 . 或 a-z 。 . 可以表示任何一个字母。</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">示例:</span><br><span class="line"><span class="function"><span class="title">addWord</span><span class="params">(<span class="string">"bad"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">addWord</span><span class="params">(<span class="string">"dad"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">addWord</span><span class="params">(<span class="string">"mad"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">search</span><span class="params">(<span class="string">"pad"</span>)</span></span> -&gt; false</span><br><span class="line"><span class="function"><span class="title">search</span><span class="params">(<span class="string">"bad"</span>)</span></span> -&gt; true</span><br><span class="line"><span class="function"><span class="title">search</span><span class="params">(<span class="string">".ad"</span>)</span></span> -&gt; true</span><br><span class="line"><span class="function"><span class="title">search</span><span class="params">(<span class="string">"b.."</span>)</span></span> -&gt; true</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>你可以假设所有单词都是由小写字母 a-z 组成的。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>需要构造一颗字典树，由于字符的种类是限定好的，方便起见可以构造一颗固定叉树。与以往不同的是，在搜索的对象中可能会有正则表达字符。这时候只需要将该节点的每个非空子树搜索一遍即可。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WordDictionary</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span> val;</span><br><span class="line">    <span class="keyword">bool</span> end;</span><br><span class="line">    <span class="built_in">vector</span>&lt;WordDictionary*&gt; son;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    WordDictionary():val(<span class="string">'\0'</span>),end(<span class="literal">false</span>) &#123;</span><br><span class="line">        son = <span class="built_in">vector</span>&lt;WordDictionary*&gt;(<span class="number">26</span>,<span class="literal">nullptr</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    WordDictionary(<span class="keyword">char</span> v):val(v),end(<span class="literal">false</span>) &#123;</span><br><span class="line">        son = <span class="built_in">vector</span>&lt;WordDictionary*&gt;(<span class="number">26</span>,<span class="literal">nullptr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Adds a word into the data structure. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addWord</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(word.empty())&#123;</span><br><span class="line">            end = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> index = word[<span class="number">0</span>]-<span class="string">'a'</span>;</span><br><span class="line">        <span class="keyword">if</span>(!son[index])son[index] = <span class="keyword">new</span> WordDictionary(word[<span class="number">0</span>]);</span><br><span class="line">        son[index]-&gt;addWord(word.substr(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(word.empty())<span class="keyword">return</span> end;</span><br><span class="line">        <span class="keyword">if</span>(word[<span class="number">0</span>]!=<span class="string">'.'</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> index = word[<span class="number">0</span>]-<span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">return</span> son[index]&amp;&amp;son[index]-&gt;search(word.substr(<span class="number">1</span>));</span><br><span class="line">        &#125;<span class="keyword">else</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> index:son)</span><br><span class="line">                <span class="keyword">if</span>(index&amp;&amp;index-&gt;search(word.substr(<span class="number">1</span>)))</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your WordDictionary object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * WordDictionary* obj = new WordDictionary();</span></span><br><span class="line"><span class="comment"> * obj-&gt;addWord(word);</span></span><br><span class="line"><span class="comment"> * bool param_2 = obj-&gt;search(word);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>处理机调度</title>
     <url>/2020/06/26/os/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/</url>
     <content><![CDATA[<h1 id="调度的概念"><a href="#调度的概念" class="headerlink" title="调度的概念"></a>调度的概念</h1><p>在多道程序系统中，进程的数量往往多于处理机的个数，因此进程争用处理机的情况在所难免，处理机调度是对处理机进行分配。即从就绪队列中按照一定的公平高效的算法选择一个进程，并将处理机分配给它运行，以实现进程并发地执行。</p>
@@ -47,7 +71,7 @@
 <h1 id="典型的调度算法"><a href="#典型的调度算法" class="headerlink" title="典型的调度算法"></a>典型的调度算法</h1><p>操作系统中存在着多种调度算法，有的调度算法适用于作业调度，有点调度算法适用于进程调度，有的调度算法两者都适用。</p>
 ]]></content>
       <tags>
-        <tag>leetcode</tag>
+        <tag>os</tag>
       </tags>
   </entry>
   <entry>

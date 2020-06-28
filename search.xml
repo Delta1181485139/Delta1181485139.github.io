@@ -1,9 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-215-数组中的第K个最大元素</title>
+    <url>/2020/06/28/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-215-%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<p>在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">4</span>] 和 k = <span class="number">2</span></span><br><span class="line">输出: <span class="number">5</span></span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>] 和 k = <span class="number">4</span></span><br><span class="line">输出: <span class="number">4</span></span><br></pre></td></tr></table></figure><br>说明:</p>
+<ul>
+<li>你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。</li>
+</ul>
+<a id="more"></a>
+<p>需要得到数组的第K个最大的元素很自然会想到堆排序。因为堆排序过程中，每次取的就是当前最大(小)的元素，那么第K大就是第K次取的元素。这里建立的是大根堆。</p>
+<p>堆排序最重要的部分是每次进行调整的过程。对于一个需要调整的节点，观察其是否满足大于其左右孩子，否则取左右孩子中最大的那个与当前节点进行交换，之后再对交换后的孩子节点继续这个递归过程。</p>
+<p>所以整个堆排序分为两步：</p>
+<ol>
+<li>遍历整个序列进行建堆。即，对序列中每个元素都做一次调整。</li>
+<li>建完堆之后，序列中第一个元素肯定是最大值，那么每次将其与末尾元素交换，并令序列逻辑长度减一。循环此操作，直到序列的逻辑长度为0为止。</li>
+</ol>
+<p>而此题为了找到第K大的元素，其实只需要执行K次取最大元素的操作就可结束了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="built_in">ceil</span>(size/<span class="number">2</span>);i&gt;=<span class="number">0</span>;--i)heapify(nums,i,size);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = size<span class="number">-1</span>;i&gt;<span class="number">-1</span>&amp;&amp;--k;--i)&#123;</span><br><span class="line">            swap(nums[<span class="number">0</span>],nums[i]);</span><br><span class="line">            heapify(nums,<span class="number">0</span>,--size);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> index, <span class="keyword">int</span> size)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lagest = index, left = index*<span class="number">2</span>+<span class="number">1</span>, right = index*<span class="number">2</span>+<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(left&lt;size&amp;&amp;nums[lagest]&lt;nums[left])lagest = left;</span><br><span class="line">        <span class="keyword">if</span>(right&lt;size&amp;&amp;nums[lagest]&lt;nums[right])lagest = right;</span><br><span class="line">        <span class="keyword">if</span>(lagest!=index)&#123;</span><br><span class="line">            swap(nums[index],nums[lagest]);</span><br><span class="line">            heapify(nums,lagest,size);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>考研核心词汇Unit-3</title>
+    <url>/2020/06/27/english/%E8%80%83%E7%A0%94%E6%A0%B8%E5%BF%83%E8%AF%8D%E6%B1%87Unit-3/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<ul>
+<li>blush<ul>
+<li>vi/n. 脸红</li>
+</ul>
+</li>
+<li>flush<ul>
+<li>n/v. 脸红；冲洗</li>
+<li>厕所的冲洗按钮上就是这个词</li>
+<li>splash v. 飞溅</li>
+</ul>
+</li>
+<li>considerable<ul>
+<li>adj. 相当大（或多）的；值得考虑的</li>
+</ul>
+</li>
+<li>casual<ul>
+<li>adj. 漫不经心的；偶然的；非正式的</li>
+<li>休闲装的标签上有这个词</li>
+<li>casually adv. 偶然地；随便地；临时地</li>
+<li>casualness n. 随便；漫不经心</li>
+</ul>
+</li>
+<li>contempt<ul>
+<li>n. 轻视；轻蔑</li>
+<li>tempt v. 诱惑</li>
+<li>temptation n. 诱惑；诱饵</li>
+<li>lure v/n. 诱惑</li>
+<li>contemptuous adj. 轻蔑的；</li>
+<li>对于诱惑的人表示很轻蔑</li>
+</ul>
+</li>
+<li>circumstance<ul>
+<li>n. 环境，境况</li>
+<li>circum—-⚪ stance—-stand 围绕的站着的=环境</li>
+<li><strong>under no circumstances</strong><ul>
+<li>在任何情况下绝不</li>
+<li>写作的时候可以用 等于not</li>
+<li>放句首整句用倒装</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>accommodate<ul>
+<li>v. 为…提供住宿；适应</li>
+<li>com—-来—-date—-约会</li>
+<li>一再的来约会<ul>
+<li>需要提供住宿</li>
+<li>慢慢的就适应的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>comparsion<ul>
+<li>n. 比较；对照</li>
+<li>by comparsion 相比之下</li>
+</ul>
+</li>
+<li>compile<ul>
+<li>vt. 汇编；编纂</li>
+<li>pile n. 堆；大量</li>
+<li>piles of 一大批；一大团</li>
+</ul>
+</li>
+<li>contact<ul>
+<li>n. 联系；接触</li>
+<li>vt. 使接触；有联系</li>
+<li>intact 未触动的；完整的</li>
+</ul>
+</li>
+<li>catalog(ue)<ul>
+<li>n. 目录</li>
+<li>v. 将…编入目录</li>
+</ul>
+</li>
+<li>counter<ul>
+<li>n. 柜台；计算器；计数器</li>
+<li>adj. 相对的；</li>
+<li>英雄联盟里面的对位康特</li>
+<li>count v/n. 数数</li>
+<li>account n. 账户；账目</li>
+<li>accountant n. 会计</li>
+<li>uncountable adj. 不可数的；很多的</li>
+<li>counterpart n. 相似的人或物</li>
+<li>encounter v. 遇见；遭遇</li>
+<li>discount n. 折扣；vt. 把…打折</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>english</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-213-打家劫舍II</title>
+    <url>/2020/06/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-213-%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8DII/</url>
+    <content><![CDATA[<p>你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都围成一圈，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">3</span></span><br><span class="line">解释: 你不能先偷窃 <span class="number">1</span> 号房屋（金额 = <span class="number">2</span>），然后偷窃 <span class="number">3</span> 号房屋（金额 = <span class="number">2</span>）, 因为他们是相邻的。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出: <span class="number">4</span></span><br><span class="line">解释: 你可以先偷窃 <span class="number">1</span> 号房屋（金额 = <span class="number">1</span>），然后偷窃 <span class="number">3</span> 号房屋（金额 = <span class="number">3</span>）。</span><br><span class="line">     偷窃到的最高金额 = <span class="number">1</span> + <span class="number">3</span> = <span class="number">4</span> 。</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<p>这题相比之前的线性状的房屋，环状的区别在于第一间房和最后一间房不能够同时抢。因此可以把问题转化为求两个线性序列的最大值，它们的首尾分别是从0到length-1和1到length。</p>
+<ul>
+<li>分别的求解过程依然是动态规划，保存不取上一间房的结果和取上一间房的结果，再判断当前这间房该不该抢。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.size() &lt;= <span class="number">1</span>)<span class="keyword">return</span> nums.empty()?<span class="number">0</span>:nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">auto</span> ergodic = [&amp;](<span class="keyword">int</span> begin,<span class="keyword">int</span> end)-&gt;<span class="keyword">int</span>&#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> last = <span class="number">0</span>;begin&lt;end;++begin)&#123;</span><br><span class="line">                <span class="keyword">int</span> tmp = res;</span><br><span class="line">                res = max(last + nums[begin],res);</span><br><span class="line">                last = tmp;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> max(ergodic(<span class="number">0</span>,nums.size()<span class="number">-1</span>),ergodic(<span class="number">1</span>,nums.size()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>考研核心词汇Unit-2</title>
     <url>/2020/06/26/english/%E8%80%83%E7%A0%94%E6%A0%B8%E5%BF%83%E8%AF%8D%E6%B1%87Unit-2/</url>
-    <content><![CDATA[<ul>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+<ul>
 <li>adapt<ul>
 <li>v. 适应；改编</li>
 </ul>

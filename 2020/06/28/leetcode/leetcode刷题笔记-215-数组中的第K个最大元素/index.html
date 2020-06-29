@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Delta">
 <meta property="og:description" content="在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。1234567示例 1:输入: [3,2,1,5,6,4] 和 k &#x3D; 2输出: 5示例 2:输入: [3,2,3,1,2,4,5,5,6] 和 k &#x3D; 4输出: 4说明:  你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。">
 <meta property="article:published_time" content="2020-06-28T02:30:25.000Z">
-<meta property="article:modified_time" content="2020-06-28T02:38:43.485Z">
+<meta property="article:modified_time" content="2020-06-28T03:27:34.756Z">
 <meta property="article:author" content="Delta">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -380,6 +380,7 @@
 <li>你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。</li>
 </ul>
 <a id="more"></a>
+<hr>
 <p>需要得到数组的第K个最大的元素很自然会想到堆排序。因为堆排序过程中，每次取的就是当前最大(小)的元素，那么第K大就是第K次取的元素。这里建立的是大根堆。</p>
 <p>堆排序最重要的部分是每次进行调整的过程。对于一个需要调整的节点，观察其是否满足大于其左右孩子，否则取左右孩子中最大的那个与当前节点进行交换，之后再对交换后的孩子节点继续这个递归过程。</p>
 <p>所以整个堆排序分为两步：</p>
@@ -428,6 +429,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/28/os/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="prev" title="处理机调度">
+                处理机调度 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -499,7 +504,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">185</span>
+                  <span class="site-state-item-count">186</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +608,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">102.4k</span>
+    <span title="Site words total count">103.8k</span>
   
 </div>
 

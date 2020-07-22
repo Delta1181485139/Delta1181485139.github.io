@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-257-二叉树的所有路径</title>
+    <url>/2020/07/22/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-257-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84/</url>
+    <content><![CDATA[<p>给定一个二叉树，返回所有从根节点到叶子节点的路径。</p>
+<p>说明: </p>
+<ul>
+<li>叶子节点是指没有子节点的节点。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入:</span><br><span class="line">   <span class="number">1</span></span><br><span class="line"> /   \</span><br><span class="line"><span class="number">2</span>     <span class="number">3</span></span><br><span class="line"> \</span><br><span class="line">  <span class="number">5</span></span><br><span class="line">输出: [<span class="string">"1-&gt;2-&gt;5"</span>, <span class="string">"1-&gt;3"</span>]</span><br><span class="line">解释: 所有根节点到叶子节点的路径为: <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">5</span>, <span class="number">1</span>-&gt;<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>在二叉树前序遍历的基础上，维护一个记录路径的栈。在访问到叶子节点的时候成功得到一条路径。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">binaryTreePaths</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">        <span class="built_in">string</span> path;</span><br><span class="line">        <span class="keyword">if</span>(root)path = to_string(root-&gt;val);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> res;</span><br><span class="line">        dfs(root,res,path);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; res, <span class="built_in">string</span> path)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;</span><br><span class="line">            res.push_back(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;left)dfs(root-&gt;left, res, path + <span class="string">"-&gt;"</span> + to_string(root-&gt;left-&gt;val));</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;right)dfs(root-&gt;right, res, path + <span class="string">"-&gt;"</span> + to_string(root-&gt;right-&gt;val));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-242-有效的字母异位词</title>
+    <url>/2020/07/21/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-242-%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</url>
+    <content><![CDATA[<p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: <span class="attr">s</span> = <span class="string">"anagram"</span>, <span class="attr">t</span> = <span class="string">"nagaram"</span></span><br><span class="line">输出: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: <span class="attr">s</span> = <span class="string">"rat"</span>, <span class="attr">t</span> = <span class="string">"car"</span></span><br><span class="line">输出: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>你可以假设字符串只包含小写字母。</li>
+</ul>
+<p>进阶:</p>
+<ul>
+<li>如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>用一个哈希表来对第一个串计数，之后用第二个串去抵消哈希表。如果有没找到的元素则直接返回假。如果最后哈希表非空也返回假。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; hash;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> c:s)</span><br><span class="line">            <span class="keyword">if</span>(hash.find(c)!=hash.end())++hash[c];</span><br><span class="line">            <span class="keyword">else</span> hash[c]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> c:t)</span><br><span class="line">            <span class="keyword">if</span>(hash.find(c)!=hash.end())&#123;</span><br><span class="line">                <span class="keyword">if</span>(--hash[c] == <span class="number">0</span>)hash.erase(c);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> hash.size() == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-241-为运算表达式设计优先级</title>
     <url>/2020/07/20/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-241-%E4%B8%BA%E8%BF%90%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%85%88%E7%BA%A7/</url>
     <content><![CDATA[<p>给定一个含有数字和运算符的字符串，为表达式添加括号，改变其运算优先级以求出不同的结果。你需要给出所有可能的组合的结果。有效的运算符号包含 +, - 以及 * 。</p>

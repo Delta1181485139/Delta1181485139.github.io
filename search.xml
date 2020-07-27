@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-274-H指数</title>
+    <url>/2020/07/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-274-H%E6%8C%87%E6%95%B0/</url>
+    <content><![CDATA[<p>给定一位研究者论文被引用次数的数组（被引用次数是非负整数）。编写一个方法，计算出研究者的 h 指数。</p>
+<ul>
+<li>h 指数的定义：h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）总共有 h 篇论文分别被引用了至少 h 次。（其余的 N - h 篇论文每篇被引用次数 不超过 h 次。）</li>
+<li>例如：某人的 h 指数是 20，这表示他已发表的论文中，每篇被引用了至少 20 次的论文总共有 20 篇。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例：</span><br><span class="line">输入：citations = [<span class="number">3</span>,<span class="number">0</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">5</span>]</span><br><span class="line">输出：<span class="number">3</span> </span><br><span class="line">解释：给定数组表示研究者总共有 <span class="number">5</span> 篇论文，每篇论文相应的被引用了 <span class="number">3</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">5</span> 次。</span><br><span class="line">     由于研究者有 <span class="number">3</span> 篇论文每篇 至少 被引用了 <span class="number">3</span> 次，其余两篇论文每篇被引用 不多于 <span class="number">3</span> 次，所以她的 h 指数是 <span class="number">3</span>。</span><br></pre></td></tr></table></figure>
+<p>提示：</p>
+<ul>
+<li>如果 h 有多种可能的值，h 指数是其中最大的那个。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>如果先将数组排好序，那么我们很容易知道引用次数大于等于当前的就是排在后面所有元素的数目。因此为了使这个数目最大，我们需要从头往后开始遍历。算法可以完全按照题目意思来写。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hIndex</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; citations)</span> </span>&#123;</span><br><span class="line">        sort(citations.begin(),citations.end());</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;citations.size() ; ++i)&#123;</span><br><span class="line">            <span class="keyword">int</span> h = citations.size()-i;</span><br><span class="line">            <span class="keyword">if</span>(citations[i] &gt;= h)<span class="keyword">return</span> h;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-268-缺失数字</title>
+    <url>/2020/07/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-268-%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>给定一个包含 0, 1, 2, …, n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。</p>
+ <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: [<span class="number">3</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">输出: <span class="number">2</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: [<span class="number">9</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">输出: <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>线性时间复杂度常数空间的算法思想还是利用异或，相同的数字异或将会为0，0与任何数异或将不改变该数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">missingNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(count &lt; nums.size())&#123;</span><br><span class="line">            res ^= count;</span><br><span class="line">            res ^= nums[count++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res^count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-264-丑数II</title>
     <url>/2020/07/26/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-264-%E4%B8%91%E6%95%B0II/</url>
     <content><![CDATA[<p>编写一个程序，找出第 n 个丑数。丑数就是质因数只包含 2, 3, 5 的正整数。</p>

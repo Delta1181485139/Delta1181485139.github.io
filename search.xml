@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-268-H指数II</title>
+    <url>/2020/07/28/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-268-H%E6%8C%87%E6%95%B0II/</url>
+    <content><![CDATA[<p>给定一位研究者论文被引用次数的数组（被引用次数是非负整数），数组已经按照升序排列。编写一个方法，计算出研究者的 h 指数。</p>
+<p>h 指数的定义: “h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）总共有 h 篇论文分别被引用了至少 h 次。（其余的 N - h 篇论文每篇被引用次数不多于 h 次。）”</p>
+ <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入: citations = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">输出: <span class="number">3</span> </span><br><span class="line">解释: 给定数组表示研究者总共有 <span class="number">5</span> 篇论文，每篇论文相应的被引用了 <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span> 次。</span><br><span class="line">     由于研究者有 <span class="number">3</span> 篇论文每篇至少被引用了 <span class="number">3</span> 次，其余两篇论文每篇被引用不多于 <span class="number">3</span> 次，所以她的 h 指数是 <span class="number">3</span>。</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>如果 h 有多有种可能的值 ，h 指数是其中最大的那个。</li>
+</ul>
+<p>进阶：</p>
+<ul>
+<li>这是 H指数 的延伸题目，本题中的 citations 数组是保证有序的。</li>
+<li>你可以优化你的算法到对数时间复杂度吗？</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>在有序的情况下达到对数时间复杂度就是用二分法。二分法的关键就是要判断在什么情况下，区间向左减半或向右减半。那么对于此题可以做以下考虑</p>
+<ul>
+<li>如果当前的元素值大于或等于包括当前元素的后面所有元素的个数，那么我们能够得知这个个数是有可能作为一个H指数的，但是不一定是最大的。因此为了找到最大的H指数，此时需要将区间向左减半。</li>
+<li>如果当前元素值小于包括当前元素的后面所有元素个数，那么这个个数不可能为H指数，H指数也不可能比这个数大。因此区间向右减半。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hIndex</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; citations)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = citations.size()<span class="number">-1</span>, candidate = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="keyword">int</span> k = (i+j)&gt;&gt;<span class="number">1</span>, h = citations.size()-k;</span><br><span class="line">            <span class="keyword">if</span>(citations[k]&gt;=h)&#123;</span><br><span class="line">                candidate = h;</span><br><span class="line">                j = k - <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> i = k + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> candidate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-274-H指数</title>
     <url>/2020/07/27/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-274-H%E6%8C%87%E6%95%B0/</url>
     <content><![CDATA[<p>给定一位研究者论文被引用次数的数组（被引用次数是非负整数）。编写一个方法，计算出研究者的 h 指数。</p>

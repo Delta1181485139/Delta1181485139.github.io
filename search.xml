@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-300-最长上升子序列</title>
+    <url>/2020/08/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-300-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/</url>
+    <content><![CDATA[<p>给定一个无序的整数数组，找到其中最长上升子序列的长度。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入: [<span class="number">10</span>,<span class="number">9</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">101</span>,<span class="number">18</span>]</span><br><span class="line">输出: <span class="number">4</span> </span><br><span class="line">解释: 最长的上升子序列是 [<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">101</span>]，它的长度是 <span class="number">4</span>。</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li><p>可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。</p>
+</li>
+<li><p>你算法的时间复杂度应该为 O(n2) 。</p>
+</li>
+</ul>
+<p>进阶: </p>
+<ul>
+<li>你能将算法的时间复杂度降低到 O(n log n) 吗?</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>可以用动态规划的方法维护一个dp数组，先将首元素填入。然后一次遍历，如果必末尾的元素大，则直接填入，否则在dp数组中找到以一个刚好大于它的元素替换。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp;</span><br><span class="line">        <span class="keyword">if</span>(!nums.empty())dp.push_back(nums[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;nums.size();++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]&gt;dp.back())dp.push_back(nums[i]);</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">auto</span> aim = lower_bound(dp.begin(),dp.end(),nums[i]);</span><br><span class="line">                *aim = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-290-单词规律</title>
-    <url>/2020/08/03/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-290-%E5%8D%95%E8%AF%8D%E8%A7%84%E5%BE%8B/</url>
+    <url>/2020/08/03/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-290-%E5%8D%95%E8%AF%8D%E8%A7%84%E5%BE%8B/</url>
     <content><![CDATA[<p>给定一种规律 pattern 和一个字符串 str ，判断 str 是否遵循相同的规律。这里的 遵循 指完全匹配，例如， pattern 里的每个字母和字符串 str 中的每个非空单词之间存在着双向连接的对应规律。</p>
 <figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">示例<span class="number">1</span>:</span><br><span class="line">输入: <span class="attr">pattern</span> = <span class="string">"abba"</span>, <span class="attr">str</span> = <span class="string">"dog cat cat dog"</span></span><br><span class="line">输出: <span class="literal">true</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入:<span class="attr">pattern</span> = <span class="string">"abba"</span>, <span class="attr">str</span> = <span class="string">"dog cat cat fish"</span></span><br><span class="line">输出: <span class="literal">false</span></span><br><span class="line">示例 <span class="number">3</span>:</span><br><span class="line">输入: <span class="attr">pattern</span> = <span class="string">"aaaa"</span>, <span class="attr">str</span> = <span class="string">"dog cat cat dog"</span></span><br><span class="line">输出: <span class="literal">false</span></span><br><span class="line">示例 <span class="number">4</span>:</span><br><span class="line">输入: <span class="attr">pattern</span> = <span class="string">"abba"</span>, <span class="attr">str</span> = <span class="string">"dog dog dog dog"</span></span><br><span class="line">输出: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <p>说明:</p>

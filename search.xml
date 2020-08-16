@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode刷题笔记-509-斐波那契数</title>
+    <url>/2020/08/09/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/</url>
+    <content><![CDATA[<p>斐波那契数，通常用 F(n) 表示，形成的序列称为斐波那契数列。该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">F(<span class="number">0</span>) = <span class="number">0</span>,   F(<span class="number">1</span>) = <span class="number">1</span></span><br><span class="line">F(N) = F(N - <span class="number">1</span>) + F(N - <span class="number">2</span>), 其中 N &gt; <span class="number">1.</span></span><br><span class="line">给定 N，计算 F(N)。</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li>0 ≤ <code>N</code> ≤ 30</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>我寻思着$F(30)$也没超过$INT_MAX$啊。难道是逼我用$O(1)$算法吗。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; F = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">13</span>,<span class="number">21</span>,<span class="number">34</span>,<span class="number">55</span>,<span class="number">89</span>,<span class="number">144</span>,<span class="number">233</span>,<span class="number">377</span>,<span class="number">610</span>,<span class="number">987</span>,<span class="number">1597</span>,<span class="number">2584</span>,<span class="number">4181</span>,<span class="number">6765</span>,<span class="number">10946</span>,<span class="number">17711</span>,<span class="number">28657</span>,<span class="number">46368</span>,<span class="number">75025</span>,<span class="number">121393</span>,<span class="number">196418</span>,<span class="number">317811</span>,<span class="number">514229</span>,<span class="number">832040</span>&#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> F[N];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-345-反转字符串中的元音字母</title>
+    <url>/2020/08/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-345-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%85%83%E9%9F%B3%E5%AD%97%E6%AF%8D/</url>
+    <content><![CDATA[<p>编写一个函数，以字符串作为输入，反转该字符串中的元音字母。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line">示例 <span class="attribute">1</span>:</span><br><span class="line">输入: <span class="string">"hello"</span></span><br><span class="line">输出: <span class="string">"holle"</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: <span class="string">"leetcode"</span></span><br><span class="line">输出: <span class="string">"leotcede"</span></span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>元音字母不包含字母”y”。</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>相比上一题的逆置数组，在进行交换之前需要对双指针进行判断，只有当满足两个指针都为元音字母的时候才需要交换，否则看情况移动指针。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">reverseVowels</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">char</span>&gt; vowel_table = &#123;<span class="string">'a'</span>,<span class="string">'A'</span>,<span class="string">'e'</span>,<span class="string">'E'</span>,<span class="string">'i'</span>,<span class="string">'I'</span>,<span class="string">'o'</span>,<span class="string">'O'</span>,<span class="string">'u'</span>,<span class="string">'U'</span>&#125;;</span><br><span class="line">        <span class="keyword">auto</span> i = s.begin(), j = s.end()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> vowel = [vowel_table](<span class="keyword">char</span> c)&#123;<span class="keyword">return</span> vowel_table.find(c)!=vowel_table.end();&#125;;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j)</span><br><span class="line">            <span class="keyword">if</span>(vowel(*i)&amp;&amp;vowel(*j))swap(*i++,*j--);</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(!vowel(*i))++i;</span><br><span class="line">                <span class="keyword">if</span>(!vowel(*j))--j;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode刷题笔记-344-反转字符串</title>
+    <url>/2020/08/08/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-344-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<p>编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 char[] 的形式给出。不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。你可以假设数组中的所有字符都是 ASCII 码表中的可打印字符。</p>
+ <figure class="highlight css"><table><tr><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：<span class="selector-attr">[<span class="string">"h"</span>,<span class="string">"e"</span>,<span class="string">"l"</span>,<span class="string">"l"</span>,<span class="string">"o"</span>]</span></span><br><span class="line">输出：<span class="selector-attr">[<span class="string">"o"</span>,<span class="string">"l"</span>,<span class="string">"l"</span>,<span class="string">"e"</span>,<span class="string">"h"</span>]</span></span><br><span class="line">示例 2：</span><br><span class="line">输入：<span class="selector-attr">[<span class="string">"H"</span>,<span class="string">"a"</span>,<span class="string">"n"</span>,<span class="string">"n"</span>,<span class="string">"a"</span>,<span class="string">"h"</span>]</span></span><br><span class="line">输出：<span class="selector-attr">[<span class="string">"h"</span>,<span class="string">"a"</span>,<span class="string">"n"</span>,<span class="string">"n"</span>,<span class="string">"a"</span>,<span class="string">"H"</span>]</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>用首尾双指针，每次进行交换，直到双指针重合。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverseString</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.empty())<span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">auto</span> i = s.begin(),j = s.end()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j)swap(*i++,*j--);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode刷题笔记-300-最长上升子序列</title>
     <url>/2020/08/05/leetcode/leetcode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0-300-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/</url>
     <content><![CDATA[<p>给定一个无序的整数数组，找到其中最长上升子序列的长度。</p>
@@ -6061,24 +6110,6 @@ F(n-2)\\F(n-1)
 ]]></content>
       <tags>
         <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>三角函数关系</title>
-    <url>/2019/12/19/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%85%B3%E7%B3%BB/</url>
-    <content><![CDATA[<p>要考研了，复习高数不定积分那一块的时候竟然发现有一些三角函数居然都没见过，特此记录一下他们与sin，cos，tan之间的关系，主要是正割余割。至于和差化积那些转换关系，既然考研不要求就不记了。<br><a id="more"></a></p>
-<h2 id="倒数关系"><a href="#倒数关系" class="headerlink" title="倒数关系"></a>倒数关系</h2><blockquote>
-<p>sin a <em> csc a=1<br>cos a </em> sec a=1<br>tana * cota=1</p>
-</blockquote>
-<h2 id="商数关系"><a href="#商数关系" class="headerlink" title="商数关系"></a>商数关系</h2><blockquote>
-<p>tana=sin a / cos a<br>cota=cos a / sin a</p>
-</blockquote>
-<h2 id="平方关系"><a href="#平方关系" class="headerlink" title="平方关系"></a>平方关系</h2><blockquote>
-<p>(sin a)^2 + (cos a)^2=1<br>1+(tan a)^2 = (sec a)^2<br>1+(cot a)^2 = (csc a)^2</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>math</tag>
       </tags>
   </entry>
 </search>
